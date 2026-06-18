@@ -2,24 +2,32 @@ import AppKit
 
 /// Output sinks for a chosen candidate.
 enum Output {
-    /// M1: copy the chosen character to the system clipboard.
+    /// Copy the chosen character to the system clipboard (used when there's no in-place target).
     static func copyToClipboard(_ string: String) {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         pasteboard.setString(string, forType: .string)
     }
 
-    /// M2: read the selected text in the frontmost app.
-    /// Requires Accessibility permission. Strategy: AXUIElement `kAXSelectedTextAttribute`,
-    /// with a clipboard-shuttle (synth ⌘C → read pasteboard → restore) fallback.
-    static func selectedTextFromFrontmostApp() -> String? {
-        // TODO (M2): implement via Accessibility. Returns nil if unavailable / not permitted.
-        return nil
+    /// Synthesize a Shift+← key event (select one char to the left). Requires Accessibility.
+    static func synthesizeShiftLeft() {
+        guard let src = CGEventSource(stateID: .combinedSessionState),
+              let down = CGEvent(keyboardEventSource: src, virtualKey: 0x7B /* left arrow */, keyDown: true),
+              let up = CGEvent(keyboardEventSource: src, virtualKey: 0x7B, keyDown: false) else { return }
+        down.flags = .maskShift
+        up.flags = .maskShift
+        down.post(tap: .cghidEventTap)
+        up.post(tap: .cghidEventTap)
     }
 
-    /// M2: paste the chosen result into the frontmost app (synthesized ⌘V via CGEvent).
-    /// Requires Accessibility permission.
-    static func pasteIntoFrontmostApp(_ string: String) {
-        // TODO (M2): set pasteboard, then post a ⌘V key event with CGEvent.
+    /// Synthesize a ⌘V key event into the frontmost app. Requires Accessibility permission.
+    static func synthesizeCmdV() {
+        guard let src = CGEventSource(stateID: .combinedSessionState),
+              let down = CGEvent(keyboardEventSource: src, virtualKey: 9 /* v */, keyDown: true),
+              let up = CGEvent(keyboardEventSource: src, virtualKey: 9, keyDown: false) else { return }
+        down.flags = .maskCommand
+        up.flags = .maskCommand
+        down.post(tap: .cghidEventTap)
+        up.post(tap: .cghidEventTap)
     }
 }

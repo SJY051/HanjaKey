@@ -174,8 +174,20 @@ runtime-read of the Apple dictionary remains a possible *optional later* experim
 M1 (engine + popup + clipboard) shipped and works; testing surfaced that it currently behaves like
 a "searcher", not the real 한자 key. Prioritized backlog:
 
-- **P0 — in-place conversion (the core identity):** type → hotkey → candidates appear **at the
-  caret** → chosen char is **inserted in place** (not just clipboard). Needs Accessibility.
+- **P0 — in-place conversion (the core identity) → DONE 2026-06-18.** type → hotkey → candidates
+  near the caret → chosen char inserted in place. Works across native apps, **Electron** (Claude,
+  Discord), and browsers. Key techniques learned:
+  - Get focus from the **frontmost app's** AX element (`AXUIElementCreateApplication(pid)`), not
+    the system-wide element (which returned `kAXErrorNoValue`).
+  - **Electron/Chromium expose their AX tree only after setting `AXManualAccessibility=true`** on
+    the app element (first hotkey press may need a repeat while the tree builds).
+  - **Read via AX, write via synthesized keys.** AX text-writes report success in Electron but do
+    nothing; AX selection is unreadable in some Electron apps. So: read the source Hangul via AX
+    (`kAXValue`, fallback select-and-read), then insert by reactivating the target
+    (`activate(.activateAllWindows)` for reliable focus return) + synthesizing Shift+← (re-select)
+    + ⌘V, restoring the clipboard after.
+  - **Limitation:** terminal apps (cmux) don't expose editable AX text → not supported; pure
+    type-in-popup + clipboard fallback still works there.
 - **P0 — `.app` bundle packaging:** Info.plist (`LSUIElement`) + bundle id + signing. Prereq for a
   reliable menu-bar icon and for stable Accessibility (TCC) permission. Likely fixes the icon bug.
 - **P0 — menu-bar icon not visible → RESOLVED 2026-06-18 (not a code bug).** Instrumentation

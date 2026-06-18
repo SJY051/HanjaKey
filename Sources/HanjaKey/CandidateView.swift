@@ -6,14 +6,19 @@ struct CandidateView: View {
     /// Called when the user picks a candidate (click or ↩). Receives the chosen character.
     let onPick: (String) -> Void
 
-    @State private var input = ""
-    @State private var candidates: [Candidate] = []
+    @State private var input: String
+    @State private var candidates: [Candidate]
     @FocusState private var fieldFocused: Bool
 
     // Loaded once: parsing the bundled tables is not free.
     private static let converter = try? Converter.bundled()
-
     private let columns = [GridItem(.adaptive(minimum: 46), spacing: 8)]
+
+    init(initialInput: String, onPick: @escaping (String) -> Void) {
+        self.onPick = onPick
+        _input = State(initialValue: initialInput)
+        _candidates = State(initialValue: Self.converter?.candidates(for: initialInput) ?? [])
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -48,7 +53,7 @@ struct CandidateView: View {
             }
         }
         .padding(14)
-        .frame(minWidth: 380, minHeight: 320)
+        .frame(minWidth: 360, minHeight: 300)
         .onAppear { fieldFocused = true }
     }
 }
