@@ -1,0 +1,12 @@
+# Sample rows extracted from Unihan_Readings.txt (Unicode Han Database, UAX #38).
+# Used as a TEST FIXTURE + dev placeholder. Replace with the full file for real coverage:
+#   https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip  (Unihan_Readings.txt)
+# License: Unicode License v3 — https://www.unicode.org/license.txt
+#
+# Format: <codepoint>\t<field>\t<value> ; kHangul value = space-separated readings,
+# each with a source-tag suffix (":0E" educational, ":0N" name-use) that is stripped on parse.
+U+6F22	kHangul	한:0E
+U+97D3	kHangul	한:0E
+U+6068	kHangul	한:0N
+U+5B57	kHangul	자:0E
+U+8005	kHangul	자:0E
