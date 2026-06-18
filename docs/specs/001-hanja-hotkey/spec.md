@@ -81,10 +81,15 @@ window). HanjaKey is not a reimplementation of that — it differentiates by:
   dismisses the panel.
 
 ### Data
-- **FR-008**: Hanja data MUST come from a bundled standard table: **Unicode Unihan `kHangul`**
-  (resolved — permissive Unicode license; the `kHangul` field gives each Han char's Hangul
-  reading(s), inverted at build/load into reading→[Hanja]). Symbol data from a **KS X 1001 symbol
-  table**. The repo MUST document the source URL + license + version of the bundled data.
+- **FR-008**: Hanja data comes from a bundled **libhangul `hanja.txt`** table (resolved
+  2026-06-18, **revised from Unihan kHangul**): it pairs each reading with Hanja **and a Korean
+  gloss (음+뜻, e.g. 韓 → "나라 한")** — satisfying the gloss requirement (FR-013) — is
+  open-source / redistributable, and is curated for exactly this IME 한자-key use (so coverage and
+  candidate order match expectations). Symbol data from a **KS X 1001 symbol table**. The repo
+  MUST document each table's source URL + license + version. (Unihan `kHangul` was the prior
+  choice but carries readings only, no Korean gloss; see Data-source research below.)
+- **FR-013**: A Hanja candidate SHOULD display its Korean **음/뜻 gloss** alongside the glyph
+  (from libhangul). `Candidate.gloss` already exists for this.
 - **FR-009**: Bundled data is **untrusted-input-safe**: parsed defensively at load (it's a data
   file, not code); malformed rows are skipped, not fatal.
 
@@ -136,13 +141,57 @@ window). HanjaKey is not a reimplementation of that — it differentiates by:
 - **SC-005 (if M2 in scope)**: Selecting text in another app and converting replaces it in place.
 
 ## Decisions (resolved 2026-06-18)
-- **(a) Data table → Unicode Unihan `kHangul`** (permissive license; inverted to reading→Hanja).
+- **(a) Data table → libhangul `hanja.txt`** (revised 2026-06-18 from Unihan kHangul): carries
+  음+뜻 glosses, is redistributable, and is IME-curated. See Data-source research below.
 - **(b) Scope → M1 + M2** both this iteration (clipboard first, then in-place paste via Accessibility).
 - **Hotkey library → `sindresorhus/KeyboardShortcuts`** (Carbon fallback).
 - **Candidate ordering → table order** for the warm-up (frequency/stroke ranking is future work).
 
+## Data-source research (2026-06-18)
+
+Investigated using macOS's *own* Hanja data (it shows 음/뜻). Found
+`KoreanSystemDictionary.dictionary` inside
+`/System/Library/Input Methods/KoreanIM.app/Contents/PlugIns/KIM_Extension.appex/.../HanjaTool.app`
+— a **Dictionary Services bundle** (Info.plist: format v3, `com.apple.TrieAccessMethod`,
+big-endian; `index-0` + `index-0_subdata`, ~2.5 MB) with full glosses, bundle id
+`com.apple.KoreanIM.KoreanSystemDictionary`. **Rejected as our data source:**
+1. **Non-redistributable** — Apple-proprietary; bundling/copying it is not allowed. Only a
+   *personal* runtime-read of the on-disk file would be license-tolerable (never if distributed).
+2. **No clean/stable API** — public `DictionaryServices` (`DCSCopyTextDefinition`) only queries the
+   user's *active* dictionaries, not this internal IME bundle; reaching it needs **private** DCS
+   APIs (`DCSDictionaryCreate(url)`) or **reverse-engineering the Trie binary** — both fragile
+   across macOS versions.
+
+So it is **not the dependency-free "free win" it appeared** (verify-before-building). Decision:
+bundle **libhangul `hanja.txt`** (open, redistributable, 음+뜻, IME-curated). A personal
+runtime-read of the Apple dictionary remains a possible *optional later* experiment, not the base.
+
 ## Open questions
-- (none blocking — ready to scaffold.)
+- (none blocking — data source resolved to libhangul; ready to continue implementation.)
+
+## Post-M1 feedback backlog (P-tiers, from 2026-06-18 testing)
+
+M1 (engine + popup + clipboard) shipped and works; testing surfaced that it currently behaves like
+a "searcher", not the real 한자 key. Prioritized backlog:
+
+- **P0 — in-place conversion (the core identity):** type → hotkey → candidates appear **at the
+  caret** → chosen char is **inserted in place** (not just clipboard). Needs Accessibility.
+- **P0 — `.app` bundle packaging:** Info.plist (`LSUIElement`) + bundle id + signing. Prereq for a
+  reliable menu-bar icon and for stable Accessibility (TCC) permission. Likely fixes the icon bug.
+- **P0 — menu-bar icon not visible → RESOLVED 2026-06-18 (not a code bug).** Instrumentation
+  showed the status item is created correctly (button present, `isVisible=true`, ~30×30 frame,
+  `.accessory`). Root cause = **menu-bar space exhaustion** on a notched Mac: icon slots are
+  finite and zero-sum (turning HanjaKey on pushed another app's icon out); Ice was hiding the
+  overflow. Glyph changed from a misleading SF Symbol to text `漢`. See P2 (optional icon).
+- **P1 — keyboard selection + compact UI:** number keys (1–9), arrows, Enter; Tab to expand;
+  shrink the window. (Original Hanja-key UX.)
+- **P1 — data coverage & order:** full libhangul `hanja.txt` + full KS X 1001 symbol rows in the
+  expected order (replaces the sample tables + `UnihanTable` with a libhangul parser).
+- **P2 — Hanja 음/뜻 display** (FR-013; comes free with libhangul data).
+- **P2 — Liquid Glass material** for the popup.
+- **P2 — optional menu-bar icon:** a toggle to hide it (the app is hotkey-driven → the icon is
+  non-essential), with **Quit/Settings reachable from the popup** when hidden. Menu-bar icon slots
+  are finite/zero-sum on notched Macs (confirmed: enabling HanjaKey evicted another app's icon).
 
 ## Future expansion
 If this grows beyond the warm-up — a real IMKit input method, fuller dictionary with glosses/

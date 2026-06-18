@@ -7,7 +7,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        item.button?.title = "漢"
+        item.button?.title = "漢" // text glyph suits a Hanja tool better than any SF Symbol
         let menu = NSMenu()
         menu.addItem(
             withTitle: "Quit HanjaKey",
