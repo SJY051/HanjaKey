@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import KeyboardShortcuts
 
 /// Preferences window: a "General" tab for toggles and a "User sets" tab for editing the custom
 /// jamo → symbol overlay in-app. Settings live in `AppSettings`/`UserSymbols`.
@@ -22,6 +23,11 @@ private struct GeneralSettingsView: View {
 
     var body: some View {
         Form {
+            Section("단축키") {
+                KeyboardShortcuts.Recorder("팝업 호출", name: .summon)
+                Text("어디서든 이 단축키로 변환 팝업을 띄웁니다.")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
             Section("일반") {
                 Toggle("메뉴바 아이콘 표시", isOn: $showMenuBarIcon)
                     .onChange(of: showMenuBarIcon) { _, _ in

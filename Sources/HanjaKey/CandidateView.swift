@@ -20,6 +20,7 @@ struct CandidateView: View {
     @State private var decomposing = false
     @State private var columns: [[Candidate]] = []
     @State private var picks: [String?] = []
+    @State private var activeColumn = 0
     @AppStorage(AppSettings.expandedWideKey) private var wideStyle = true
     @FocusState private var focused: Bool
 
@@ -190,6 +191,7 @@ struct CandidateView: View {
             Button("음절별로 만들기") {
                 columns = Self.converter?.decomposition(of: reading) ?? []
                 picks = columns.map { $0.first?.value }
+                activeColumn = 0
                 decomposing = true
             }
             .buttonStyle(.borderedProminent)
@@ -213,41 +215,50 @@ struct CandidateView: View {
                     ForEach(columns.indices, id: \.self) { ci in
                         VStack(spacing: 4) {
                             Text(ci < chars.count ? String(chars[ci]) : "")
-                                .font(.caption).foregroundStyle(.secondary)
-                            ScrollView {
-                                VStack(spacing: 2) {
-                                    ForEach(columns[ci], id: \.self) { candidate in
-                                        Button { setPick(ci, candidate.value) } label: {
-                                            HStack(spacing: 6) {
-                                                Text(candidate.value).font(.title3)
-                                                if let gloss = candidate.gloss, !gloss.isEmpty {
-                                                    Text(gloss)
-                                                        .font(.caption2).foregroundStyle(.secondary)
-                                                        .lineLimit(1).truncationMode(.tail)
+                                .font(.caption.weight(ci == activeColumn ? .bold : .regular))
+                                .foregroundStyle(ci == activeColumn ? AnyShapeStyle(.tint) : AnyShapeStyle(.secondary))
+                            ScrollViewReader { proxy in
+                                ScrollView {
+                                    VStack(spacing: 2) {
+                                        ForEach(columns[ci], id: \.self) { candidate in
+                                            Button { setPick(ci, candidate.value) } label: {
+                                                HStack(spacing: 6) {
+                                                    Text(candidate.value).font(.title3)
+                                                    if let gloss = candidate.gloss, !gloss.isEmpty {
+                                                        Text(gloss)
+                                                            .font(.caption2).foregroundStyle(.secondary)
+                                                            .lineLimit(1).truncationMode(.tail)
+                                                    }
+                                                    Spacer(minLength: 0)
                                                 }
-                                                Spacer(minLength: 0)
+                                                .padding(.horizontal, 6).padding(.vertical, 3)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .background(
+                                                    (ci < picks.count ? picks[ci] : nil) == candidate.value
+                                                        ? AnyShapeStyle(.tint.opacity(0.20)) : AnyShapeStyle(.clear),
+                                                    in: RoundedRectangle(cornerRadius: 5)
+                                                )
+                                                .contentShape(Rectangle())
                                             }
-                                            .padding(.horizontal, 6).padding(.vertical, 3)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .background(
-                                                (ci < picks.count ? picks[ci] : nil) == candidate.value
-                                                    ? AnyShapeStyle(.tint.opacity(0.20)) : AnyShapeStyle(.clear),
-                                                in: RoundedRectangle(cornerRadius: 5)
-                                            )
-                                            .contentShape(Rectangle())
+                                            .buttonStyle(.plain)
+                                            .id(candidate.value)
                                         }
-                                        .buttonStyle(.plain)
+                                    }
+                                }
+                                .frame(height: 220)
+                                .onChange(of: ci < picks.count ? picks[ci] : nil) { _, newValue in
+                                    if let value = newValue {
+                                        withAnimation(.easeOut(duration: 0.12)) { proxy.scrollTo(value, anchor: .center) }
                                     }
                                 }
                             }
-                            .frame(height: 220)
                         }
                         .frame(width: 150)
                     }
                 }
                 .padding(.horizontal, 12).padding(.bottom, 6)
             }
-            Text("각 음절에서 한자를 고르고 ‘입력’(↵) · esc 뒤로")
+            Text("←→ 음절 · ↑↓ 또는 1–9 한자 선택 · ↵ 입력 · esc 뒤로")
                 .font(.caption2).foregroundStyle(.secondary)
                 .padding(.horizontal, 12).padding(.bottom, 8)
         }
@@ -259,6 +270,20 @@ struct CandidateView: View {
     private func setPick(_ column: Int, _ value: String) {
         guard picks.indices.contains(column) else { return }
         picks[column] = value
+        activeColumn = column
+    }
+
+    private func movePick(_ column: Int, _ delta: Int) {
+        guard columns.indices.contains(column) else { return }
+        let items = columns[column]
+        guard !items.isEmpty else { return }
+        let current = items.firstIndex { $0.value == picks[column] } ?? 0
+        picks[column] = items[min(max(current + delta, 0), items.count - 1)].value
+    }
+
+    private func pickInColumn(_ column: Int, _ index: Int) {
+        guard columns.indices.contains(column), columns[column].indices.contains(index) else { return }
+        picks[column] = columns[column][index].value
     }
 
     private func confirmDecomposition() {
@@ -391,8 +416,16 @@ struct CandidateView: View {
             switch press.key {
             case .escape: decomposing = false; return .handled // back to the miss screen
             case .return: confirmDecomposition(); return .handled
-            default: return .ignored
+            case .leftArrow: activeColumn = max(0, activeColumn - 1); return .handled
+            case .rightArrow: activeColumn = min(max(columns.count - 1, 0), activeColumn + 1); return .handled
+            case .upArrow: movePick(activeColumn, -1); return .handled
+            case .downArrow: movePick(activeColumn, 1); return .handled
+            default: break
             }
+            if let n = Int(press.characters), (1...9).contains(n) {
+                pickInColumn(activeColumn, n - 1); return .handled
+            }
+            return .ignored
         }
         switch press.key {
         case .escape:
