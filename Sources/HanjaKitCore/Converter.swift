@@ -49,13 +49,15 @@ public struct Converter {
         })
     }
 
-    /// Whole-word Hanja candidates for a multi-syllable reading, using a (lazily loaded) word table.
+    /// Whole-word Hanja candidates for a multi-syllable reading, using a (lazily loaded) word table and
+    /// an optional corpus-frequency table.
     ///
-    /// Ranked gloss-first (libhangul's direct "real headword" signal), then by the sum of each
-    /// syllable's single-Hanja frequency rank (lower = more common), then original order. Entries
-    /// with an unknown syllable sink last. (Heuristic: word frequency ≠ constituent-Hanja frequency,
-    /// so it's good but not perfect — curated real frequency can layer on top above gloss later.)
-    public func candidates(forWord word: String, using words: WordTable) -> [Candidate] {
+    /// When `freq` has the reading, candidates are ordered by DESCENDING corpus frequency (국립국어원 2002,
+    /// spec 003); Hanja with no count fall to the back, ordered by the 002 heuristic. When `freq` is nil
+    /// or lacks the reading, ordering is exactly the 002 heuristic: gloss-first (libhangul's "real
+    /// headword" signal), then summed single-syllable frequency rank (lower = more common), then source
+    /// order. The frequency table only reorders — it never drops a candidate (FR-006).
+    public func candidates(forWord word: String, using words: WordTable, freq: FreqTable? = nil) -> [Candidate] {
         let readingChars = Array(word)
         func score(_ entry: WordTable.Entry) -> Int {
             let hanjaChars = Array(entry.hanja)
@@ -67,12 +69,25 @@ public struct Converter {
             }
             return total
         }
-        let ranked = words.entries(for: word).enumerated().sorted { lhs, rhs in
+        // 002 heuristic comparator: gloss-first, then syllable-frequency score, then source order.
+        func heuristicLess(_ lhs: (offset: Int, element: WordTable.Entry),
+                           _ rhs: (offset: Int, element: WordTable.Entry)) -> Bool {
             let gl = lhs.element.gloss != nil, gr = rhs.element.gloss != nil
-            if gl != gr { return gl } // gloss-bearing (real headword) first
+            if gl != gr { return gl }
             let sl = score(lhs.element), sr = score(rhs.element)
-            if sl != sr { return sl < sr } // then lower syllable-frequency score (more common)
+            if sl != sr { return sl < sr }
             return lhs.offset < rhs.offset
+        }
+        let useFreq = freq?.hasReading(word) ?? false
+        let ranked = words.entries(for: word).enumerated().sorted { lhs, rhs in
+            if useFreq, let freq {
+                let fl = freq.frequency(of: lhs.element.hanja, for: word)
+                let fr = freq.frequency(of: rhs.element.hanja, for: word)
+                if let fl, let fr, fl != fr { return fl > fr }   // both ranked: higher frequency first
+                if (fl != nil) != (fr != nil) { return fl != nil } // one ranked: it leads the unranked
+                // neither ranked (or equal) → fall through to the 002 heuristic
+            }
+            return heuristicLess(lhs, rhs)
         }
         return ranked.map { Candidate(value: $0.element.hanja, kind: .hanja, gloss: $0.element.gloss) }
     }

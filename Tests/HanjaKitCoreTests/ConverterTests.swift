@@ -62,4 +62,38 @@ final class ConverterTests: XCTestCase {
         XCTAssertEqual(columns[0].first?.value, "韓") // 한 → 韓 leads (frequency order)
         XCTAssertFalse(columns[1].isEmpty)             // 자 → has Hanja candidates
     }
+
+    // MARK: - 003-M1 frequency ranking (scaffold; skipped until implemented)
+
+    func testWordCandidatesFrequencyOrderingPrefersCommonHanja() throws {
+        // FR-005 / SC-001: with the 2002 freq table, 수도 → 首都 (freq 136) leads 修道/水道/囚徒,
+        // overriding the gloss-first/syllable-frequency heuristic. Source order is deliberately scrambled.
+        let words = WordTable.parse("수도:水道:\n수도:修道:\n수도:首都:\n수도:囚徒:")
+        let freq = FreqTable.parse("수도:首都:136\n수도:修道:7\n수도:水道:4\n수도:囚徒:1")
+        let result = try makeConverter().candidates(forWord: "수도", using: words, freq: freq).map(\.value)
+        XCTAssertEqual(result, ["首都", "修道", "水道", "囚徒"])
+    }
+
+    func testWordCandidatesFallBackToGlossOrderWithoutFreq() throws {
+        // FR-005 / SC-002: a reading absent from the freq table keeps the exact 002 gloss-first order
+        // (no regression) — candidates(forWord:using:freq:) == candidates(forWord:using:).
+        let words = WordTable.parse("한국:寒國:\n한국:寒菊:\n한국:韓國:대한민국\n한국:汗國:")
+        let conv = try makeConverter()
+        let base = conv.candidates(forWord: "한국", using: words).map(\.value)
+        let unrelatedFreq = FreqTable.parse("수도:首都:136")  // has no 한국 entry
+        let withFreq = conv.candidates(forWord: "한국", using: words, freq: unrelatedFreq).map(\.value)
+        XCTAssertEqual(withFreq, base)        // freq lacks 한국 → identical to 002
+        XCTAssertEqual(base.first, "韓國")     // 002 gloss-first still holds
+    }
+
+    func testWordCandidatesFrequencyRankedLeadUnrankedTail() throws {
+        // FR-006: the freq table reorders but never drops candidates — a Hanja with no corpus count
+        // still appears, after the frequency-ranked ones.
+        let words = WordTable.parse("수도:水道:\n수도:首都:\n수도:隧道:")  // 隧道 absent from freq
+        let freq = FreqTable.parse("수도:首都:136\n수도:水道:4")
+        let result = try makeConverter().candidates(forWord: "수도", using: words, freq: freq).map(\.value)
+        XCTAssertEqual(result.count, 3)            // nothing dropped
+        XCTAssertEqual(Array(result.prefix(2)), ["首都", "水道"])  // ranked ones first, by frequency
+        XCTAssertEqual(result.last, "隧道")        // unranked sinks to the tail
+    }
 }

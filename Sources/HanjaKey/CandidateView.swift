@@ -41,6 +41,10 @@ struct CandidateView: View {
     /// Lazy: the multi-syllable word dictionary is large (~235k); loaded only on first word use.
     private static let wordTable = try? WordTable.bundled()
 
+    /// Lazy: the 국립국어원 2002 frequency table (spec 003) — ranks homophone words by real usage.
+    /// nil if the resource is missing, in which case word ranking falls back to the 002 heuristic.
+    private static let freqTable = try? FreqTable.bundled()
+
     private static let pageSize = 9
     private static let gridColumns = 5
     private static let cellWidth: CGFloat = 32
@@ -55,7 +59,7 @@ struct CandidateView: View {
         if reading.count >= 2 {
             // Multi-syllable → whole-word Hanja candidates from the (lazy) word dictionary.
             self.candidates = Self.wordTable.flatMap { table in
-                Self.converter?.candidates(forWord: reading, using: table)
+                Self.converter?.candidates(forWord: reading, using: table, freq: Self.freqTable)
             } ?? []
         } else {
             self.candidates = Self.converter?.candidates(
