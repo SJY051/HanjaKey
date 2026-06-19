@@ -462,18 +462,24 @@ struct CandidateView: View {
         return .ignored
     }
 
+    /// The wide 9-row grid renders only for single-glyph candidates; words always use the square grid
+    /// even when the wide-style setting is on (see body line 93). Navigation must follow what is
+    /// actually rendered, not just the setting — otherwise word grids get the wide step (arrows feel
+    /// transposed).
+    private var isWideGrid: Bool { expanded && wideStyle && !isWord }
+
     private var numberPickEnabled: Bool { !expanded || wideStyle }
 
-    /// Up/down step: ±1 in the list and the wide grid; one row (±columns) in the square grid.
+    /// Up/down step: ±1 in the list and the wide grid; one row (±columns) in any square grid (incl. words).
     private func verticalStep(_ direction: Int) -> Int {
-        (expanded && !wideStyle) ? direction * Self.gridColumns : direction
+        (expanded && !isWideGrid) ? direction * Self.gridColumns : direction
     }
 
-    /// Left/right: page in the list, adjacent column in the wide grid, ±1 in the square grid.
+    /// Left/right: page in the list, adjacent column in the wide grid, ±1 in any square grid (incl. words).
     private func horizontal(_ direction: Int) {
         if !expanded {
             page(direction)
-        } else if wideStyle {
+        } else if isWideGrid {
             move(direction * Self.pageSize)
         } else {
             move(direction)
