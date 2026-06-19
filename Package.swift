@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "HanjaKey",
-    platforms: [.macOS(.v13)],
+    platforms: [.macOS(.v14)], // SwiftUI .onKeyPress (keyboard-driven candidate list) needs macOS 14
     dependencies: [
         // Global, user-customizable hotkeys (min macOS 10.15; SwiftUI recorder UI).
         .package(url: "https://github.com/sindresorhus/KeyboardShortcuts", from: "2.0.0"),

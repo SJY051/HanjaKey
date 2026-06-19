@@ -1,22 +1,23 @@
 import AppKit
 import SwiftUI
 
-/// A floating panel (Maccy-style) that hosts the SwiftUI candidate UI and commits the pick
-/// back into the frontmost app (in place when possible).
+/// A floating, borderless panel (Maccy-style) hosting the SwiftUI candidate list and committing
+/// the pick back into the frontmost app (in place when possible).
 final class PopupPanel: NSPanel {
     private var context: AXContext?
 
     init() {
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: 360, height: 300),
-            styleMask: [.titled, .closable, .nonactivatingPanel, .fullSizeContentView],
+            contentRect: NSRect(x: 0, y: 0, width: 300, height: 360),
+            styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: true
         )
         isFloatingPanel = true
         level = .floating
-        titleVisibility = .hidden
-        titlebarAppearsTransparent = true
+        isOpaque = false
+        backgroundColor = .clear // let the SwiftUI material + rounded corners show through
+        hasShadow = true
         isMovableByWindowBackground = true
         hidesOnDeactivate = true
         animationBehavior = .utilityWindow
@@ -25,11 +26,15 @@ final class PopupPanel: NSPanel {
     /// Show the popup for a captured context (nil → type-in + clipboard fallback).
     func present(context: AXContext?) {
         self.context = context
-        let initial = context?.source ?? ""
-        let view = CandidateView(initialInput: initial) { [weak self] chosen in
-            self?.commit(chosen)
-        }
-        contentView = NSHostingView(rootView: view)
+        let reading = context?.source ?? ""
+        let view = CandidateView(
+            reading: reading,
+            onPick: { [weak self] in self?.commit($0) },
+            onCancel: { [weak self] in self?.cancel() }
+        )
+        let hosting = NSHostingView(rootView: view)
+        contentView = hosting
+        setContentSize(hosting.fittingSize) // size the panel to the SwiftUI content
         positionNearCaret(context?.screenRect)
         makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
@@ -42,6 +47,12 @@ final class PopupPanel: NSPanel {
         } else {
             Output.copyToClipboard(chosen)  // no context → clipboard (M1 fallback)
         }
+    }
+
+    /// Dismiss without inserting; return focus to the original app.
+    private func cancel() {
+        orderOut(nil)
+        context?.app.activate(options: [.activateAllWindows])
     }
 
     private func positionNearCaret(_ rect: CGRect?) {
