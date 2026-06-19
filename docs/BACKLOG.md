@@ -26,3 +26,45 @@ Real but deferred items. Not part of an active spec until promoted.
   that jamo and send it down the symbol (jamo → KS X 1001) path — likely in
   `AXSupport.trailingHangulRun` or the `CandidateView` branch (split a trailing jamo off the run).
 - **Priority:** affects usability, not urgent — fix later.
+
+### Multi-line input: auto-capture replaces text on the previous line
+- **Reported:** 2026-06-19 (ASQi), confirmed in real use.
+- **Symptom:** when typing across multiple lines and converting WITHOUT a manual selection (어절
+  auto-capture), recognition is correct but the replacement hits the wrong place — it overwrites the last
+  N characters of the PREVIOUS line (N = captured length) instead of the intended word at the caret.
+- **Likely area:** the synthesized Shift+Left selection / replacement in
+  `Sources/HanjaKey/AXSupport.swift` (+ `Output.swift`) — the selection or caret math crosses the line
+  boundary so `selectBack` lands on the previous line. Manual selection works, so it is specific to the
+  auto-capture path.
+- **Priority:** HIGH — wrong-location replacement corrupts text; fix first.
+
+### TAB-expanded word grid: arrow keys swap vertical/horizontal
+- **Reported:** 2026-06-19 (ASQi), confirmed in real use.
+- **Symptom:** in word conversion, after TAB expands the candidate list into the wide grid, the arrow
+  keys behave as if vertical/horizontal are swapped — Up moves right, Down moves left. Single-syllable
+  conversion and symbol input are unaffected.
+- **Likely area:** the expanded-grid navigation key handlers in `Sources/HanjaKey/CandidateView.swift` —
+  the row/column ↔ index mapping is transposed.
+- **Priority:** usability; fix.
+
+## Enhancements
+
+### Single-Hanja gloss (훈음) coverage from a license-clean Hanja dictionary
+- **Reported:** 2026-06-19 (ASQi).
+- **Gap:** libhangul `hanja.txt` leaves the gloss (훈음/뜻) empty for many single Hanja (especially
+  rarer characters), so the candidate list shows a Hanja with no Korean meaning beside it. Word ranking
+  (spec 003) does not address this — it is the per-CHARACTER gloss that is missing.
+- **Why the 003 sources don't solve it:** Unihan `kDefinition` is Chinese-based English (not a Korean
+  훈음); Wikidata P5537 is reading-only. Neither supplies a Korean gloss (verified in 003 research).
+- **Idea:** find a license-clean Korean Hanja dictionary / 자전 (CC BY-SA, KOGL, or similar) carrying
+  훈음 and fill the missing single-Hanja glosses. Keep its license separate (own data dir +
+  `THIRD_PARTY_DATA.md`), same hygiene as the nikl-freq / nikl-dict data.
+- **Priority:** nice-to-have; improves the single-syllable candidate UX.
+
+### Long gloss truncation — tooltip / auto-scroll
+- **Reported:** 2026-06-19 (ASQi).
+- **Context:** stdict definitions are capped at 50 chars (003 M2), so longer glosses are truncated in the
+  candidate row (e.g. 漢字's definition shows but is cut off). Meaning is still readable.
+- **Idea:** show the full definition on hover (tooltip), or auto-scroll/marquee the gloss of the selected
+  candidate, so the full text is accessible without permanently widening the row.
+- **Priority:** UX nice-to-have.
