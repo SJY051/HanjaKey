@@ -1,14 +1,16 @@
 import AppKit
+import SwiftUI
 import KeyboardShortcuts
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem?
     private var panel: PopupPanel?
-    private var wideMenuItem: NSMenuItem?
+    private var settingsWindow: NSWindow?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Default the expanded (Tab) view to the Windows-style wide grid.
         UserDefaults.standard.register(defaults: [AppSettings.expandedWideKey: true])
+        UserSymbols.ensureTemplate() // write a starter symbols.json on first run
 
         // Prompt once for Accessibility — needed for caret-grab + in-place insertion (#3).
         AXPermission.ensureTrusted(prompt: true)
@@ -17,15 +19,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         item.button?.title = "漢" // text glyph suits a Hanja tool better than any SF Symbol
         let menu = NSMenu()
 
-        let wide = NSMenuItem(
-            title: "와이드 확장 보기 (Tab)",
-            action: #selector(toggleWide),
-            keyEquivalent: ""
-        )
-        wide.target = self
-        wide.state = AppSettings.expandedWide ? .on : .off
-        menu.addItem(wide)
-        wideMenuItem = wide
+        let settings = NSMenuItem(title: "설정…", action: #selector(openSettings), keyEquivalent: ",")
+        settings.target = self
+        menu.addItem(settings)
 
         menu.addItem(.separator())
         menu.addItem(
@@ -41,10 +37,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Toggle the expanded-view style between the wide (Windows) grid and the compact square grid.
-    @objc private func toggleWide() {
-        AppSettings.expandedWide.toggle()
-        wideMenuItem?.state = AppSettings.expandedWide ? .on : .off
+    /// Open (or focus) the preferences window hosting `SettingsView`.
+    @objc private func openSettings() {
+        if settingsWindow == nil {
+            let window = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 400, height: 280),
+                styleMask: [.titled, .closable],
+                backing: .buffered,
+                defer: false
+            )
+            window.title = "HanjaKey 설정"
+            window.contentView = NSHostingView(rootView: SettingsView())
+            window.isReleasedWhenClosed = false // reuse across opens
+            window.center()
+            settingsWindow = window
+        }
+        NSApp.activate(ignoringOtherApps: true)
+        settingsWindow?.makeKeyAndOrderFront(nil)
     }
 
     /// Capture the editing context in the frontmost app, then show the candidate popup.

@@ -33,6 +33,10 @@ final class PopupPanel: NSPanel {
             onCancel: { [weak self] in self?.cancel() }
         )
         let hosting = NSHostingView(rootView: view)
+        hosting.wantsLayer = true
+        hosting.layer?.cornerRadius = 12
+        hosting.layer?.cornerCurve = .continuous
+        hosting.layer?.masksToBounds = true // clip the hosting layer's square corners to the glass shape
         contentView = hosting
         setContentSize(hosting.fittingSize) // size the panel to the SwiftUI content
         positionNearCaret(context?.screenRect)

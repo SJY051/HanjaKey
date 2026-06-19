@@ -22,16 +22,30 @@ public struct Converter {
     /// - `.syllable` → Hanja, frequency-ordered, with optional gloss
     /// - `.jamo`     → KS X 1001 symbols
     /// - `.other`    → none
-    public func candidates(for input: String) -> [Candidate] {
+    public func candidates(for input: String, halfwidthSymbols: Bool = false) -> [Candidate] {
         switch HangulUtil.classify(input) {
         case .syllable:
             return hanja.entries(for: input).map {
                 Candidate(value: $0.hanja, kind: .hanja, gloss: $0.gloss)
             }
         case .jamo:
-            return symbols.symbols(for: input).map { Candidate(value: $0, kind: .symbol) }
+            return symbols.symbols(for: input).map {
+                Candidate(value: halfwidthSymbols ? Self.foldToHalfwidth($0) : $0, kind: .symbol)
+            }
         case .other:
             return []
         }
+    }
+
+    /// Fold fullwidth ASCII-range characters (！０Ａ …) and the ideographic space to their
+    /// halfwidth equivalents; leave non-ASCII symbols (※ ☆ …) unchanged.
+    static func foldToHalfwidth(_ s: String) -> String {
+        String(s.unicodeScalars.map { scalar -> Character in
+            switch scalar.value {
+            case 0xFF01...0xFF5E: return Character(Unicode.Scalar(scalar.value - 0xFEE0)!)
+            case 0x3000: return " "
+            default: return Character(scalar)
+            }
+        })
     }
 }

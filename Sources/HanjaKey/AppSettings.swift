@@ -6,11 +6,18 @@ import Foundation
 /// Named `AppSettings` rather than `Settings` to avoid colliding with SwiftUI's `Settings` scene.
 enum AppSettings {
     static let expandedWideKey = "expandedWide"
+    static let halfwidthSymbolsKey = "halfwidthSymbols"
 
     /// Whether the Tab-expanded view uses the wide Windows-style grid (`true`) or the compact
     /// square grid (`false`).
     static var expandedWide: Bool {
         get { UserDefaults.standard.bool(forKey: expandedWideKey) }
         set { UserDefaults.standard.set(newValue, forKey: expandedWideKey) }
+    }
+
+    /// Whether jamo special symbols are inserted halfwidth (`!0A`) instead of fullwidth (`！０Ａ`).
+    static var halfwidthSymbols: Bool {
+        get { UserDefaults.standard.bool(forKey: halfwidthSymbolsKey) }
+        set { UserDefaults.standard.set(newValue, forKey: halfwidthSymbolsKey) }
     }
 }

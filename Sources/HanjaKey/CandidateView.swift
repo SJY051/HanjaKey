@@ -18,8 +18,20 @@ struct CandidateView: View {
     @AppStorage(AppSettings.expandedWideKey) private var wideStyle = true
     @FocusState private var focused: Bool
 
-    // Loaded once: parsing the bundled tables is not free.
-    private static let converter = try? Converter.bundled()
+    // The Hanja table is heavy so it's cached once; only the small user symbol overlay is re-read
+    // on reload (after the user edits their symbols.json).
+    private static let hanja = try? HanjaTable.bundled()
+    private static let baseSymbols = try? SymbolTable.bundled()
+    private static var converter: Converter? = buildConverter()
+
+    static func buildConverter() -> Converter? {
+        guard let hanja, let baseSymbols else { return nil }
+        return Converter(hanja: hanja, symbols: baseSymbols.merging(UserSymbols.load()))
+    }
+
+    /// Rebuild the converter after the user edits their symbol file (cheap — Hanja stays cached).
+    static func reloadUserSymbols() { converter = buildConverter() }
+
     private static let pageSize = 9
     private static let gridColumns = 5
     private static let cellWidth: CGFloat = 32
@@ -29,7 +41,9 @@ struct CandidateView: View {
         self.reading = reading
         self.onPick = onPick
         self.onCancel = onCancel
-        self.candidates = Self.converter?.candidates(for: reading) ?? []
+        self.candidates = Self.converter?.candidates(
+            for: reading, halfwidthSymbols: AppSettings.halfwidthSymbols
+        ) ?? []
     }
 
     // Paging math, derived from the current selection.
@@ -55,13 +69,10 @@ struct CandidateView: View {
             }
         }
         .frame(width: panelWidth)
-        .background(.regularMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(.separator)
-        )
+        .modifier(PanelSurface())
         .focusable()
         .focused($focused)
+        .focusEffectDisabled() // suppress the blue keyboard focus ring around the panel
         .onAppear { focused = true }
         .onKeyPress(action: handleKey)
     }
@@ -312,6 +323,21 @@ struct CandidateView: View {
     private func pick(_ index: Int) {
         guard candidates.indices.contains(index) else { return }
         onPick(candidates[index].value)
+    }
+}
+
+/// The popup's rounded surface: Liquid Glass on macOS 26+, a material fallback below.
+private struct PanelSurface: ViewModifier {
+    func body(content: Content) -> some View {
+        let shape = RoundedRectangle(cornerRadius: 12, style: .continuous)
+        if #available(macOS 26.0, *) {
+            content.glassEffect(.regular, in: shape)
+        } else {
+            content
+                .background(.regularMaterial)
+                .clipShape(shape)
+                .overlay(shape.strokeBorder(.separator))
+        }
     }
 }
 

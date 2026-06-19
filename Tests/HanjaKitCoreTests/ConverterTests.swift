@@ -33,4 +33,17 @@ final class ConverterTests: XCTestCase {
             XCTAssertFalse(converter.candidates(for: jamo).isEmpty, "expected KS X 1001 symbols for \(jamo)")
         }
     }
+
+    func testHalfwidthFoldsFullwidthSymbols() throws {
+        let converter = try makeConverter()
+        let full = converter.candidates(for: "ㅈ").map(\.value)               // ０１２… fullwidth digits
+        let half = converter.candidates(for: "ㅈ", halfwidthSymbols: true).map(\.value)
+        XCTAssertTrue(full.contains("０") && !full.contains("0"))
+        XCTAssertTrue(half.contains("0") && !half.contains("０"))
+    }
+
+    func testHalfwidthLeavesNonAsciiSymbols() throws {
+        let half = try makeConverter().candidates(for: "ㅁ", halfwidthSymbols: true).map(\.value)
+        XCTAssertTrue(half.contains("※"), "non-ASCII symbols stay unchanged under halfwidth folding")
+    }
 }
