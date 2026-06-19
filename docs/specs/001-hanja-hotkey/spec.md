@@ -1,6 +1,6 @@
 ---
 title: HanjaKey — global-hotkey Hangul→Hanja/symbol picker (macOS)
-status: approved     # draft -> approved -> implemented
+status: implemented     # draft -> approved -> implemented
 created: 2026-06-18
 owner: ASQi
 tags: [macos, swiftui, swift, warm-up, hanja, hotkey, menu-bar]
@@ -181,11 +181,12 @@ a "searcher", not the real 한자 key. Prioritized backlog:
     the system-wide element (which returned `kAXErrorNoValue`).
   - **Electron/Chromium expose their AX tree only after setting `AXManualAccessibility=true`** on
     the app element (first hotkey press may need a repeat while the tree builds).
-  - **Read via AX, write via synthesized keys.** AX text-writes report success in Electron but do
-    nothing; AX selection is unreadable in some Electron apps. So: read the source Hangul via AX
-    (`kAXValue`, fallback select-and-read), then insert by reactivating the target
-    (`activate(.activateAllWindows)` for reliable focus return) + synthesizing Shift+← (re-select)
-    + ⌘V, restoring the clipboard after.
+  - **Read & write via synthesized keys (Electron-safe).** AX text-writes report success in Electron
+    but do nothing, and AX *reads* are stale right after typing (Chromium updates its AX tree async,
+    so `kAXValue`/`kAXSelectedTextRange` return the previous character). So both directions use real
+    keys: read the caret char with Shift+← then ⌘C (poll the pasteboard, restore it, collapse with
+    →), and insert by reactivating the target (`activate(.activateAllWindows)`) + Shift+← + ⌘V,
+    restoring the clipboard. (Initial P0 read via AX `kAXValue`; revised in P1 — see `fix(ax)`.)
   - **Limitation:** terminal apps (cmux) don't expose editable AX text → not supported; pure
     type-in-popup + clipboard fallback still works there.
 - **P0 — `.app` bundle packaging:** Info.plist (`LSUIElement`) + bundle id + signing. Prereq for a
@@ -195,15 +196,25 @@ a "searcher", not the real 한자 key. Prioritized backlog:
   `.accessory`). Root cause = **menu-bar space exhaustion** on a notched Mac: icon slots are
   finite and zero-sum (turning HanjaKey on pushed another app's icon out); Ice was hiding the
   overflow. Glyph changed from a misleading SF Symbol to text `漢`. See P2 (optional icon).
-- **P1 — keyboard selection + compact UI:** number keys (1–9), arrows, Enter; Tab to expand;
-  shrink the window. (Original Hanja-key UX.)
-- **P1 — data coverage & order:** full libhangul `hanja.txt` + full KS X 1001 symbol rows in the
-  expected order (replaces the sample tables + `UnihanTable` with a libhangul parser).
-- **P2 — Hanja 음/뜻 display** (FR-013; comes free with libhangul data).
-- **P2 — Liquid Glass material** for the popup.
-- **P2 — optional menu-bar icon:** a toggle to hide it (the app is hotkey-driven → the icon is
-  non-essential), with **Quit/Settings reachable from the popup** when hidden. Menu-bar icon slots
-  are finite/zero-sum on notched Macs (confirmed: enabling HanjaKey evicted another app's icon).
+- **P1 — keyboard selection + compact UI → DONE 2026-06-19.** number keys 1–9, ↑↓ move, ←→ page,
+  Tab to expand, Enter pick, esc cancel; vertical numbered list, smaller borderless material panel.
+- **P1 — data coverage & order → DONE 2026-06-19.** Full single-syllable libhangul `hanja.txt`
+  (음:한자:뜻, frequency-ordered, ~28.5k entries) replaces `UnihanTable` (now `HanjaTable`); full
+  KS X 1001 **18-jamo** layout incl. double consonants (ㄲ latin, ㄸ hiragana, ㅃ katakana, ㅆ
+  cyrillic). Layout from innks.github.io (consonant-labeled); ㄹ uses ° (the Windows-original
+  전각 F there is a known upstream error).
+- **P2 — Hanja 음/뜻 display → DONE 2026-06-19.** Gloss shown inline; empty for ~73% rare chars
+  (glyph-only).
+- **P2 — expanded-view styles + settings → DONE 2026-06-19.** Tab expands to a wide Windows-style
+  9-row grid or a compact square grid, switchable from a menu-bar toggle (`AppSettings` via
+  `UserDefaults`/`@AppStorage`).
+- **P2 — Liquid Glass material** for the popup (currently `.regularMaterial`). *Remaining.*
+- **P2 — optional menu-bar icon:** a toggle to hide it (hotkey-driven → non-essential), with
+  Quit/Settings reachable from the popup when hidden. Menu-bar icon slots are finite/zero-sum on
+  notched Macs (enabling HanjaKey evicted another app's icon). *Remaining.*
+- **P3 — fullwidth/halfwidth toggle** for the ㄱ/ㅈ/ㅍ sets (currently fullwidth, per Windows).
+  *Remaining.*
+- **P3 — multi-syllable conversion** (the engine is single-syllable today). *Remaining.*
 
 ## Future expansion
 If this grows beyond the warm-up — a real IMKit input method, fuller dictionary with glosses/
