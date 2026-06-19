@@ -1,6 +1,6 @@
 ---
 title: HanjaKey — multi-syllable Hangul→Hanja (word) conversion
-status: approved     # draft -> approved -> implemented
+status: implemented     # draft -> approved -> implemented
 created: 2026-06-19
 owner: ASQi
 tags: [macos, swiftui, swift, hanja, multi-syllable, hanja-word]
@@ -122,10 +122,11 @@ approach needs no new data source. Two caveats:
 - **SC-006**: `swift test` passes the engine suite; no network calls.
 
 ## Milestones
-- **M1 (core):** word dictionary (2–6 syllable, lazy-loaded) + `candidates(forWord:)` with gloss-first
-  ordering; selection-first / 어절 auto-capture; whole-word candidates in the existing popup; correct
-  multi-char `selectBack`. Built and verified first.
-- **M2 (fallback):** per-syllable column view for dictionary misses (preview + confirm).
+- **M1 (core) → DONE 2026-06-19:** word dictionary (2–6 syllable, lazy-loaded) +
+  `candidates(forWord:using:)` with gloss-first ordering; selection-first / 어절 auto-capture;
+  whole-word candidates in the popup; correct multi-char `selectBack`.
+- **M2 (fallback) → DONE 2026-06-19:** per-syllable column view for dictionary misses — each
+  syllable's Hanja with gloss, combined preview, confirm (↵), esc back.
 
 ## Test plan
 - **Engine (HanjaKitCore, pure):** word lookup hit (한자→漢字) and miss; gloss-first stable ordering
@@ -136,14 +137,13 @@ approach needs no new data source. Two caveats:
   browser; column fallback inserts an assembled word; startup/single-syllable latency unaffected.
 
 ## Open questions
-- [NEEDS CLARIFICATION: better homophone-word **ranking** beyond gloss-first — e.g. a small curated
-  frequency list, or weighting by the constituent syllables' single-char frequency. Deferred; v1 is
-  gloss-first + original order.]
-- [NEEDS CLARIFICATION: **어절 auto-capture mechanism** — synthesize repeated `Shift+←` to a non-Hangul
-  boundary vs `Shift+⌥←` (word-left); how to detect the boundary when we can't read text directly in
-  some apps. To be settled during M1 implementation.]
-- [NEEDS CLARIFICATION: **max auto-capture length** (cap at 6 to match the dictionary? longer for
-  selection?).]
+- **Resolved — 어절 auto-capture:** synthesize `Shift+←` × maxCapture (6) + ⌘C, then keep the trailing
+  Hangul run of the copied text; `selectBack` = run length. Selection-first preserved; mouse-location
+  fallback for positioning when no caret rect.
+- **Resolved — max auto-capture length:** 6 syllables (matches the dictionary filter).
+- **Open (future):** better homophone-word **ranking** beyond gloss-first — a curated frequency list,
+  or weighting by the constituent syllables' single-char frequency. v1 ships gloss-first + original
+  order (gloss covers only ~1.9% of word entries, so ordering is only partially improved).
 
 ## Future expansion
 If this grows (phrase-level conversion, curated frequency ranking, a larger or indexed dictionary,
