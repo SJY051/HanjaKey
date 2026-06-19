@@ -8,7 +8,7 @@ was transformed. CC BY-SA / KOGL data must keep its own notice; do not fold it u
 |---|---|---|---|
 | libhangul `hanja.txt` (Choe Hwanjin) | `Sources/HanjaKitCore/Resources/hanja.txt`, `hanja_words.txt` | BSD 3-Clause | single-syllable + word inventory |
 | 국립국어원 현대 국어 사용 빈도 조사 (2002) | `Sources/HanjaKitCore/Resources/data/nikl-freq/hanja_freq.txt` | KOGL 제1유형 (출처표시) | homophone-word ranking (spec 003 M1) |
-| 국립국어원 표준국어대사전 + 우리말샘 *(M2, planned)* | `Sources/HanjaKitCore/Resources/data/nikl-dict/` | CC BY-SA 2.0 KR | inventory augmentation (spec 003 M2) |
+| 국립국어원 표준국어대사전 (stdict) | `Sources/HanjaKitCore/Resources/data/nikl-dict/hanja_words_nikl.txt` | CC BY-SA 2.0 KR | gloss + inventory overlay (spec 003 M2): 186,659 stdict entries |
 
 ## libhangul — BSD 3-Clause
 The upstream repo (github.com/libhangul/libhangul) is LGPL-2.1 overall, but the data file
@@ -26,9 +26,16 @@ in their headers — the only BSD obligation (retain the notice on source redist
   dropped; example sentences and multimedia not included. Output: `hanja_freq.txt` (26,678 rows).
 - Attribution: 국립국어원. Redistribution + commercial use OK with attribution.
 
-## 국립국어원 표준국어대사전 + 우리말샘 — CC BY-SA 2.0 KR *(M2, planned — not yet bundled)*
-- Access: key-free mirror `spellcheck-ko/korean-dict-nikl` (or official XML dump); pin the commit.
-- **ShareAlike:** the derived dictionary data ships under CC BY-SA 2.0 KR, separate from the MIT code.
-- **Carve-outs stripped (mandatory):** `<source>`-bearing example sentences and ALL multimedia
-  (`<multimedia_info>` / pronunciation / sign-language links) are individually licensed and excluded.
-- Attribution: 국립국어원; link the CC BY-SA 2.0 KR deed; state that headwords were filtered/transformed.
+## 국립국어원 표준국어대사전 (stdict) — CC BY-SA 2.0 KR
+- Bundled as: `Sources/HanjaKitCore/Resources/data/nikl-dict/hanja_words_nikl.txt` (spec 003 M2).
+- Access: key-free mirror `spellcheck-ko/korean-dict-nikl` (stdict shards 005000–436144.xml).
+- Retrieved: 2026-06-19. Built by `scripts/build_dict.py`.
+- Transformation: ALL pure multi-syllable 한자어 (reading → 원어 → first-sense definition, capped at 50
+  chars) extracted; affixes and 혼종어 (음절수 ≠ 한자수) dropped. 186,659 entries.
+- Runtime: `WordTable` overlays the gloss onto libhangul entries and adds new headwords (no duplication).
+- **Carve-outs:** `<source>` example sentences and ALL multimedia are NOT read; the gloss is the stdict
+  definition (CC BY-SA dictionary body text), not the carved-out examples.
+- **ShareAlike:** ships under CC BY-SA 2.0 KR, separate from the MIT code; merged with libhangul (BSD) at
+  runtime by `WordTable`, with the two source files kept separate.
+- Attribution: 국립국어원; deed https://creativecommons.org/licenses/by-sa/2.0/kr/.
+- 우리말샘 (opendict): deferred (전문어/방언, ~1.8GB) — add only when actually needed.

@@ -1,6 +1,6 @@
 ---
 title: HanjaKey — homophone-word ranking via usage frequency
-status: approved     # draft -> approved -> implemented
+status: implemented  # draft -> approved -> implemented
 created: 2026-06-19
 owner: ASQi
 tags: [macos, swift, hanja, ranking, frequency, data, license]
@@ -102,11 +102,12 @@ the long tail the 2002 corpus misses) is split out — see Non-goals and Future 
   the existing UI; this spec adds no new UI.)
 
 ### Inventory augmentation (M2)
-- **FR-009 (M2)**: A build step MUST extract standard 한자어 (Hangul headword → Hanja 원어) from the
-  국립국어원 dictionaries (stdict + 우리말샘 via the key-free `korean-dict-nikl` mirror) to **augment**
-  the libhangul inventory (add standard headwords it lacks) and **cross-check** the 2002 Hanja spellings.
-  Example `<source>` sentences and all multimedia MUST be stripped; the derived dictionary data MUST be
-  shipped under **CC BY-SA 2.0 KR** in its own dir with attribution to 국립국어원 — not folded into MIT.
+- **FR-009 (M2)**: A build step MUST extract standard 한자어 (Hangul headword → Hanja 원어 → first-sense
+  definition) from 표준국어대사전 (stdict, via the key-free `korean-dict-nikl` mirror). `WordTable` MUST
+  **overlay** this onto the libhangul inventory: fill a missing gloss on a shared (reading, hanja),
+  append a new hanja, add a new reading — without duplication. Example `<source>` sentences and all
+  multimedia MUST be stripped; the derived data MUST ship under **CC BY-SA 2.0 KR** in its own dir with
+  attribution to 국립국어원 — not folded into MIT. (우리말샘 deferred.)
 
 ## User scenarios
 
@@ -147,8 +148,11 @@ the long tail the 2002 corpus misses) is split out — see Non-goals and Future 
 - **M1 (frequency ranking):** build script parses the 2002 빈도조사 → bundled `reading→{hanja:freq}`
   resource; `FreqTable` (pure, lazy) + `Converter.candidates(forWord:)` frequency ordering with 002
   fallback; unit tests; license dir + `THIRD_PARTY_DATA.md`. **This alone fixes the documented misranks.**
-- **M2 (inventory augmentation):** extract 국어원 사전 한자어 to augment the libhangul inventory +
-  cross-check Hanja spellings (CC BY-SA 2.0 KR, carve-outs stripped).
+- **M2 (gloss + inventory overlay) → DONE 2026-06-19:** `scripts/build_dict.py` extracts all 186,659
+  pure stdict 한자어 (reading→원어→gloss, capped 50 chars); `WordTable` overlays the gloss onto libhangul
+  entries and adds new headwords. Every stdict-listed 한자어 gets a definition (선택 편의). Trade-off:
+  with no frequency data, glossing all homophones removes the gloss-first signal, so rare homophones
+  fall back to syllable-frequency order (e.g. 가경 → 加敬) — the visible gloss makes manual selection easy.
 - **Separate / future:** curation long-tail (proposed spec 004); 9-domain register weighting; context/
   meaning disambiguation; Unihan single-syllable fallback.
 
