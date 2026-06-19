@@ -98,17 +98,45 @@ struct AXContext {
                     break
                 }
             }
-            // Restore the clipboard and collapse the selection (caret back where it started).
+            // Restore the clipboard (selection handling depends on whether we found an 어절).
             pasteboard.clearContents()
             if let saved { pasteboard.setString(saved, forType: .string) }
-            Output.synthesizeRightArrow()
 
             let run = trailingHangulRun(copied)
-            if !run.isEmpty {
+            if run.isEmpty {
+                Output.synthesizeRightArrow()  // nothing to convert → collapse, restoring the caret
+            } else {
                 source = run
-                selectBack = run.utf16.count   // insert() re-selects exactly the source before ⌘V
-                if caret > 0 {
-                    rectRange = CFRange(location: max(0, caret - run.count), length: run.count)
+                let n = run.count
+                rectRange = caret > 0 ? CFRange(location: max(0, caret - n), length: n) : caretRange
+
+                // Select exactly the 어절 by AX RANGE (offset-precise). Synthesized arrows mis-handle
+                // line boundaries — this app collapses a selection to its LEFT end, so the synthesized
+                // re-select started on the previous line and replaced the wrong text. Setting the range
+                // directly avoids arrows entirely.
+                var selectedViaAX = false
+                if caret >= n {
+                    var want = CFRange(location: caret - n, length: n)
+                    if let axRange = AXValueCreate(.cfRange, &want),
+                       AXUIElementSetAttributeValue(el, kAXSelectedTextRangeAttribute as CFString, axRange) == .success {
+                        // Electron reports success but ignores AX writes — verify by reading it back.
+                        var check: CFTypeRef?
+                        if AXUIElementCopyAttributeValue(el, kAXSelectedTextRangeAttribute as CFString, &check) == .success,
+                           let c = check, CFGetTypeID(c) == AXValueGetTypeID() {
+                            var got = CFRange()
+                            AXValueGetValue((c as! AXValue), .cfRange, &got)
+                            selectedViaAX = (got.location == want.location && got.length == want.length)
+                        }
+                    }
+                }
+                if selectedViaAX {
+                    selectBack = 0  // 어절 already selected via AX → insert() just ⌘V's over it
+                } else {
+                    // Fallback for apps that ignore AX range writes: collapse, then re-select N chars.
+                    // (Imperfect across lines, but the AX path covers native fields.)
+                    Output.synthesizeRightArrow()
+                    for _ in 0..<n { Output.synthesizeShiftLeft() }
+                    selectBack = 0
                 }
             }
         }
