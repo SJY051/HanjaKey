@@ -4,21 +4,33 @@ import XCTest
 final class ConverterTests: XCTestCase {
     private func makeConverter() throws -> Converter { try Converter.bundled() }
 
-    // Sample fixture maps reading 한 → 漢 韓 恨.
-    func testSyllableReturnsHanjaCandidates() throws {
+    func testSyllableReturnsHanjaCandidatesWithGloss() throws {
         let result = try makeConverter().candidates(for: "한")
-        XCTAssertTrue(result.contains { $0.value == "韓" && $0.kind == .hanja },
-                      "expected 韓 among Hanja candidates for 한 — TODO: implement Converter/UnihanTable")
+        XCTAssertTrue(result.contains { $0.value == "韓" && $0.kind == .hanja })
         XCTAssertTrue(result.contains { $0.value == "漢" })
+        // Common Hanja carry a Korean gloss (訓音).
+        XCTAssertNotNil(result.first { $0.value == "韓" }?.gloss)
+    }
+
+    func testFrequentHanjaComeFirst() throws {
+        // libhangul orders each reading by frequency, so 韓 leads the 한 candidates.
+        XCTAssertEqual(try makeConverter().candidates(for: "한").first?.value, "韓")
     }
 
     func testJamoReturnsSymbolCandidates() throws {
         let result = try makeConverter().candidates(for: "ㅁ")
-        XCTAssertFalse(result.isEmpty, "expected KS X 1001 symbols for ㅁ — TODO")
+        XCTAssertFalse(result.isEmpty)
         XCTAssertTrue(result.allSatisfy { $0.kind == .symbol })
     }
 
     func testEmptyInputReturnsNoCandidates() throws {
         XCTAssertTrue(try makeConverter().candidates(for: "").isEmpty)
+    }
+
+    func testSymbolLayoutCoversConsonants() throws {
+        let converter = try makeConverter()
+        for jamo in ["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ", "ㄲ", "ㄸ", "ㅃ", "ㅆ"] {
+            XCTAssertFalse(converter.candidates(for: jamo).isEmpty, "expected KS X 1001 symbols for \(jamo)")
+        }
     }
 }
