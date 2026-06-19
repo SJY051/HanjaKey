@@ -7,7 +7,7 @@ ShareAlike required.
 **Attribution:** 국립국어원 (National Institute of Korean Language).
 
 `hanja_words_nikl.txt` is **derived** by `scripts/build_dict.py`: ALL pure multi-syllable 한자어 (Hangul
-reading → Hanja 원어 → first-sense definition, capped at 50 chars) extracted from stdict — 186,659
+reading → Hanja 원어 → full first-sense definition) extracted from stdict — 186,659
 entries. At runtime `WordTable` overlays the gloss onto the libhangul inventory and adds new headwords.
 The gloss is the dictionary definition (CC BY-SA body text); example sentences (`<source>`) and all
 multimedia are excluded. This data stays under **CC BY-SA 2.0 KR** (ShareAlike) — NOT the MIT license.

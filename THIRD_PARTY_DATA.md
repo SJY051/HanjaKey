@@ -30,8 +30,8 @@ in their headers — the only BSD obligation (retain the notice on source redist
 - Bundled as: `Sources/HanjaKitCore/Resources/data/nikl-dict/hanja_words_nikl.txt` (spec 003 M2).
 - Access: key-free mirror `spellcheck-ko/korean-dict-nikl` (stdict shards 005000–436144.xml).
 - Retrieved: 2026-06-19. Built by `scripts/build_dict.py`.
-- Transformation: ALL pure multi-syllable 한자어 (reading → 원어 → first-sense definition, capped at 50
-  chars) extracted; affixes and 혼종어 (음절수 ≠ 한자수) dropped. 186,659 entries.
+- Transformation: ALL pure multi-syllable 한자어 (reading → 원어 → full first-sense definition)
+  extracted; affixes and 혼종어 (음절수 ≠ 한자수) dropped. 186,659 entries.
 - Runtime: `WordTable` overlays the gloss onto libhangul entries and adds new headwords (no duplication).
 - **Carve-outs:** `<source>` example sentences and ALL multimedia are NOT read; the gloss is the stdict
   definition (CC BY-SA dictionary body text), not the carved-out examples.

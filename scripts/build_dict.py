@@ -14,8 +14,8 @@ Extraction rules (match scripts/build_freq.py for consistency):
     (leading/trailing hyphen),
   - take <original_language> as the Hanja; keep only pure-Hanja 원어 whose length == the reading's
     syllable count (drops 혼종어 / 복합 원어, deferred),
-  - gloss = the first <sense_info>'s <definition>, whitespace-collapsed and capped at GLOSS_MAX chars.
-    Example sentences (<source>) and multimedia are never read.
+  - gloss = the first <sense_info>'s <definition>, whitespace-collapsed (FULL text, not capped — the UI
+    shows it in a wrapping footer / tooltip). Example sentences (<source>) and multimedia are never read.
 
 License: 표준국어대사전 is CC BY-SA 2.0 KR (국립국어원). The output stays under that license (NOT MIT) —
 see THIRD_PARTY_DATA.md. Definitions are dictionary body text (CC BY-SA), not the carved-out examples.
@@ -38,10 +38,9 @@ REPO = "spellcheck-ko/korean-dict-nikl"
 RAW_BASE = f"https://raw.githubusercontent.com/{REPO}/master/stdict"
 DEFAULT_CACHE = Path("/tmp/nikl-stdict")
 DEFAULT_OUT = Path("Sources/HanjaKitCore/Resources/data/nikl-dict/hanja_words_nikl.txt")
-GLOSS_MAX = 50  # cap the definition length (UI candidate row + data size); longer ones get an ellipsis
 
 OUTPUT_HEADER = (
-    "# HanjaKey nikl-dict — `읽기:한자:뜻` for ALL stdict multi-syllable 한자어 (gloss capped).\n"
+    "# HanjaKey nikl-dict — `읽기:한자:뜻` for ALL stdict multi-syllable 한자어 (full first-sense definition).\n"
     "# Source: 국립국어원 표준국어대사전, via spellcheck-ko/korean-dict-nikl (stdict shards).\n"
     "# License: CC BY-SA 2.0 KR (국립국어원). NOT MIT. Examples/multimedia excluded. See THIRD_PARTY_DATA.md.\n"
     "# Built by scripts/build_dict.py. WordTable overlays gloss onto libhangul + adds new readings at runtime."
@@ -52,9 +51,10 @@ def is_hanja(s: str) -> bool:
     return len(s) > 0 and all("一" <= c <= "鿿" for c in s)
 
 
-def cap_gloss(defn: str) -> str:
-    defn = " ".join(defn.split())
-    return defn[:GLOSS_MAX].rstrip() + "…" if len(defn) > GLOSS_MAX else defn
+def clean_gloss(defn: str) -> str:
+    return " ".join(
+        defn.split()
+    )  # full definition; just collapse whitespace/newlines to single spaces
 
 
 def shard_names() -> list[str]:
@@ -81,7 +81,7 @@ def download_shards(cache: Path, shards: list[str]) -> None:
 
 
 def extract_shard(path: Path) -> dict[tuple[str, str], str]:
-    """Pure multi-syllable (reading, hanja) -> capped first-sense definition, from one stdict shard."""
+    """Pure multi-syllable (reading, hanja) -> full first-sense definition, from one stdict shard."""
     out: dict[tuple[str, str], str] = {}
     root = ET.fromstring(path.read_text(encoding="utf-8", errors="replace"))
     for item in root.iter("item"):
@@ -103,7 +103,7 @@ def extract_shard(path: Path) -> dict[tuple[str, str], str]:
         key = (reading, hanja)
         if key in out:
             continue  # keep the first sense's definition
-        out[key] = cap_gloss(
+        out[key] = clean_gloss(
             next((si.findtext("definition") or "" for si in wi.iter("sense_info")), "")
         )
     return out
