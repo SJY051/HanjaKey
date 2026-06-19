@@ -30,4 +30,24 @@ enum Output {
         down.post(tap: .cghidEventTap)
         up.post(tap: .cghidEventTap)
     }
+
+    /// Synthesize a ⌘C key event (copy the current selection). Requires Accessibility.
+    static func synthesizeCmdC() {
+        guard let src = CGEventSource(stateID: .combinedSessionState),
+              let down = CGEvent(keyboardEventSource: src, virtualKey: 8 /* c */, keyDown: true),
+              let up = CGEvent(keyboardEventSource: src, virtualKey: 8, keyDown: false) else { return }
+        down.flags = .maskCommand
+        up.flags = .maskCommand
+        down.post(tap: .cghidEventTap)
+        up.post(tap: .cghidEventTap)
+    }
+
+    /// Synthesize a → key event (collapse a selection to its right end). Requires Accessibility.
+    static func synthesizeRightArrow() {
+        guard let src = CGEventSource(stateID: .combinedSessionState),
+              let down = CGEvent(keyboardEventSource: src, virtualKey: 0x7C /* right arrow */, keyDown: true),
+              let up = CGEvent(keyboardEventSource: src, virtualKey: 0x7C, keyDown: false) else { return }
+        down.post(tap: .cghidEventTap)
+        up.post(tap: .cghidEventTap)
+    }
 }

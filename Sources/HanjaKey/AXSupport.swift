@@ -69,40 +69,33 @@ struct AXContext {
             source = selected
             selectBack = 0                  // already selected → ⌘V replaces it
             rectRange = caretRange
-        } else if caret > 0 {
-            // Read the char before the caret via the element's full value (works in most apps).
-            var valueObj: CFTypeRef?
-            _ = AXUIElementCopyAttributeValue(el, kAXValueAttribute as CFString, &valueObj)
-            if let full = valueObj as? String {
-                let ns = full as NSString
-                let end = min(caret, ns.length)
-                if end > 0 {
-                    let ch = ns.character(at: end - 1)
-                    if isHangul(ch) {
-                        source = String(utf16CodeUnits: [ch], count: 1)
-                        selectBack = 1
-                        rectRange = CFRange(location: end - 1, length: 1)
-                    }
+        } else {
+            // Read the char before the caret with REAL key events rather than AX: Electron/Chromium
+            // serve a STALE AX value/caret right after typing (the AX tree updates asynchronously),
+            // so select one char to the left and copy it — the editor's true state, never stale.
+            let pasteboard = NSPasteboard.general
+            let saved = pasteboard.string(forType: .string)
+            let beforeCount = pasteboard.changeCount
+            Output.synthesizeShiftLeft()
+            Output.synthesizeCmdC()
+            // Wait briefly for the target app (a separate process) to service ⌘C; stop once it does.
+            var copied = ""
+            for _ in 0..<24 { // up to ~120ms
+                usleep(5_000)
+                if pasteboard.changeCount != beforeCount {
+                    copied = pasteboard.string(forType: .string) ?? ""
+                    break
                 }
             }
-            // Fallback: select-to-read then collapse (apps with no kAXValue but a readable selection).
-            if source.isEmpty {
-                var probe = CFRange(location: caret - 1, length: 1)
-                if let axProbe = AXValueCreate(.cfRange, &probe) {
-                    AXUIElementSetAttributeValue(el, kAXSelectedTextRangeAttribute as CFString, axProbe)
-                    var probeObj: CFTypeRef?
-                    let probeStr = (AXUIElementCopyAttributeValue(el, kAXSelectedTextAttribute as CFString, &probeObj) == .success)
-                        ? (probeObj as? String ?? "") : ""
-                    var collapse = CFRange(location: caret, length: 0)  // collapse; synth keys re-select
-                    if let axCollapse = AXValueCreate(.cfRange, &collapse) {
-                        AXUIElementSetAttributeValue(el, kAXSelectedTextRangeAttribute as CFString, axCollapse)
-                    }
-                    if containsHangul(probeStr) {
-                        source = probeStr
-                        selectBack = 1
-                        rectRange = CFRange(location: caret - 1, length: 1)
-                    }
-                }
+            // Restore the clipboard and collapse the probe selection (caret back where it started).
+            pasteboard.clearContents()
+            if let saved { pasteboard.setString(saved, forType: .string) }
+            Output.synthesizeRightArrow()
+
+            if containsHangul(copied) {
+                source = copied
+                selectBack = copied.utf16.count   // insert() re-selects this many chars before ⌘V
+                if caret > 0 { rectRange = CFRange(location: caret - 1, length: 1) }
             }
         }
 
