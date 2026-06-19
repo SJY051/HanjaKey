@@ -48,4 +48,15 @@ public struct Converter {
             }
         })
     }
+
+    /// Whole-word Hanja candidates for a multi-syllable reading, using a (lazily loaded) word table.
+    public func candidates(forWord word: String, using words: WordTable) -> [Candidate] {
+        words.entries(for: word).map { Candidate(value: $0.hanja, kind: .hanja, gloss: $0.gloss) }
+    }
+
+    /// Per-syllable decomposition: the single-syllable Hanja candidates for each syllable, in order.
+    /// Used as a fallback when a word isn't in the dictionary (the UI offers a column per syllable).
+    public func decomposition(of word: String) -> [[Candidate]] {
+        word.map { candidates(for: String($0)) }
+    }
 }

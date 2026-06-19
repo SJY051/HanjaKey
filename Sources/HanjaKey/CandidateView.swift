@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 import HanjaKitCore
 
 /// Windows Hanja-key–style candidate list: a vertical, numbered list of candidates with gloss,
@@ -32,6 +33,9 @@ struct CandidateView: View {
     /// Rebuild the converter after the user edits their symbol file (cheap — Hanja stays cached).
     static func reloadUserSymbols() { converter = buildConverter() }
 
+    /// Lazy: the multi-syllable word dictionary is large (~235k); loaded only on first word use.
+    private static let wordTable = try? WordTable.bundled()
+
     private static let pageSize = 9
     private static let gridColumns = 5
     private static let cellWidth: CGFloat = 32
@@ -41,12 +45,20 @@ struct CandidateView: View {
         self.reading = reading
         self.onPick = onPick
         self.onCancel = onCancel
-        self.candidates = Self.converter?.candidates(
-            for: reading, halfwidthSymbols: AppSettings.halfwidthSymbols
-        ) ?? []
+        if reading.count >= 2 {
+            // Multi-syllable → whole-word Hanja candidates from the (lazy) word dictionary.
+            self.candidates = Self.wordTable.flatMap { table in
+                Self.converter?.candidates(forWord: reading, using: table)
+            } ?? []
+        } else {
+            self.candidates = Self.converter?.candidates(
+                for: reading, halfwidthSymbols: AppSettings.halfwidthSymbols
+            ) ?? []
+        }
     }
 
     // Paging math, derived from the current selection.
+    private var isWord: Bool { reading.count >= 2 }
     private var pageCount: Int { max(1, (candidates.count + Self.pageSize - 1) / Self.pageSize) }
     private var currentPage: Int { selection / Self.pageSize }
     private var pageStart: Int { currentPage * Self.pageSize }
@@ -60,7 +72,8 @@ struct CandidateView: View {
                 emptyState
             } else {
                 if expanded {
-                    if wideStyle { wideGrid } else { squareGrid }
+                    // The wide 9-row grid assumes single-glyph cells; words use the flexible square grid.
+                    if wideStyle && !isWord { wideGrid } else { squareGrid }
                 } else {
                     rows
                 }
@@ -101,6 +114,15 @@ struct CandidateView: View {
                     .font(.caption.monospacedDigit())
                     .foregroundStyle(.secondary)
             }
+            Menu {
+                Button("설정…") { NotificationCenter.default.post(name: .hkOpenSettings, object: nil) }
+                Button("HanjaKey 종료") { NSApplication.shared.terminate(nil) }
+            } label: {
+                Image(systemName: "ellipsis.circle").foregroundStyle(.secondary)
+            }
+            .menuStyle(.borderlessButton)
+            .menuIndicator(.hidden)
+            .fixedSize()
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)

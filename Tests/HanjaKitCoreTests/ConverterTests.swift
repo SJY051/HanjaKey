@@ -46,4 +46,18 @@ final class ConverterTests: XCTestCase {
         let half = try makeConverter().candidates(for: "ㅁ", halfwidthSymbols: true).map(\.value)
         XCTAssertTrue(half.contains("※"), "non-ASCII symbols stay unchanged under halfwidth folding")
     }
+
+    func testWordCandidatesFromTable() throws {
+        let words = WordTable.parse("한자:漢字:\n한자:漢子:")
+        let result = try makeConverter().candidates(forWord: "한자", using: words)
+        XCTAssertEqual(result.map(\.value), ["漢字", "漢子"])
+        XCTAssertTrue(result.allSatisfy { $0.kind == .hanja })
+    }
+
+    func testDecompositionReturnsColumnPerSyllable() throws {
+        let columns = try makeConverter().decomposition(of: "한자")
+        XCTAssertEqual(columns.count, 2)
+        XCTAssertEqual(columns[0].first?.value, "韓") // 한 → 韓 leads (frequency order)
+        XCTAssertFalse(columns[1].isEmpty)             // 자 → has Hanja candidates
+    }
 }

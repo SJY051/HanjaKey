@@ -31,6 +31,17 @@ struct AXContext {
     let selectBack: Int     // chars to select backward before pasting (0 if already selected)
     let screenRect: CGRect
 
+    static let maxCapture = 6 // grab up to a 6-syllable 어절 before the caret (matches the word dict)
+
+    /// The trailing run of Hangul (syllables or jamo) at the end of `s` — the 어절 just before the caret.
+    static func trailingHangulRun(_ s: String) -> String {
+        var scalars: [Unicode.Scalar] = []
+        for scalar in s.unicodeScalars.reversed() {
+            if isHangul(unichar(scalar.value & 0xFFFF)) { scalars.append(scalar) } else { break }
+        }
+        return String(String.UnicodeScalarView(scalars.reversed()))
+    }
+
     static func capture() -> AXContext? {
         guard AXPermission.ensureTrusted(prompt: false) else { return nil }
         guard let frontApp = NSWorkspace.shared.frontmostApplication,
@@ -70,13 +81,13 @@ struct AXContext {
             selectBack = 0                  // already selected → ⌘V replaces it
             rectRange = caretRange
         } else {
-            // Read the char before the caret with REAL key events rather than AX: Electron/Chromium
-            // serve a STALE AX value/caret right after typing (the AX tree updates asynchronously),
-            // so select one char to the left and copy it — the editor's true state, never stale.
+            // Read the Hangul 어절 before the caret with REAL key events rather than AX: Electron/
+            // Chromium serve a STALE AX value/caret right after typing (the AX tree updates async).
+            // Select up to maxCapture chars left, copy, then keep only the trailing Hangul run.
             let pasteboard = NSPasteboard.general
             let saved = pasteboard.string(forType: .string)
             let beforeCount = pasteboard.changeCount
-            Output.synthesizeShiftLeft()
+            for _ in 0..<maxCapture { Output.synthesizeShiftLeft() }
             Output.synthesizeCmdC()
             // Wait briefly for the target app (a separate process) to service ⌘C; stop once it does.
             var copied = ""
@@ -87,15 +98,18 @@ struct AXContext {
                     break
                 }
             }
-            // Restore the clipboard and collapse the probe selection (caret back where it started).
+            // Restore the clipboard and collapse the selection (caret back where it started).
             pasteboard.clearContents()
             if let saved { pasteboard.setString(saved, forType: .string) }
             Output.synthesizeRightArrow()
 
-            if containsHangul(copied) {
-                source = copied
-                selectBack = copied.utf16.count   // insert() re-selects this many chars before ⌘V
-                if caret > 0 { rectRange = CFRange(location: caret - 1, length: 1) }
+            let run = trailingHangulRun(copied)
+            if !run.isEmpty {
+                source = run
+                selectBack = run.utf16.count   // insert() re-selects exactly the source before ⌘V
+                if caret > 0 {
+                    rectRange = CFRange(location: max(0, caret - run.count), length: run.count)
+                }
             }
         }
 

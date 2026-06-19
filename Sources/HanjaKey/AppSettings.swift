@@ -7,6 +7,7 @@ import Foundation
 enum AppSettings {
     static let expandedWideKey = "expandedWide"
     static let halfwidthSymbolsKey = "halfwidthSymbols"
+    static let showMenuBarIconKey = "showMenuBarIcon"
 
     /// Whether the Tab-expanded view uses the wide Windows-style grid (`true`) or the compact
     /// square grid (`false`).
@@ -19,5 +20,11 @@ enum AppSettings {
     static var halfwidthSymbols: Bool {
         get { UserDefaults.standard.bool(forKey: halfwidthSymbolsKey) }
         set { UserDefaults.standard.set(newValue, forKey: halfwidthSymbolsKey) }
+    }
+
+    /// Whether the menu-bar 漢 icon is shown. When off, reach settings/quit from the popup's ⋯ menu.
+    static var showMenuBarIcon: Bool {
+        get { UserDefaults.standard.bool(forKey: showMenuBarIconKey) }
+        set { UserDefaults.standard.set(newValue, forKey: showMenuBarIconKey) }
     }
 }

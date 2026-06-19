@@ -18,9 +18,18 @@ struct SettingsView: View {
 private struct GeneralSettingsView: View {
     @AppStorage(AppSettings.expandedWideKey) private var expandedWide = true
     @AppStorage(AppSettings.halfwidthSymbolsKey) private var halfwidthSymbols = false
+    @AppStorage(AppSettings.showMenuBarIconKey) private var showMenuBarIcon = true
 
     var body: some View {
         Form {
+            Section("일반") {
+                Toggle("메뉴바 아이콘 표시", isOn: $showMenuBarIcon)
+                    .onChange(of: showMenuBarIcon) { _, _ in
+                        NotificationCenter.default.post(name: .hkMenuBarVisibilityChanged, object: nil)
+                    }
+                Text("끄면 단축키(⌥⌘H)와 팝업의 ⋯ 메뉴로 접근합니다.")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
             Section("팝업") {
                 Toggle("Tab 확장 시 와이드 그리드", isOn: $expandedWide)
                 Text("끄면 컴팩트한 정사각 그리드로 펼쳐집니다.")
