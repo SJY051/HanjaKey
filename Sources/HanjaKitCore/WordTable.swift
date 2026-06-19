@@ -5,9 +5,8 @@ import Foundation
 /// Source: libhangul `hanja.txt`, filtered to 2–6 syllable entries (`음:한자:뜻`). Large (~235k
 /// entries), so the app loads it lazily on the first multi-syllable conversion.
 ///
-/// Per reading, gloss-bearing entries come first (libhangul only glosses common / headword words),
-/// then gloss-less — a stable sort that surfaces the everyday word (e.g. 한국 → 韓國 first, ahead of
-/// rarer homophones 寒國/寒菊/…).
+/// Entries are kept in source order; ranking (syllable-frequency score + gloss tiebreaker) is applied
+/// by `Converter.candidates(forWord:using:)`, which holds the single-Hanja frequency table.
 public struct WordTable {
     public struct Entry: Equatable, Sendable {
         public let hanja: String
@@ -30,7 +29,8 @@ public struct WordTable {
         readingToEntries[reading] ?? []
     }
 
-    /// Parse `음:한자:뜻` lines (blank/`#` skipped) and apply gloss-first stable ordering per reading.
+    /// Parse `음:한자:뜻` lines (blank/`#` skipped), grouped by reading in source order.
+    /// Ranking is applied later by `Converter.candidates(forWord:using:)`.
     public static func parse(_ text: String) -> WordTable {
         var map: [String: [Entry]] = [:]
         for rawLine in text.split(separator: "\n", omittingEmptySubsequences: false) {
@@ -46,15 +46,7 @@ public struct WordTable {
                 : ""
             map[reading, default: []].append(Entry(hanja: hanja, gloss: glossText.isEmpty ? nil : glossText))
         }
-        for (reading, entries) in map {
-            map[reading] = glossFirst(entries)
-        }
         return WordTable(readingToEntries: map)
-    }
-
-    /// Stable reorder: entries with a gloss first (original order), then those without.
-    static func glossFirst(_ entries: [Entry]) -> [Entry] {
-        entries.filter { $0.gloss != nil } + entries.filter { $0.gloss == nil }
     }
 
     /// Build from the bundled word file. Heavy — load lazily (e.g. a `static let` touched on first use).

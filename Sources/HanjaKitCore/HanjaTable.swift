@@ -29,6 +29,11 @@ public struct HanjaTable {
         readingToEntries[reading] ?? []
     }
 
+    /// Frequency rank of `hanja` for `reading` (0 = most common in the table), or nil if absent.
+    public func rank(of hanja: String, for reading: String) -> Int? {
+        entries(for: reading).firstIndex { $0.hanja == hanja }
+    }
+
     /// Parse `hanja.txt` content into the reading → entries map.
     ///
     /// Line format: `음:한자:뜻` (the gloss may be empty). Blank lines and `#` comments are

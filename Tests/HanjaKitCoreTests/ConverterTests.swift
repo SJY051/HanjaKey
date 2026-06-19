@@ -47,11 +47,13 @@ final class ConverterTests: XCTestCase {
         XCTAssertTrue(half.contains("※"), "non-ASCII symbols stay unchanged under halfwidth folding")
     }
 
-    func testWordCandidatesFromTable() throws {
-        let words = WordTable.parse("한자:漢字:\n한자:漢子:")
-        let result = try makeConverter().candidates(forWord: "한자", using: words)
-        XCTAssertEqual(result.map(\.value), ["漢字", "漢子"])
-        XCTAssertTrue(result.allSatisfy { $0.kind == .hanja })
+    func testWordCandidatesGlossFirstThenFrequency() throws {
+        // 韓國 has a gloss → first (libhangul headword signal). Among glossless entries, the lower
+        // syllable-frequency score wins (寒國 ahead of 寒菊/汗國).
+        let words = WordTable.parse("한국:寒國:\n한국:寒菊:\n한국:韓國:대한민국\n한국:汗國:")
+        let result = try makeConverter().candidates(forWord: "한국", using: words).map(\.value)
+        XCTAssertEqual(result.first, "韓國")
+        XCTAssertEqual(result.dropFirst().first, "寒國")
     }
 
     func testDecompositionReturnsColumnPerSyllable() throws {

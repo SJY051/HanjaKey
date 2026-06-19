@@ -50,8 +50,31 @@ public struct Converter {
     }
 
     /// Whole-word Hanja candidates for a multi-syllable reading, using a (lazily loaded) word table.
+    ///
+    /// Ranked gloss-first (libhangul's direct "real headword" signal), then by the sum of each
+    /// syllable's single-Hanja frequency rank (lower = more common), then original order. Entries
+    /// with an unknown syllable sink last. (Heuristic: word frequency ≠ constituent-Hanja frequency,
+    /// so it's good but not perfect — curated real frequency can layer on top above gloss later.)
     public func candidates(forWord word: String, using words: WordTable) -> [Candidate] {
-        words.entries(for: word).map { Candidate(value: $0.hanja, kind: .hanja, gloss: $0.gloss) }
+        let readingChars = Array(word)
+        func score(_ entry: WordTable.Entry) -> Int {
+            let hanjaChars = Array(entry.hanja)
+            guard hanjaChars.count == readingChars.count else { return Int.max }
+            var total = 0
+            for (reading, char) in zip(readingChars, hanjaChars) {
+                guard let r = hanja.rank(of: String(char), for: String(reading)) else { return Int.max }
+                total += r
+            }
+            return total
+        }
+        let ranked = words.entries(for: word).enumerated().sorted { lhs, rhs in
+            let gl = lhs.element.gloss != nil, gr = rhs.element.gloss != nil
+            if gl != gr { return gl } // gloss-bearing (real headword) first
+            let sl = score(lhs.element), sr = score(rhs.element)
+            if sl != sr { return sl < sr } // then lower syllable-frequency score (more common)
+            return lhs.offset < rhs.offset
+        }
+        return ranked.map { Candidate(value: $0.element.hanja, kind: .hanja, gloss: $0.element.gloss) }
     }
 
     /// Per-syllable decomposition: the single-syllable Hanja candidates for each syllable, in order.
