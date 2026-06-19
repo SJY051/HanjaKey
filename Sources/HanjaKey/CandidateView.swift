@@ -12,10 +12,14 @@ struct CandidateView: View {
     let reading: String
     let onPick: (String) -> Void
     let onCancel: () -> Void
+    let onResize: (CGSize) -> Void
 
     private let candidates: [Candidate]
     @State private var selection = 0
     @State private var expanded = false
+    @State private var decomposing = false
+    @State private var columns: [[Candidate]] = []
+    @State private var picks: [String?] = []
     @AppStorage(AppSettings.expandedWideKey) private var wideStyle = true
     @FocusState private var focused: Bool
 
@@ -41,10 +45,12 @@ struct CandidateView: View {
     private static let cellWidth: CGFloat = 32
     private static let cellHeight: CGFloat = 28
 
-    init(reading: String, onPick: @escaping (String) -> Void, onCancel: @escaping () -> Void) {
+    init(reading: String, onPick: @escaping (String) -> Void, onCancel: @escaping () -> Void,
+         onResize: @escaping (CGSize) -> Void = { _ in }) {
         self.reading = reading
         self.onPick = onPick
         self.onCancel = onCancel
+        self.onResize = onResize
         if reading.count >= 2 {
             // Multi-syllable → whole-word Hanja candidates from the (lazy) word dictionary.
             self.candidates = Self.wordTable.flatMap { table in
@@ -69,7 +75,13 @@ struct CandidateView: View {
             header
             Divider()
             if candidates.isEmpty {
-                emptyState
+                if decomposing {
+                    decompositionView
+                } else if isWord {
+                    wordMissState
+                } else {
+                    emptyState
+                }
             } else {
                 if expanded {
                     // The wide 9-row grid assumes single-glyph cells; words use the flexible square grid.
@@ -88,9 +100,17 @@ struct CandidateView: View {
         .focusEffectDisabled() // suppress the blue keyboard focus ring around the panel
         .onAppear { focused = true }
         .onKeyPress(action: handleKey)
+        .background(
+            GeometryReader { proxy in
+                // Report content-size changes (e.g. entering the decomposition view) so the panel
+                // can resize + reposition — the NSPanel doesn't auto-follow SwiftUI's size.
+                Color.clear.onChange(of: proxy.size) { _, newSize in onResize(newSize) }
+            }
+        )
     }
 
     private var panelWidth: CGFloat {
+        if decomposing { return min(680, CGFloat(max(2, columns.count)) * 158 + 40) }
         guard expanded else { return 300 }
         return wideStyle ? 460 : 360
     }
@@ -159,6 +179,91 @@ struct CandidateView: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.horizontal, 12)
             .padding(.vertical, 18)
+    }
+
+    // MARK: - Per-syllable fallback (dictionary miss for a multi-syllable word)
+
+    private var wordMissState: some View {
+        VStack(spacing: 12) {
+            Text("‘\(reading)’ 단어를 사전에서 찾지 못했어요")
+                .font(.callout).foregroundStyle(.secondary)
+            Button("음절별로 만들기") {
+                columns = Self.converter?.decomposition(of: reading) ?? []
+                picks = columns.map { $0.first?.value }
+                decomposing = true
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(18)
+    }
+
+    private var decompositionView: some View {
+        let chars = Array(reading)
+        return VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(previewText).font(.title3)
+                Spacer()
+                Button("입력", action: confirmDecomposition).disabled(!allPicked)
+            }
+            .padding(.horizontal, 12).padding(.top, 10)
+            Divider()
+            ScrollView(.horizontal, showsIndicators: true) {
+                HStack(alignment: .top, spacing: 8) {
+                    ForEach(columns.indices, id: \.self) { ci in
+                        VStack(spacing: 4) {
+                            Text(ci < chars.count ? String(chars[ci]) : "")
+                                .font(.caption).foregroundStyle(.secondary)
+                            ScrollView {
+                                VStack(spacing: 2) {
+                                    ForEach(columns[ci], id: \.self) { candidate in
+                                        Button { setPick(ci, candidate.value) } label: {
+                                            HStack(spacing: 6) {
+                                                Text(candidate.value).font(.title3)
+                                                if let gloss = candidate.gloss, !gloss.isEmpty {
+                                                    Text(gloss)
+                                                        .font(.caption2).foregroundStyle(.secondary)
+                                                        .lineLimit(1).truncationMode(.tail)
+                                                }
+                                                Spacer(minLength: 0)
+                                            }
+                                            .padding(.horizontal, 6).padding(.vertical, 3)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .background(
+                                                (ci < picks.count ? picks[ci] : nil) == candidate.value
+                                                    ? AnyShapeStyle(.tint.opacity(0.20)) : AnyShapeStyle(.clear),
+                                                in: RoundedRectangle(cornerRadius: 5)
+                                            )
+                                            .contentShape(Rectangle())
+                                        }
+                                        .buttonStyle(.plain)
+                                    }
+                                }
+                            }
+                            .frame(height: 220)
+                        }
+                        .frame(width: 150)
+                    }
+                }
+                .padding(.horizontal, 12).padding(.bottom, 6)
+            }
+            Text("각 음절에서 한자를 고르고 ‘입력’(↵) · esc 뒤로")
+                .font(.caption2).foregroundStyle(.secondary)
+                .padding(.horizontal, 12).padding(.bottom, 8)
+        }
+    }
+
+    private var previewText: String { picks.map { $0 ?? "·" }.joined() }
+    private var allPicked: Bool { !picks.isEmpty && picks.allSatisfy { $0 != nil } }
+
+    private func setPick(_ column: Int, _ value: String) {
+        guard picks.indices.contains(column) else { return }
+        picks[column] = value
+    }
+
+    private func confirmDecomposition() {
+        guard allPicked else { return }
+        onPick(picks.compactMap { $0 }.joined())
     }
 
     // MARK: - Paged list (collapsed)
@@ -282,6 +387,13 @@ struct CandidateView: View {
     // MARK: - Keyboard handling
 
     private func handleKey(_ press: KeyPress) -> KeyPress.Result {
+        if decomposing {
+            switch press.key {
+            case .escape: decomposing = false; return .handled // back to the miss screen
+            case .return: confirmDecomposition(); return .handled
+            default: return .ignored
+            }
+        }
         switch press.key {
         case .escape:
             onCancel(); return .handled

@@ -5,6 +5,7 @@ import SwiftUI
 /// the pick back into the frontmost app (in place when possible).
 final class PopupPanel: NSPanel {
     private var context: AXContext?
+    private var lastScreenRect: CGRect?
 
     init() {
         super.init(
@@ -26,11 +27,13 @@ final class PopupPanel: NSPanel {
     /// Show the popup for a captured context (nil → type-in + clipboard fallback).
     func present(context: AXContext?) {
         self.context = context
+        self.lastScreenRect = context?.screenRect
         let reading = context?.source ?? ""
         let view = CandidateView(
             reading: reading,
             onPick: { [weak self] in self?.commit($0) },
-            onCancel: { [weak self] in self?.cancel() }
+            onCancel: { [weak self] in self?.cancel() },
+            onResize: { [weak self] size in self?.resize(to: size) }
         )
         let hosting = NSHostingView(rootView: view)
         hosting.wantsLayer = true
@@ -38,8 +41,9 @@ final class PopupPanel: NSPanel {
         hosting.layer?.cornerCurve = .continuous
         hosting.layer?.masksToBounds = true // clip the hosting layer's square corners to the glass shape
         contentView = hosting
-        setContentSize(hosting.fittingSize) // size the panel to the SwiftUI content
-        positionNearCaret(context?.screenRect)
+        hosting.layoutSubtreeIfNeeded()      // ensure fittingSize reflects the laid-out SwiftUI content
+        setContentSize(hosting.fittingSize)  // size the panel to the SwiftUI content
+        positionNearCaret(lastScreenRect)
         makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
@@ -53,6 +57,13 @@ final class PopupPanel: NSPanel {
         }
     }
 
+    /// Re-fit and re-place the panel when the SwiftUI content changes size (e.g. decomposition view).
+    private func resize(to size: CGSize) {
+        guard size.width > 1, size.height > 1, size != frame.size else { return }
+        setContentSize(size)
+        positionNearCaret(lastScreenRect)
+    }
+
     /// Dismiss without inserting; return focus to the original app.
     private func cancel() {
         orderOut(nil)
@@ -60,12 +71,27 @@ final class PopupPanel: NSPanel {
     }
 
     private func positionNearCaret(_ rect: CGRect?) {
-        guard let rect, rect != .zero, let screen = NSScreen.screens.first else { center(); return }
-        // AX rect is screen coords with a TOP-left origin; AppKit window origin is BOTTOM-left.
-        let caretBottomCocoaY = screen.frame.height - rect.maxY
-        var origin = NSPoint(x: rect.minX, y: caretBottomCocoaY - frame.height - 4) // just below caret
-        if origin.y < screen.visibleFrame.minY { // would clip off the bottom → flip above the caret
-            origin.y = (screen.frame.height - rect.minY) + 4
+        // AX rects are global with a TOP-left origin relative to the PRIMARY screen; convert to
+        // Cocoa's bottom-left global space using the primary (menu-bar) screen's height.
+        let primaryHeight = NSScreen.screens.first?.frame.height ?? 0
+        let caretBottom: NSPoint  // anchor at the caret bottom (or mouse) in Cocoa global coords
+        let caretTop: CGFloat
+        if let rect, rect != .zero {
+            caretBottom = NSPoint(x: rect.minX, y: primaryHeight - rect.maxY)
+            caretTop = primaryHeight - rect.minY
+        } else {
+            let mouse = NSEvent.mouseLocation // already Cocoa global — a sensible fallback
+            caretBottom = mouse
+            caretTop = mouse.y
+        }
+        let screen = NSScreen.screens.first(where: { $0.frame.contains(caretBottom) })
+            ?? NSScreen.main ?? NSScreen.screens.first
+        var origin = NSPoint(x: caretBottom.x, y: caretBottom.y - frame.height - 4) // just below caret
+        if let visible = screen?.visibleFrame {
+            if origin.y < visible.minY { origin.y = caretTop + 4 } // no room below → above the caret
+            // Clamp fully inside the visible frame so the panel never clips off-screen.
+            origin.x = min(max(origin.x, visible.minX), visible.maxX - frame.width)
+            origin.y = min(max(origin.y, visible.minY), visible.maxY - frame.height)
         }
         setFrameOrigin(origin)
     }
