@@ -27,26 +27,6 @@ Real but deferred items. Not part of an active spec until promoted.
   `AXSupport.trailingHangulRun` or the `CandidateView` branch (split a trailing jamo off the run).
 - **Priority:** affects usability, not urgent — fix later.
 
-### Multi-line input: auto-capture replaces text on the previous line
-- **Reported:** 2026-06-19 (ASQi), confirmed in real use.
-- **Symptom:** when typing across multiple lines and converting WITHOUT a manual selection (어절
-  auto-capture), recognition is correct but the replacement hits the wrong place — it overwrites the last
-  N characters of the PREVIOUS line (N = captured length) instead of the intended word at the caret.
-- **Likely area:** the synthesized Shift+Left selection / replacement in
-  `Sources/HanjaKey/AXSupport.swift` (+ `Output.swift`) — the selection or caret math crosses the line
-  boundary so `selectBack` lands on the previous line. Manual selection works, so it is specific to the
-  auto-capture path.
-- **Priority:** HIGH — wrong-location replacement corrupts text; fix first.
-
-### TAB-expanded word grid: arrow keys swap vertical/horizontal
-- **Reported:** 2026-06-19 (ASQi), confirmed in real use.
-- **Symptom:** in word conversion, after TAB expands the candidate list into the wide grid, the arrow
-  keys behave as if vertical/horizontal are swapped — Up moves right, Down moves left. Single-syllable
-  conversion and symbol input are unaffected.
-- **Likely area:** the expanded-grid navigation key handlers in `Sources/HanjaKey/CandidateView.swift` —
-  the row/column ↔ index mapping is transposed.
-- **Priority:** usability; fix.
-
 ## Enhancements
 
 ### Single-Hanja gloss (훈음) coverage from a license-clean Hanja dictionary
