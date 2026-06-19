@@ -1,43 +1,55 @@
 # HanjaKey
 
-A macOS menu-bar utility that emulates the Korean **한자 키**: press a global hotkey, type a
-Hangul reading, and pick a **Hanja** (for a syllable) or a **KS X 1001 special symbol** (for a
-single jamo) to insert — Maccy-style, **without** being a system input method.
+macOS에서 Windows의 **한자 키**를 재현하는 메뉴바 유틸리티입니다. 시스템 입력기를 바꾸지 않고,
+전역 단축키로 커서 앞의 한글을 한자나 특수문자로 그 자리에서 바꿉니다.
 
-> Warm-up mini-project. Spec: [`docs/specs/001-hanja-hotkey/spec.md`](docs/specs/001-hanja-hotkey/spec.md).
+> English: [README.en.md](README.en.md)
 
-## Structure
+<!-- 스크린샷은 준비되는 대로 docs/images/ 에 추가합니다 -->
 
-| Target | Kind | Notes |
-|---|---|---|
-| `HanjaKitCore` | library | Pure conversion engine (no AppKit/SwiftUI). The tested core. |
-| `HanjaKey` | executable | Menu-bar agent: `NSStatusItem` + non-activating `NSPanel` hosting SwiftUI; global hotkey via `KeyboardShortcuts`. |
-| `HanjaKitCoreTests` | tests | Engine unit tests (run without Xcode). |
+## 왜 만들었나
 
-Data: Unicode **Unihan `kHangul`** (Hanja, inverted to reading→characters) + a KS X 1001 symbol
-table. See [`Sources/HanjaKitCore/Resources/README.md`](Sources/HanjaKitCore/Resources/README.md)
-for sources/licenses. **No public macOS API exists for Hangul→Hanja** (verified) — hence a bundled table.
+macOS 한글 입력기에도 한자 변환(Option+Return)이 있지만, **자모로 특수문자를 넣는 기능은 없고**
+한글 입력 상태일 때만 동작합니다. HanjaKey는 입력 소스와 무관하게 어디서든 전역 단축키로 불러,
+한자와 KS X 1001 특수문자를 한곳에서 고르고 그 자리에 넣을 수 있게 합니다.
 
-## Build & test
+## 무엇을 하나
 
-```bash
-# The engine library builds with Command Line Tools alone:
-swift build --target HanjaKitCore
+- **한글 음절 → 한자** — 한 → 韓 漢 寒 … (음·뜻을 함께 표시)
+- **자모 → 특수문자** — KS X 1001 배열 그대로. ㅁ → ※ ◎ □ …, ㄷ → ± × ÷ …
+- **한자어(단어) → 한자어** — 대한민국 → 大韓民國, 한자 → 漢字
+- 고른 글자를 **커서 자리에 바로 치환** (입력 클립보드는 쓰고 나서 복원)
 
-# Tests use XCTest, which ships with the Xcode toolchain (NOT Command Line Tools).
-# Either select Xcode once (sudo)…
-sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-swift test
-# …or run per-command without sudo:
-DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test
+## 어디서 작동하나
 
-# The app target (HanjaKey) also needs the Xcode toolchain:
-swift run HanjaKey   # after xcode-select, or prefixed with DEVELOPER_DIR=…
-```
+- **작동:** 네이티브 앱(TextEdit 등), Electron 앱(Claude·Discord 등), 브라우저
+- **미지원:** 터미널 — 편집 가능한 접근성(AX) 텍스트를 노출하지 않습니다
 
-## Status
+## 사용법
 
-Scaffolded (skeleton + TODO stubs + tests in TDD **red** state). Implementation order:
-1. `HangulUtil.classify` → 2. `UnihanTable.parse` → 3. `Converter.candidates` (M1 engine green),
-then the app shell (hotkey → panel → clipboard), then **M2** (Accessibility: read selection +
-paste-back).
+1. 한글을 입력하고 커서를 바로 뒤에 둔 채 **⌥⌘H**
+   - 단어는 커서 앞 어절을 자동으로 잡고, 직접 선택한 텍스트가 있으면 그것을 씁니다
+2. 후보에서 고르기
+   - **1–9** 선택 · **↑↓←→** 이동/페이지 · **Tab** 전체 펼치기 · **↵** 입력 · **esc** 취소
+3. 사전에 없는 단어는 **"음절별로 만들기"** 로 음절마다 한자를 골라 조합
+
+설정은 메뉴바 **漢** 아이콘 또는 팝업의 **⋯ → 설정**에서:
+확장 보기(와이드/컴팩트 그리드), 특수문자 전각/반각, 사용자 정의 세트, 메뉴바 아이콘 표시.
+
+## 설치 / 빌드
+
+- 요구: **macOS 14 이상**, **Xcode 툴체인**(빌드·테스트의 XCTest용)
+- 빌드: `scripts/bundle.sh` → `.build/HanjaKey.app`
+- 첫 실행 때 **접근성 권한**을 허용해야 자리 치환이 동작합니다
+  (시스템 설정 → 개인정보 보호 및 보안 → 손쉬운 사용)
+- 단축키 라이브러리: [sindresorhus/KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
+
+## 데이터
+
+- 한자·한자어: [libhangul](https://github.com/libhangul/libhangul) `hanja.txt` (음·뜻 포함)
+- 특수문자: KS X 1001 자모별 배열
+
+## 라이선스
+
+- 코드: [MIT](LICENSE)
+- 번들 한자 데이터: libhangul, BSD 라이선스 — 원 저작권 고지를 데이터 파일 헤더에 유지합니다
