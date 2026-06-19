@@ -60,8 +60,11 @@ final class PopupPanel: NSPanel {
     /// Re-fit and re-place the panel when the SwiftUI content changes size (e.g. decomposition view).
     private func resize(to size: CGSize) {
         guard size.width > 1, size.height > 1, size != frame.size else { return }
-        setContentSize(size)
-        positionNearCaret(lastScreenRect)
+        // Top-left stays put; grow down/right. Resize IMMEDIATELY (no NSAnimationContext): the SwiftUI
+        // content already animates via withAnimation, and animating the frame on top of it raced — the
+        // window jumped right then settled. Letting the frame follow the content reads smoother.
+        let origin = NSPoint(x: frame.minX, y: frame.maxY - size.height)
+        setFrame(NSRect(origin: origin, size: size), display: true)
     }
 
     /// Dismiss without inserting; return focus to the original app.

@@ -21,6 +21,7 @@ struct CandidateView: View {
     @State private var columns: [[Candidate]] = []
     @State private var picks: [String?] = []
     @State private var activeColumn = 0
+    @Namespace private var glyphNS  // ties a candidate's glyph across list ↔ grid for smooth motion
     @AppStorage(AppSettings.expandedWideKey) private var wideStyle = true
     @FocusState private var focused: Bool
 
@@ -88,12 +89,15 @@ struct CandidateView: View {
                     emptyState
                 }
             } else {
-                if expanded {
-                    // The wide 9-row grid assumes single-glyph cells; words use the flexible square grid.
-                    if wideStyle && !isWord { wideGrid } else { squareGrid }
-                } else {
-                    rows
+                Group {
+                    if expanded {
+                        // The wide 9-row grid assumes single-glyph cells; words use the flexible square grid.
+                        if wideStyle && !isWord { wideGrid } else { squareGrid }
+                    } else {
+                        rows
+                    }
                 }
+                .transition(.opacity) // glyphs ride matchedGeometry; the rest of each mode fades in/out
                 Divider()
                 footer
             }
@@ -130,15 +134,17 @@ struct CandidateView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
             Spacer()
-            if expanded {
-                Text("전체 \(candidates.count)")
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.secondary)
-            } else if candidates.count > Self.pageSize {
-                Text("\(currentPage + 1)/\(pageCount)")
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.secondary)
+            Group {
+                if expanded {
+                    Text("전체 \(candidates.count)")
+                } else if candidates.count > Self.pageSize {
+                    Text("\(currentPage + 1)/\(pageCount)")
+                }
             }
+            .font(.caption.monospacedDigit())
+            .foregroundStyle(.secondary)
+            .id(expanded)            // page-count vs total are different roles → cross-fade only on toggle
+            .transition(.opacity)
             Menu {
                 Button("설정…") { NotificationCenter.default.post(name: .hkOpenSettings, object: nil) }
                 Button("HanjaKey 종료") { NSApplication.shared.terminate(nil) }
@@ -154,27 +160,62 @@ struct CandidateView: View {
     }
 
     private var footer: some View {
-        Group {
-            if expanded {
-                HStack(spacing: 8) {
-                    Text(candidates[safe: selection]?.value ?? "")
-                        .font(.headline)
-                    if let gloss = candidates[safe: selection]?.gloss, !gloss.isEmpty {
-                        Text(gloss).foregroundStyle(.secondary).lineLimit(1).truncationMode(.tail)
+        VStack(alignment: .leading, spacing: 4) {
+            if !candidates.isEmpty, let sel = candidates[safe: selection] {
+                let gloss = sel.gloss ?? ""
+                if expanded {
+                    // Full definition in a FIXED-height scroll area, so navigating candidates never
+                    // resizes the window (scroll/trackpad for the rest of a long gloss).
+                    if !gloss.isEmpty {
+                        HStack(alignment: .top, spacing: 8) {
+                            Text(sel.value).font(.headline)
+                            ScrollView {
+                                Text(gloss)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .matchedGeometryEffect(id: "footerGloss", in: glyphNS)
+                            }
+                            .frame(height: 52)
+                        }
                     }
-                    Spacer(minLength: 0)
-                    Text(wideStyle ? "1–9 · ↑↓←→ · Tab 접기" : "↑↓←→ · Tab 접기")
-                        .foregroundStyle(.tertiary)
+                } else if !gloss.isEmpty {
+                    // List: one faded line + a disclosure (chevron) to expand for the full text.
+                    HStack(spacing: 6) {
+                        Text(gloss)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                            .matchedGeometryEffect(id: "footerGloss", in: glyphNS)
+                            .mask(LinearGradient(
+                                stops: [.init(color: .black, location: 0.82), .init(color: .clear, location: 1)],
+                                startPoint: .leading, endPoint: .trailing))
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.18)) { expanded = true }
+                        } label: { Image(systemName: "chevron.down") }
+                            .buttonStyle(.plain)
+                            .font(.caption2)
+                            .foregroundStyle(.tint)
+                            .help("전체 뜻 보기")
+                        Spacer(minLength: 0)
+                    }
+                    .frame(height: 15)
+                } else if sel.kind != .symbol {
+                    // Keep glossless hanja steady; symbols have no gloss → no placeholder.
+                    Color.clear.frame(height: 15)
                 }
-                .font(.caption)
-            } else {
-                Text("1–9 선택 · ↑↓ 이동 · ←→ 페이지 · Tab 전체 · ↵ 입력 · esc 취소")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
             }
+            Text(expanded
+                 ? (wideStyle ? "1–9 · ↑↓←→ · Tab 접기" : "↑↓←→ · Tab 접기")
+                 : "1–9 선택 · ↑↓ 이동 · ←→ 페이지 · Tab 전체 · ↵ 입력 · esc 취소")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+                .id(expanded)
+                .transition(.opacity)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
+        .animation(.easeInOut(duration: 0.18), value: expanded)
     }
 
     private var emptyState: some View {
@@ -315,8 +356,10 @@ struct CandidateView: View {
                 .font(.callout.monospacedDigit())
                 .foregroundStyle(.secondary)
                 .frame(width: 16, alignment: .trailing)
+                .matchedGeometryEffect(id: "num-\(number)", in: glyphNS)
             Text(candidate.value)
                 .font(.title2)
+                .matchedGeometryEffect(id: index, in: glyphNS)
             if let gloss = candidate.gloss, !gloss.isEmpty {
                 Text(gloss)
                     .font(.subheadline)
@@ -348,6 +391,7 @@ struct CandidateView: View {
                                 .font(.caption2.monospacedDigit())
                                 .foregroundStyle(.tertiary)
                                 .frame(width: 14, height: Self.cellHeight)
+                                .matchedGeometryEffect(id: "num-\(n)", in: glyphNS)
                         }
                     }
                     ForEach(0..<colCount, id: \.self) { column in
@@ -384,6 +428,9 @@ struct CandidateView: View {
                 ) {
                     ForEach(candidates.indices, id: \.self) { index in
                         cell(index, fill: true).id(index)
+                            // Words newly revealed on expand rise in (opacity + slight scale) so the
+                            // entrance reads clearly instead of a too-fast fade.
+                            .transition(.opacity.combined(with: .scale(scale: 0.8)))
                     }
                 }
                 .padding(8)
@@ -399,12 +446,24 @@ struct CandidateView: View {
     private func cell(_ index: Int, fill: Bool = false) -> some View {
         Text(candidates[index].value)
             .font(.title3)
+            .matchedGeometryEffect(id: index, in: glyphNS)
             .frame(
                 width: fill ? nil : Self.cellWidth,
                 height: fill ? 34 : Self.cellHeight
             )
             .frame(maxWidth: fill ? .infinity : nil)
             .background(highlight(index == selection), in: RoundedRectangle(cornerRadius: 6))
+            .overlay(alignment: .topLeading) {
+                // Square grid (words): show the 1–9 index like the list/wide grid do, carried over by
+                // matchedGeometry so it eases in from the collapsed list rather than popping.
+                if fill, (pageStart..<pageEnd).contains(index) {
+                    Text("\(index - pageStart + 1)")
+                        .font(.caption2.monospacedDigit())
+                        .foregroundStyle(.tertiary)
+                        .matchedGeometryEffect(id: "num-\(index - pageStart + 1)", in: glyphNS)
+                        .padding(3)
+                }
+            }
             .contentShape(Rectangle())
             .onTapGesture { onPick(candidates[index].value) }
     }
@@ -437,7 +496,8 @@ struct CandidateView: View {
         case .return:
             pick(selection); return .handled
         case .tab:
-            expanded.toggle(); return .handled
+            withAnimation(.easeInOut(duration: 0.18)) { expanded.toggle() }
+            return .handled
         case .upArrow:
             move(verticalStep(-1)); return .handled
         case .downArrow:
