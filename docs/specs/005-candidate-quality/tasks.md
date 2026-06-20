@@ -10,11 +10,11 @@ owner: ASQi
 Resume the ranking-swarm grind from here (survives compaction).
 
 ## Progress
-- **Ranking: 83 / 352 readings done** (the >20-candidate readings). = pilot (가·갑·난) + batch1 (15) + batch2 (25) + batch3 (40).
-- **Remaining: 269 readings.** Then the gloss workflow.
-- Raw swarm outputs persisted: `swarm-raw/pilot.json`, `rank-batch1.json`, `rank-batch2.json`, `rank-batch3.json`.
-- Compiled table: `Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt` (83 readings, 13,094 rows).
-- Quality: top tiers are correct common chars; 간체/이체/유령 → tier 3; integrity 17 dropped cumulative (~0.13%); batch-3 fallbacks ≤2/reading (big >160-cap readings sink the long tail to tier 3 by design).
+- **Ranking: 123 / 352 readings done** (the >20-candidate readings). = pilot (가·갑·난) + batch1 (15) + batch2 (25) + batch3 (40) + batch4 (40).
+- **Remaining: 229 readings.** Then the gloss workflow.
+- Raw swarm outputs persisted: `swarm-raw/pilot.json`, `rank-batch1.json`, `rank-batch2.json`, `rank-batch3.json`, `rank-batch4.json`.
+- Compiled table: `Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt` (123 readings, 16,762 rows).
+- Quality: top tiers are correct common chars; 간체/이체/유령 → tier 3; integrity 25 dropped cumulative (~0.15%); batch-3/4 fallbacks ≤1-2/reading (big >160-cap readings sink the long tail to tier 3 by design).
 
 ## Run the next ranking batch
 1. **Dump args** (auto-excludes done): `python3 scripts/build_swarm_input.py --count 40` → copy the stdout JSON.
