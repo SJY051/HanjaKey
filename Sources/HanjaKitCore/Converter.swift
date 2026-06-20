@@ -25,7 +25,7 @@ public struct Converter {
     public func candidates(for input: String, halfwidthSymbols: Bool = false) -> [Candidate] {
         switch HangulUtil.classify(input) {
         case .syllable:
-            return hanja.entries(for: input).map {
+            return Self.curate(hanja.entries(for: input)).map {
                 Candidate(value: $0.hanja, kind: .hanja, gloss: $0.gloss)
             }
         case .jamo:
@@ -35,6 +35,26 @@ public struct Converter {
         case .other:
             return []
         }
+    }
+
+    /// Curate single-Hanja candidates (spec 005 v1): stable-partition into clean-gloss → empty-gloss →
+    /// variant-pointer-gloss, preserving libhangul's order within each tier. Demotes explicit variants
+    /// (同字/略字/俗字/簡體) and glossless rares below the common, meaning-bearing chars. Never drops a
+    /// candidate — the full set is reordered, and the UI keeps the tail one affordance away (the grid).
+    static func curate(_ entries: [HanjaTable.Entry]) -> [HanjaTable.Entry] {
+        func tier(_ entry: HanjaTable.Entry) -> Int {
+            guard let gloss = entry.gloss, !gloss.isEmpty else { return 1 } // no meaning → middle
+            return isVariantPointer(gloss) ? 2 : 0                          // variant pointer → back
+        }
+        return entries.enumerated()
+            .sorted { (tier($0.element), $0.offset) < (tier($1.element), $1.offset) }
+            .map(\.element)
+    }
+
+    /// A gloss that merely points at another character ("歌와 同字", "假의 略字", 俗字, 簡體) — i.e. a
+    /// variant form we demote in favor of its canonical character.
+    static func isVariantPointer(_ gloss: String) -> Bool {
+        gloss.contains("同字") || gloss.contains("略字") || gloss.contains("俗字") || gloss.contains("簡體")
     }
 
     /// Fold fullwidth ASCII-range characters (！０Ａ …) and the ideographic space to their

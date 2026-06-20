@@ -47,6 +47,7 @@ struct CandidateView: View {
     private static let freqTable = try? FreqTable.bundled()
 
     private static let pageSize = 9
+    private static let visibleCutoff = 20   // spec 005: collapsed single-syllable list cap; the grid shows all
     private static let gridColumns = 5
     private static let cellWidth: CGFloat = 32
     private static let cellHeight: CGFloat = 28
@@ -71,10 +72,15 @@ struct CandidateView: View {
 
     // Paging math, derived from the current selection.
     private var isWord: Bool { reading.count >= 2 }
-    private var pageCount: Int { max(1, (candidates.count + Self.pageSize - 1) / Self.pageSize) }
+    // spec 005: the collapsed single-syllable list shows only the curated head; Tab (the grid) reveals
+    // the full set. Words and the expanded grid stay uncapped.
+    private var visibleCount: Int {
+        (expanded || isWord) ? candidates.count : min(Self.visibleCutoff, candidates.count)
+    }
+    private var pageCount: Int { max(1, (visibleCount + Self.pageSize - 1) / Self.pageSize) }
     private var currentPage: Int { selection / Self.pageSize }
     private var pageStart: Int { currentPage * Self.pageSize }
-    private var pageEnd: Int { min(pageStart + Self.pageSize, candidates.count) }
+    private var pageEnd: Int { min(pageStart + Self.pageSize, visibleCount) }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -137,6 +143,8 @@ struct CandidateView: View {
             Group {
                 if expanded {
                     Text("전체 \(candidates.count)")
+                } else if candidates.count > visibleCount {
+                    Text("\(currentPage + 1)/\(pageCount) · 전체 \(candidates.count)")
                 } else if candidates.count > Self.pageSize {
                     Text("\(currentPage + 1)/\(pageCount)")
                 }
@@ -497,6 +505,7 @@ struct CandidateView: View {
             pick(selection); return .handled
         case .tab:
             withAnimation(.easeInOut(duration: 0.18)) { expanded.toggle() }
+            if !expanded { selection = min(selection, visibleCount - 1) } // collapsing → keep selection in the head
             return .handled
         case .upArrow:
             move(verticalStep(-1)); return .handled
@@ -548,7 +557,7 @@ struct CandidateView: View {
 
     private func move(_ delta: Int) {
         guard !candidates.isEmpty else { return }
-        selection = min(max(selection + delta, 0), candidates.count - 1)
+        selection = min(max(selection + delta, 0), visibleCount - 1)
     }
 
     private func page(_ delta: Int) {

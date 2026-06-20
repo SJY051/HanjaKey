@@ -96,4 +96,32 @@ final class ConverterTests: XCTestCase {
         XCTAssertEqual(Array(result.prefix(2)), ["首都", "水道"])  // ranked ones first, by frequency
         XCTAssertEqual(result.last, "隧道")        // unranked sinks to the tail
     }
+
+    // MARK: - 005 single-Hanja curation
+
+    func testCurateGlossFirstThenEmptyThenVariant() {
+        // spec 005 v1: clean gloss → empty gloss → variant-pointer, libhangul order within each tier;
+        // never drops a candidate.
+        let entries = [
+            HanjaTable.Entry(hanja: "可", gloss: "옳을 가"),    // clean
+            HanjaTable.Entry(hanja: "价", gloss: nil),          // empty
+            HanjaTable.Entry(hanja: "仮", gloss: "假의 略字"),   // variant pointer
+            HanjaTable.Entry(hanja: "家", gloss: "집 가"),       // clean
+            HanjaTable.Entry(hanja: "椵", gloss: nil),          // empty
+            HanjaTable.Entry(hanja: "謌", gloss: "歌와 同字"),   // variant pointer
+        ]
+        let got = Converter.curate(entries)
+        XCTAssertEqual(got.map(\.hanja), ["可", "家", "价", "椵", "仮", "謌"])
+        XCTAssertEqual(got.count, entries.count) // reordered, never dropped
+    }
+
+    func testSyllableCandidatesAreCurated() throws {
+        // End-to-end through the bundled tables: a clean-gloss common char still leads, and any
+        // variant-pointer char lands after the meaning-bearing ones.
+        let result = try makeConverter().candidates(for: "가").map(\.value)
+        XCTAssertEqual(result.first, "可")  // libhangul head, clean gloss → stays first
+        if let kao = result.firstIndex(of: "仮") {  // 假의 略字 (variant) — demoted to the tail
+            XCTAssertGreaterThan(kao, 20)
+        }
+    }
 }
