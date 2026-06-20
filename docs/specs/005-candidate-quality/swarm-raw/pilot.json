@@ -1,0 +1,1343 @@
+{
+  "summary": "Pilot (spec 005 M2): tier+rank single-Hanja candidates and fill 훈독 for 3 readings",
+  "agentCount": 8,
+  "logs": [],
+  "result": {
+    "combined": [
+      {
+        "reading": "가",
+        "ranked": [
+          {
+            "hanja": "家",
+            "tier": 0,
+            "rank": 1,
+            "reason": "집 가 — 家族·家庭·國家 등 현대 한국어 최고빈도 한자 중 하나"
+          },
+          {
+            "hanja": "可",
+            "tier": 0,
+            "rank": 2,
+            "reason": "옳을 가 — 可能·許可·不可 등 일상 복합어 다수"
+          },
+          {
+            "hanja": "加",
+            "tier": 0,
+            "rank": 3,
+            "reason": "더할 가 — 加入·追加·加速 등 일상 어휘 고빈도"
+          },
+          {
+            "hanja": "歌",
+            "tier": 0,
+            "rank": 4,
+            "reason": "노래 가 — 歌手·歌謠·校歌 등 광범위하게 사용"
+          },
+          {
+            "hanja": "價",
+            "tier": 0,
+            "rank": 5,
+            "reason": "값 가 — 價格·物價·定價 등 경제 일상어"
+          },
+          {
+            "hanja": "街",
+            "tier": 0,
+            "rank": 6,
+            "reason": "거리 가 — 街道·商街·住宅街 등 현용"
+          },
+          {
+            "hanja": "假",
+            "tier": 0,
+            "rank": 7,
+            "reason": "거짓 가 — 假定·假名·假想 등 교과서 어휘"
+          },
+          {
+            "hanja": "嘉",
+            "tier": 0,
+            "rank": 8,
+            "reason": "아름다울 가 — 嘉禮·嘉納 등 문어·인명에 자주"
+          },
+          {
+            "hanja": "佳",
+            "tier": 0,
+            "rank": 9,
+            "reason": "아름다울 가 — 佳作·佳人 등 인명·문예어"
+          },
+          {
+            "hanja": "暇",
+            "tier": 0,
+            "rank": 10,
+            "reason": "겨를 가 — 休暇·餘暇 등 일상 어휘"
+          },
+          {
+            "hanja": "架",
+            "tier": 0,
+            "rank": 11,
+            "reason": "시렁 가 — 架設·書架·架橋 등 기술·일상어"
+          },
+          {
+            "hanja": "嫁",
+            "tier": 0,
+            "rank": 12,
+            "reason": "시집갈 가 — 嫁娶·出嫁·轉嫁 등 현용"
+          },
+          {
+            "hanja": "稼",
+            "tier": 0,
+            "rank": 13,
+            "reason": "심을 가 — 稼動·稼穡 등 경제·농업어"
+          },
+          {
+            "hanja": "駕",
+            "tier": 0,
+            "rank": 14,
+            "reason": "수레 몰 가 — 駕車·超駕 등 현용, 인명에도 씀"
+          },
+          {
+            "hanja": "苛",
+            "tier": 0,
+            "rank": 15,
+            "reason": "가혹할 가 — 苛酷·苛政 등 문어·교육 어휘"
+          },
+          {
+            "hanja": "袈",
+            "tier": 0,
+            "rank": 16,
+            "reason": "가사 가 — 袈裟(불교 의복) 한 단어에만 쓰이나 불교 문화권 내 인지도 높음"
+          },
+          {
+            "hanja": "哥",
+            "tier": 0,
+            "rank": 17,
+            "reason": "형 가 — 중국어 차용어 맥락으로 인지, 인명·가요 제목"
+          },
+          {
+            "hanja": "呵",
+            "tier": 1,
+            "rank": 18,
+            "reason": "꾸짖을 가 — 呵責·呵呵大笑 등 고전·문어"
+          },
+          {
+            "hanja": "訶",
+            "tier": 1,
+            "rank": 19,
+            "reason": "꾸짖을 가 — 呵와 통용, 불교 범어 음차에도 씀"
+          },
+          {
+            "hanja": "賈",
+            "tier": 1,
+            "rank": 20,
+            "reason": "장사 가/고 — 商賈(고) / 성 賈(가): 인명·고전에서 알려짐"
+          },
+          {
+            "hanja": "伽",
+            "tier": 1,
+            "rank": 21,
+            "reason": "절 가 — 伽藍·伽耶 등 불교·역사 고유명사에 자주"
+          },
+          {
+            "hanja": "迦",
+            "tier": 1,
+            "rank": 22,
+            "reason": "부처이름 가 — 釋迦牟尼의 迦; 불교 문헌 한정"
+          },
+          {
+            "hanja": "茄",
+            "tier": 1,
+            "rank": 23,
+            "reason": "가지 가 — 茄子(가지)의 茄; 식물명으로 알려짐"
+          },
+          {
+            "hanja": "柯",
+            "tier": 1,
+            "rank": 24,
+            "reason": "나뭇가지 가 — 인명·아호에 간간이 씀; 일반 어휘 드묾"
+          },
+          {
+            "hanja": "軻",
+            "tier": 1,
+            "rank": 25,
+            "reason": "맹가(孟軻) 이름자 — 고전·역사 인명 맥락 한정"
+          },
+          {
+            "hanja": "枷",
+            "tier": 1,
+            "rank": 26,
+            "reason": "칼 가 — 枷鎖; 형벌 도구, 고전 법제사 용어"
+          },
+          {
+            "hanja": "珂",
+            "tier": 1,
+            "rank": 27,
+            "reason": "마노 가 — 珂雪 등 인명·아호에 간간이"
+          },
+          {
+            "hanja": "痂",
+            "tier": 1,
+            "rank": 28,
+            "reason": "딱지 가(의학) — 의학 용어로 전문적으로 알려짐"
+          },
+          {
+            "hanja": "跏",
+            "tier": 1,
+            "rank": 29,
+            "reason": "책상다리 가 — 跏趺坐(불교 좌법); 불교 전문어"
+          },
+          {
+            "hanja": "斝",
+            "tier": 1,
+            "rank": 30,
+            "reason": "술잔 가 — 고대 예기(禮器); 고고학·한문 전문어"
+          },
+          {
+            "hanja": "葭",
+            "tier": 1,
+            "rank": 31,
+            "reason": "갈대 가 — 葭蘆; 고전 시가(詩經) 어휘"
+          },
+          {
+            "hanja": "舸",
+            "tier": 1,
+            "rank": 32,
+            "reason": "큰 배 가 — 고전 문학 어휘; 현대 거의 안 씀"
+          },
+          {
+            "hanja": "笳",
+            "tier": 1,
+            "rank": 33,
+            "reason": "호드기 가 — 胡笳; 악기 이름, 고전 시가"
+          },
+          {
+            "hanja": "嘏",
+            "tier": 1,
+            "rank": 34,
+            "reason": "복 가 — 嘏辭; 고대 제사·예기 어휘"
+          },
+          {
+            "hanja": "哿",
+            "tier": 2,
+            "rank": 35,
+            "reason": "좋을 가 — 詩經 용어; 현대 사용 거의 없음"
+          },
+          {
+            "hanja": "坷",
+            "tier": 2,
+            "rank": 36,
+            "reason": "험할 가/가 — 坎坷; 한국어보다 중국어 문헌에 주"
+          },
+          {
+            "hanja": "珈",
+            "tier": 2,
+            "rank": 37,
+            "reason": "머리꾸미개 가 — 珈琲(커피) 일본 차용; 한국어 표기로 드묾"
+          },
+          {
+            "hanja": "謌",
+            "tier": 2,
+            "rank": 38,
+            "reason": "歌의 이체자; 고전 문헌 한정"
+          },
+          {
+            "hanja": "砢",
+            "tier": 2,
+            "rank": 39,
+            "reason": "돌 쌓인 모양 가 — 고전 문학; 현대 사용 없음"
+          },
+          {
+            "hanja": "佉",
+            "tier": 2,
+            "rank": 40,
+            "reason": "범어 음차 가 — 佉盧(카로슈티); 불교·언어학 전문어"
+          },
+          {
+            "hanja": "呿",
+            "tier": 2,
+            "rank": 41,
+            "reason": "입 벌릴 가 — 고전 의학 어휘(구강 벌림); 한의학"
+          },
+          {
+            "hanja": "榎",
+            "tier": 2,
+            "rank": 42,
+            "reason": "팽나무 가 — 일본에서 주로 쓰는 한자; 한국 고전 식물"
+          },
+          {
+            "hanja": "咖",
+            "tier": 2,
+            "rank": 43,
+            "reason": "咖啡(커피)의 음차자; 한국어 표기에 거의 안 씀"
+          },
+          {
+            "hanja": "瘕",
+            "tier": 2,
+            "rank": 44,
+            "reason": "징가(症瘕) 가 — 한의학 병증 용어"
+          },
+          {
+            "hanja": "耞",
+            "tier": 2,
+            "rank": 45,
+            "reason": "도리깨 가 — 농기구 이름; 고전·방언 어휘"
+          },
+          {
+            "hanja": "宊",
+            "tier": 2,
+            "rank": 46,
+            "reason": "갑자기 가 — 희귀 고전 문자"
+          },
+          {
+            "hanja": "椵",
+            "tier": 2,
+            "rank": 47,
+            "reason": "나무 이름 가 — 木本 수목명; 고전 식물"
+          },
+          {
+            "hanja": "叚",
+            "tier": 2,
+            "rank": 48,
+            "reason": "假의 고자(古字); 고문서 맥락"
+          },
+          {
+            "hanja": "猳",
+            "tier": 2,
+            "rank": 49,
+            "reason": "수퇘지 가 — 고전 동물 어휘; 현대 사용 없음"
+          },
+          {
+            "hanja": "髂",
+            "tier": 2,
+            "rank": 50,
+            "reason": "볼기뼈 가 — 해부학 전문어"
+          },
+          {
+            "hanja": "槚",
+            "tier": 2,
+            "rank": 51,
+            "reason": "차나무·개오동 가 — 고전 식물분류"
+          },
+          {
+            "hanja": "斚",
+            "tier": 2,
+            "rank": 52,
+            "reason": "斝의 이체자; 고대 예기"
+          },
+          {
+            "hanja": "泇",
+            "tier": 2,
+            "rank": 53,
+            "reason": "강 이름 가 — 고전 지리 한정"
+          },
+          {
+            "hanja": "牁",
+            "tier": 2,
+            "rank": 54,
+            "reason": "배 매는 말뚝 가 — 牁柯; 고전 지명·어휘"
+          },
+          {
+            "hanja": "豭",
+            "tier": 2,
+            "rank": 55,
+            "reason": "수퇘지 가 — 猳와 동의; 고전 동물 어휘"
+          },
+          {
+            "hanja": "岢",
+            "tier": 2,
+            "rank": 56,
+            "reason": "산 이름 가 — 지명 한정; 중국 산서성 지명"
+          },
+          {
+            "hanja": "幏",
+            "tier": 2,
+            "rank": 57,
+            "reason": "천 이름 가 — 고전 직물 어휘; 현대 사용 없음"
+          },
+          {
+            "hanja": "徦",
+            "tier": 2,
+            "rank": 58,
+            "reason": "이를 가 — 고전 문헌; 현대 사용 없음"
+          },
+          {
+            "hanja": "愘",
+            "tier": 2,
+            "rank": 59,
+            "reason": "희귀 고전 문자"
+          },
+          {
+            "hanja": "戓",
+            "tier": 2,
+            "rank": 60,
+            "reason": "희귀 고전 문자"
+          },
+          {
+            "hanja": "戨",
+            "tier": 2,
+            "rank": 61,
+            "reason": "희귀 고전 문자"
+          },
+          {
+            "hanja": "樖",
+            "tier": 2,
+            "rank": 62,
+            "reason": "희귀 고전 문자"
+          },
+          {
+            "hanja": "渮",
+            "tier": 2,
+            "rank": 63,
+            "reason": "강 이름 가(하?) — 고전 지리 어휘"
+          },
+          {
+            "hanja": "滒",
+            "tier": 2,
+            "rank": 64,
+            "reason": "진흙 가 — 희귀 고전 문자"
+          },
+          {
+            "hanja": "炣",
+            "tier": 2,
+            "rank": 65,
+            "reason": "불빛 가 — 희귀 고전 문자"
+          },
+          {
+            "hanja": "牫",
+            "tier": 2,
+            "rank": 66,
+            "reason": "희귀 고전 문자; 소 관련"
+          },
+          {
+            "hanja": "牱",
+            "tier": 2,
+            "rank": 67,
+            "reason": "희귀 고전 문자; 소 관련"
+          },
+          {
+            "hanja": "犌",
+            "tier": 2,
+            "rank": 68,
+            "reason": "희귀 고전 문자"
+          },
+          {
+            "hanja": "玍",
+            "tier": 2,
+            "rank": 69,
+            "reason": "희귀 고전 문자"
+          },
+          {
+            "hanja": "癿",
+            "tier": 2,
+            "rank": 70,
+            "reason": "희귀 고전 문자; 병 관련"
+          },
+          {
+            "hanja": "笴",
+            "tier": 2,
+            "rank": 71,
+            "reason": "화살대 가 — 고전 무기 어휘"
+          },
+          {
+            "hanja": "糘",
+            "tier": 2,
+            "rank": 72,
+            "reason": "희귀 고전 문자; 곡식 관련"
+          },
+          {
+            "hanja": "胢",
+            "tier": 2,
+            "rank": 73,
+            "reason": "희귀 고전 문자; 신체 관련"
+          },
+          {
+            "hanja": "腵",
+            "tier": 2,
+            "rank": 74,
+            "reason": "희귀 고전 문자; 신체 관련"
+          },
+          {
+            "hanja": "蚵",
+            "tier": 2,
+            "rank": 75,
+            "reason": "굴 가 — 해산물 명칭; 주로 대만·남방 방언"
+          },
+          {
+            "hanja": "貑",
+            "tier": 2,
+            "rank": 76,
+            "reason": "희귀 고전 문자; 짐승 관련"
+          },
+          {
+            "hanja": "跒",
+            "tier": 2,
+            "rank": 77,
+            "reason": "희귀 고전 문자; 발 관련"
+          },
+          {
+            "hanja": "酠",
+            "tier": 2,
+            "rank": 78,
+            "reason": "희귀 고전 문자; 술 관련"
+          },
+          {
+            "hanja": "鉫",
+            "tier": 2,
+            "rank": 79,
+            "reason": "희귀 고전 문자; 금속 관련"
+          },
+          {
+            "hanja": "鉲",
+            "tier": 2,
+            "rank": 80,
+            "reason": "희귀 고전 문자; 금속 관련"
+          },
+          {
+            "hanja": "鎵",
+            "tier": 2,
+            "rank": 81,
+            "reason": "갈륨(Gallium)의 한자 표기 — 화학 원소 전문어"
+          },
+          {
+            "hanja": "鎶",
+            "tier": 2,
+            "rank": 82,
+            "reason": "코페르니슘(Cn) 한자 표기 — 화학 원소 전문어"
+          },
+          {
+            "hanja": "魺",
+            "tier": 2,
+            "rank": 83,
+            "reason": "희귀 고전 문자; 물고기 관련"
+          },
+          {
+            "hanja": "鴚",
+            "tier": 2,
+            "rank": 84,
+            "reason": "희귀 고전 문자; 새 관련"
+          },
+          {
+            "hanja": "麚",
+            "tier": 2,
+            "rank": 85,
+            "reason": "수사슴 가 — 고전 동물 어휘"
+          },
+          {
+            "hanja": "溊",
+            "tier": 2,
+            "rank": 86,
+            "reason": "희귀 고전 문자; 물 관련"
+          },
+          {
+            "hanja": "价",
+            "tier": 3,
+            "rank": 87,
+            "reason": "價의 중국 간체자 — 한국 정자 교육에서 사용 안 함"
+          },
+          {
+            "hanja": "仮",
+            "tier": 3,
+            "rank": 88,
+            "reason": "假의 일본 신자체 — 한국 한자에서 비표준"
+          },
+          {
+            "hanja": "傢",
+            "tier": 3,
+            "rank": 89,
+            "reason": "家의 이체자(俗字) — 한국 현행 표기에서 안 씀"
+          },
+          {
+            "hanja": "価",
+            "tier": 3,
+            "rank": 90,
+            "reason": "価(U+4FA1) — 價의 이형자; 한국 정자 교육에서 사용 안 함"
+          },
+          {
+            "hanja": "瘸",
+            "tier": 3,
+            "rank": 91,
+            "reason": "절뚝거릴 가 — 현대 중국어 어휘; 한국어 한자어 미사용"
+          },
+          {
+            "hanja": "鴐",
+            "tier": 3,
+            "rank": 92,
+            "reason": "기러기 가 — 한국어 한자어로 사실상 미사용"
+          },
+          {
+            "hanja": "诃",
+            "tier": 3,
+            "rank": 93,
+            "reason": "訶의 중국 간체자 — 한국 한자에서 비표준"
+          },
+          {
+            "hanja": "贾",
+            "tier": 3,
+            "rank": 94,
+            "reason": "賈의 중국 간체자 — 한국 한자에서 비표준"
+          },
+          {
+            "hanja": "轲",
+            "tier": 3,
+            "rank": 95,
+            "reason": "軻의 중국 간체자 — 한국 한자에서 비표준"
+          },
+          {
+            "hanja": "镓",
+            "tier": 3,
+            "rank": 96,
+            "reason": "鎵의 중국 간체자 — 한국 한자에서 비표준"
+          },
+          {
+            "hanja": "驾",
+            "tier": 3,
+            "rank": 97,
+            "reason": "駕의 중국 간체자 — 한국 한자에서 비표준"
+          },
+          {
+            "hanja": "鲄",
+            "tier": 3,
+            "rank": 98,
+            "reason": "어류 관련 간체 추정 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "婽",
+            "tier": 3,
+            "rank": 99,
+            "reason": "희귀 이체자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "尜",
+            "tier": 3,
+            "rank": 100,
+            "reason": "팽이 가 — 중국어 민속 어휘; 한국 한자어 미사용"
+          },
+          {
+            "hanja": "彁",
+            "tier": 3,
+            "rank": 101,
+            "reason": "희귀 이체자/유령자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "榢",
+            "tier": 3,
+            "rank": 102,
+            "reason": "희귀 이체자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "毠",
+            "tier": 3,
+            "rank": 103,
+            "reason": "희귀 고전 문자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "拁",
+            "tier": 3,
+            "rank": 104,
+            "reason": "희귀 유니코드 확장자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "㤎",
+            "tier": 3,
+            "rank": 105,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "㗎",
+            "tier": 3,
+            "rank": 106,
+            "reason": "광동어 조사 글자 — 한국 한자어 범주 외 유령자"
+          },
+          {
+            "hanja": "㚙",
+            "tier": 3,
+            "rank": 107,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "㞹",
+            "tier": 3,
+            "rank": 108,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "㢦",
+            "tier": 3,
+            "rank": 109,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "㤉",
+            "tier": 3,
+            "rank": 110,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "㧝",
+            "tier": 3,
+            "rank": 111,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "㪃",
+            "tier": 3,
+            "rank": 112,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "㪼",
+            "tier": 3,
+            "rank": 113,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "㱒",
+            "tier": 3,
+            "rank": 114,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "㹢",
+            "tier": 3,
+            "rank": 115,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "䂟",
+            "tier": 3,
+            "rank": 116,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "䈔",
+            "tier": 3,
+            "rank": 117,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "䑝",
+            "tier": 3,
+            "rank": 118,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "䔅",
+            "tier": 3,
+            "rank": 119,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "䕒",
+            "tier": 3,
+            "rank": 120,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "䪪",
+            "tier": 3,
+            "rank": 121,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "䯊",
+            "tier": 3,
+            "rank": 122,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "䶗",
+            "tier": 3,
+            "rank": 123,
+            "reason": "유니코드 확장 희귀자 — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "䴥",
+            "tier": 3,
+            "rank": 124,
+            "reason": "유니코드 확장 희귀자(U+4D25) — 한국어 사용 기록 없음"
+          },
+          {
+            "hanja": "彁",
+            "tier": 3,
+            "rank": 125,
+            "reason": "유령자/유니코드 확장 — 한국어 사용 기록 없음"
+          }
+        ],
+        "glosses": [
+          {
+            "hanja": "呿",
+            "status": "full",
+            "gloss": "입 벌릴 가"
+          },
+          {
+            "hanja": "瘕",
+            "status": "full",
+            "gloss": "적취 가"
+          },
+          {
+            "hanja": "猳",
+            "status": "full",
+            "gloss": "수퇘지 가"
+          },
+          {
+            "hanja": "溊",
+            "status": "full",
+            "gloss": "물 이름 가"
+          },
+          {
+            "hanja": "牁",
+            "status": "full",
+            "gloss": "배말뚝 가"
+          },
+          {
+            "hanja": "豭",
+            "status": "full",
+            "gloss": "수퇘지 가"
+          },
+          {
+            "hanja": "槚",
+            "status": "full",
+            "gloss": "가나무 가"
+          },
+          {
+            "hanja": "岢",
+            "status": "full",
+            "gloss": "산 이름 가"
+          },
+          {
+            "hanja": "幏",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "愘",
+            "status": "unknown"
+          },
+          {
+            "hanja": "戓",
+            "status": "unknown"
+          },
+          {
+            "hanja": "戨",
+            "status": "unknown"
+          },
+          {
+            "hanja": "斚",
+            "status": "full",
+            "gloss": "술잔 가"
+          },
+          {
+            "hanja": "樖",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "泇",
+            "status": "full",
+            "gloss": "물 이름 가"
+          },
+          {
+            "hanja": "渮",
+            "status": "full",
+            "gloss": "강 이름 가"
+          },
+          {
+            "hanja": "滒",
+            "status": "full",
+            "gloss": "진창 가"
+          },
+          {
+            "hanja": "炣",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "牫",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "牱",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "犌",
+            "status": "full",
+            "gloss": "수소 가"
+          },
+          {
+            "hanja": "玍",
+            "status": "unknown"
+          },
+          {
+            "hanja": "癿",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "笴",
+            "status": "full",
+            "gloss": "화살대 가"
+          },
+          {
+            "hanja": "糘",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "胢",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "腵",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "蚵",
+            "status": "full",
+            "gloss": "굴 가"
+          },
+          {
+            "hanja": "貑",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "跒",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "酠",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "鉫",
+            "status": "unknown"
+          },
+          {
+            "hanja": "鉲",
+            "status": "unknown"
+          },
+          {
+            "hanja": "鎵",
+            "status": "full",
+            "gloss": "갈륨 가"
+          },
+          {
+            "hanja": "鎶",
+            "status": "reading_only"
+          },
+          {
+            "hanja": "魺",
+            "status": "full",
+            "gloss": "복어 가"
+          },
+          {
+            "hanja": "鴚",
+            "status": "full",
+            "gloss": "기러기 가"
+          },
+          {
+            "hanja": "麚",
+            "status": "full",
+            "gloss": "수사슴 가"
+          },
+          {
+            "hanja": "嘏",
+            "status": "full",
+            "gloss": "클 가"
+          }
+        ]
+      },
+      {
+        "reading": "갑",
+        "ranked": [
+          {
+            "hanja": "甲",
+            "tier": 0,
+            "rank": 1,
+            "reason": "갑옷·첫째 천간(天干)·손등 등 다의자로 일상 전반에 극히 자주 쓰이는 기본 한자"
+          },
+          {
+            "hanja": "匣",
+            "tier": 1,
+            "rank": 2,
+            "reason": "작은 상자(갑); 지갑(紙匣) 등 복합어로 현대에도 실용 가능"
+          },
+          {
+            "hanja": "岬",
+            "tier": 1,
+            "rank": 3,
+            "reason": "곶·갑 등 지리 용어 및 지명에 쓰이나 일상에서 드묾"
+          },
+          {
+            "hanja": "胛",
+            "tier": 2,
+            "rank": 4,
+            "reason": "견갑골(肩胛骨) 해부학 복합어에 고정 사용됨"
+          },
+          {
+            "hanja": "閘",
+            "tier": 2,
+            "rank": 5,
+            "reason": "갑문(閘門, 수문)으로 토목·수문학 전문어에 쓰임"
+          },
+          {
+            "hanja": "鉀",
+            "tier": 2,
+            "rank": 6,
+            "reason": "칼륨의 한자 표기; 한국에서는 화학 고전 표기로만 드묾"
+          },
+          {
+            "hanja": "瞌",
+            "tier": 2,
+            "rank": 7,
+            "reason": "瞌睡(갑수, 졸음) 형태로 고전·중국어 맥락에 등장; 현대 한국에서 극히 드묾"
+          },
+          {
+            "hanja": "韐",
+            "tier": 2,
+            "rank": 8,
+            "reason": "슬갑(膝韐) 등 고전 예복 용어; 실용 빈도 거의 없음"
+          },
+          {
+            "hanja": "帢",
+            "tier": 2,
+            "rank": 9,
+            "reason": "고대 두건 명칭; 현대 한국 한자어에서 사실상 미사용"
+          },
+          {
+            "hanja": "钾",
+            "tier": 3,
+            "rank": 10,
+            "reason": "鉀(U+9240)의 중국 간체자(简体字); 한국 정자 아님"
+          },
+          {
+            "hanja": "闸",
+            "tier": 3,
+            "rank": 11,
+            "reason": "閘(U+9598)의 중국 간체자(简体字); 한국 정자 아님"
+          },
+          {
+            "hanja": "舺",
+            "tier": 3,
+            "rank": 12,
+            "reason": "艋舺(맹갑) 대만 지명 한자; 한국 한자어에서 미사용"
+          },
+          {
+            "hanja": "厒",
+            "tier": 3,
+            "rank": 13,
+            "reason": "실용 용례 불명의 희귀자"
+          },
+          {
+            "hanja": "搕",
+            "tier": 3,
+            "rank": 14,
+            "reason": "두드리다 의미의 고전 희귀자; 현대 미사용"
+          },
+          {
+            "hanja": "敆",
+            "tier": 3,
+            "rank": 15,
+            "reason": "희귀/유령자; 실용 용례 없음"
+          },
+          {
+            "hanja": "玾",
+            "tier": 3,
+            "rank": 16,
+            "reason": "玉 관련 희귀 고전자; 현대 미사용"
+          },
+          {
+            "hanja": "笚",
+            "tier": 3,
+            "rank": 17,
+            "reason": "대나무 기물 관련 희귀자; 현대 미사용"
+          },
+          {
+            "hanja": "筪",
+            "tier": 3,
+            "rank": 18,
+            "reason": "대나무 상자 관련 고전 희귀자; 현대 미사용"
+          },
+          {
+            "hanja": "醘",
+            "tier": 3,
+            "rank": 19,
+            "reason": "술 관련 희귀자; 실용 용례 없음"
+          },
+          {
+            "hanja": "㠷",
+            "tier": 3,
+            "rank": 20,
+            "reason": "CJK Extension A 수록 희귀자; 유령 문자 수준"
+          },
+          {
+            "hanja": "㓣",
+            "tier": 3,
+            "rank": 21,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "㕅",
+            "tier": 3,
+            "rank": 22,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "㕉",
+            "tier": 3,
+            "rank": 23,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "㗐",
+            "tier": 3,
+            "rank": 24,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "㧁",
+            "tier": 3,
+            "rank": 25,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "㪉",
+            "tier": 3,
+            "rank": 26,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "㭱",
+            "tier": 3,
+            "rank": 27,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "䐦",
+            "tier": 3,
+            "rank": 28,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "䖬",
+            "tier": 3,
+            "rank": 29,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "䗘",
+            "tier": 3,
+            "rank": 30,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "䘥",
+            "tier": 3,
+            "rank": 31,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "䪺",
+            "tier": 3,
+            "rank": 32,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          },
+          {
+            "hanja": "䫦",
+            "tier": 3,
+            "rank": 33,
+            "reason": "CJK Extension A 희귀/유령자; 한국어에서 사실상 미사용"
+          }
+        ],
+        "glosses": [
+          {
+            "hanja": "瞌",
+            "status": "full",
+            "gloss": "졸 갑"
+          },
+          {
+            "hanja": "帢",
+            "status": "full",
+            "gloss": "모자 갑"
+          }
+        ]
+      },
+      {
+        "reading": "난",
+        "ranked": [
+          {
+            "hanja": "難",
+            "tier": 0,
+            "rank": 1,
+            "reason": "難이도·困難·難관 등 일상 어휘 전반에 가장 광범위하게 쓰이는 핵심자"
+          },
+          {
+            "hanja": "亂",
+            "tier": 0,
+            "rank": 2,
+            "reason": "混亂·亂動·亂場 등 일상 및 사회 어휘에 매우 빈번히 등장"
+          },
+          {
+            "hanja": "暖",
+            "tier": 0,
+            "rank": 3,
+            "reason": "暖房·溫暖·暖流 등 기후·생활 어휘에 고빈도로 쓰임"
+          },
+          {
+            "hanja": "卵",
+            "tier": 0,
+            "rank": 4,
+            "reason": "卵子·鷄卵·産卵 등 일상 및 생물 어휘에 꾸준히 쓰임"
+          },
+          {
+            "hanja": "蘭",
+            "tier": 1,
+            "rank": 5,
+            "reason": "蘭草·蘭花; 인명·지명과 식물 관련 어휘에 사용되나 일상 빈도는 낮음"
+          },
+          {
+            "hanja": "欄",
+            "tier": 1,
+            "rank": 6,
+            "reason": "欄外·欄干; 신문·서식 등 문어적 맥락에서 가끔 등장"
+          },
+          {
+            "hanja": "爛",
+            "tier": 1,
+            "rank": 7,
+            "reason": "燦爛·爛熟 등 고급 문어 어휘에 간간이 쓰임"
+          },
+          {
+            "hanja": "鸞",
+            "tier": 1,
+            "rank": 8,
+            "reason": "鸞鳳; 고전·문학 어휘 및 인명에 한정적으로 쓰임"
+          },
+          {
+            "hanja": "煖",
+            "tier": 2,
+            "rank": 9,
+            "reason": "暖의 이체자이나 고전 문헌에 독립 용례가 존재하는 전문·희귀자"
+          },
+          {
+            "hanja": "赧",
+            "tier": 2,
+            "rank": 10,
+            "reason": "'부끄러워 얼굴 붉히다'의 뜻; 고전 한문 전용으로 현대 한국어에서 극히 드묾"
+          },
+          {
+            "hanja": "煗",
+            "tier": 2,
+            "rank": 11,
+            "reason": "煖·暖의 이체자로 고전 문헌에만 한정; 현대 한국어에서 독립 사용 거의 없음"
+          },
+          {
+            "hanja": "偄",
+            "tier": 2,
+            "rank": 12,
+            "reason": "'나약하다'의 뜻; 한국어에서 전문·고전 어휘로만 극히 드물게 나타남"
+          },
+          {
+            "hanja": "餪",
+            "tier": 2,
+            "rank": 13,
+            "reason": "혼례 음식 관련 고전 어휘; 현대 한국어에서 실사용 거의 없는 전문·역사어"
+          },
+          {
+            "hanja": "㬉",
+            "tier": 2,
+            "rank": 14,
+            "reason": "日 부수 이체자로 고전 문헌에 한정; 현대 한국어에서 사실상 쓰이지 않음"
+          },
+          {
+            "hanja": "愞",
+            "tier": 3,
+            "rank": 15,
+            "reason": "懦의 이형동자(동자/약자); 독립 사용이 극히 희귀하여 tier 3으로 강등"
+          },
+          {
+            "hanja": "难",
+            "tier": 3,
+            "rank": 16,
+            "reason": "難의 중국 간체자(简体); 한국어에서 사용하지 않으며 정자 難 우선"
+          },
+          {
+            "hanja": "奻",
+            "tier": 3,
+            "rank": 17,
+            "reason": "극히 희귀한 이체·유령자; 한국어에서 실사용 용례 없음"
+          },
+          {
+            "hanja": "戁",
+            "tier": 3,
+            "rank": 18,
+            "reason": "고전 이체자; 한국어에서 독립 사용 용례 없는 유령자"
+          },
+          {
+            "hanja": "渜",
+            "tier": 3,
+            "rank": 19,
+            "reason": "이체자; 한국어에서 실사용 용례 없음"
+          },
+          {
+            "hanja": "㫱",
+            "tier": 3,
+            "rank": 20,
+            "reason": "CJK 통합 한자 확장 영역 유령자; 한국어 실사용 없음"
+          },
+          {
+            "hanja": "㬮",
+            "tier": 3,
+            "rank": 21,
+            "reason": "CJK 통합 한자 확장 영역 유령자; 한국어 실사용 없음"
+          },
+          {
+            "hanja": "䎡",
+            "tier": 3,
+            "rank": 22,
+            "reason": "CJK 확장 B 영역 유령자; 한국어에서 실사용 용례 없음"
+          }
+        ],
+        "glosses": [
+          {
+            "hanja": "㬉",
+            "status": "full",
+            "gloss": "따뜻할 난"
+          }
+        ]
+      }
+    ],
+    "verify": [
+      {
+        "issues": [
+          {
+            "reading": "가",
+            "hanja": "謌",
+            "kind": "wrong_tier",
+            "detail": "이체자인데 tier 3으로 강등되지 않음. rank 38에서 tier 2로 분류되어 있으나, reason 자체가 '歌의 이체자'라고 명시함. 이 스킴은 변형/속자(예: 家의 속자 傢, 假의 신자체 仮)를 tier 3으로 강등하므로, 흔한 정자 歌의 이체자인 謌도 tier 3이어야 함. 같은 부류인 簡體字들(诃·贾·镓 등)이 tier 3에 있는 것과도 불일치."
+          },
+          {
+            "reading": "가",
+            "hanja": "斚",
+            "kind": "wrong_tier",
+            "detail": "이체자인데 tier 3으로 강등되지 않음. rank 52에서 tier 2로 분류되어 있으나, reason이 '斝의 이체자'라고 명시함. 변형자를 tier 3으로 보내는 스킴 규칙(傢·仮·価 등)과 어긋나므로 tier 3이어야 함."
+          }
+        ],
+        "summary": "검토 결과 명백한 오류는 변형자(이체자)의 티어 분류 불일치 2건입니다. 謌(rank 38)와 斚(rank 52)는 각자의 reason에서 '歌의 이체자', '斝의 이체자'라고 스스로 명시하는데도 tier 2에 머물러 있습니다. 이 스킴은 변형/속자/신자체(傢=家 속자, 仮=假 신자체, 価)와 中國 간체자(价·钾·诃·贾·轲·镓·驾·难)를 일관되게 tier 3으로 강등하므로, 같은 부류인 謌·斚도 tier 3이 맞습니다. 그 외 점검 결과: (1) 흔한 상용자의 잘못된 강등은 없음 — 家·可·加·歌·價(가), 甲(갑), 難·亂·暖·卵(난) 등 핵심 상용자는 모두 tier 0에 올바르게 위치. (2) 명백히 환각된 훈독은 발견 못함 — 魺('복어 가'), 鴚('기러기 가'), 犌('수소 가') 등 희귀자 훈독도 모두 文獻상 근거 있는 뜻·음으로 판단되어 단정적 오류로 보기 어려움. (3) 누락된 흔한 한자 없음 — 세 음 모두 상용 한자는 망라됨. 참고(경계 사례, 확정 오류로 분류하지 않음): 叚(rank 48, '假의 古字')는 古字가 俗字/이체자와는 다른 범주로 볼 여지가 있어 tier 2 유지가 방어 가능하므로 제외했습니다."
+      },
+      {
+        "issues": [
+          {
+            "reading": "가",
+            "hanja": "謌",
+            "kind": "wrong_tier",
+            "detail": "reason 텍스트가 스스로 '歌의 이체자'라고 명시하는데 tier 2에 배치됨. 간체자/이체자는 tier 3으로 강등되어야 함(기준 3). 기본자 歌는 같은 목록 rank 4 tier 0에 이미 존재하므로 이체자인 謌는 tier 3이 맞음."
+          },
+          {
+            "reading": "가",
+            "hanja": "斚",
+            "kind": "wrong_tier",
+            "detail": "reason 텍스트가 '斝의 이체자'라고 명시하는데 tier 2에 배치됨. 기본자 斝가 같은 목록 rank 30에 이미 있으므로 이체자 斚는 tier 3으로 강등되어야 함(기준 3)."
+          },
+          {
+            "reading": "가",
+            "hanja": "叚",
+            "kind": "wrong_tier",
+            "detail": "reason 텍스트가 '假의 고자(古字)'라고 명시하는데 tier 2에 배치됨. 정자 假는 같은 목록 rank 7 tier 0에 있으므로 고자/이체자인 叚는 tier 3이 맞음(기준 3)."
+          }
+        ],
+        "summary": "명백한 오류 3건을 발견했으며 모두 '이체자/고자인데 tier 3으로 강등되지 않음'(기준 3) 유형입니다. 가(家) 그룹의 謌(rank 38), 斚(rank 52), 叚(rank 48)는 데이터 자체의 reason 텍스트가 각각 歌의 이체자, 斝의 이체자, 假의 고자(古字)라고 명시하면서도 tier 2에 배치되어 있습니다. 세 경우 모두 해당 기본자(歌 rank 4·tier 0, 斝 rank 30, 假 rank 7·tier 0)가 같은 목록에 더 높은 티어로 존재하므로, 변형자는 tier 3으로 강등되는 것이 일관됩니다. 그 외 항목들: tier 0 목록이 다소 과포함(袈·哥·嘉·駕 등 비교적 희귀자가 tier 0)이나 이는 '강등'이 아닌 '과승격' 방향이라 지정된 4개 기준에 해당하지 않아 제외했습니다. 간체자(价·钾·闸·诃·贾·轲·镓·驾·难 등)는 모두 tier 3에 올바르게 배치되어 있습니다. 글로스 중 魺='복어 가'는 표준 자전의 '물고기 이름 가'와 다소 어긋나나 희귀자라 명백한 환각으로 단정하기 어려워 보수적으로 제외했습니다. 난(難) 그룹의 煖·煗·㬉는 reason이 독립적 고전 용례를 근거로 들어 tier 2를 정당화하므로 편집 판단의 여지가 있어 오류로 보지 않았습니다. 누락된 상용 한자나 명백히 잘못 강등된 고빈도자는 확인되지 않았습니다."
+      }
+    ]
+  }
+}
