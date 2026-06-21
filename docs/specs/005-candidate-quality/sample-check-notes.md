@@ -64,3 +64,13 @@ Verifier "missing/substitution" cases where a real candidate was displaced by a 
 
 Batch 5 has `verify=[]` (it hit the session limit before verify ran); its 18 readings are
 structurally fine via the compile but were not verifier-scanned — re-scan them in the sample-check.
+
+## Tail ordering policy (decide in the sample-check) — from the 2026-06-21 run-check
+- M2 replaces M1's "variants strictly last" rule with a pure **(tier, swarm-rank)** order. So within tier 3,
+  variant forms (同字/略字/俗字) are interleaved with rare/ghost chars by rank — NOT isolated at the very end;
+  the absolute tail is the `뜻 미상` ghosts. (Run-check on 가: 椵 = tier 2 @ pos 44 leads the tier-3 variants
+  @ 63–68; `뜻 미상` ghosts fill 114–125.)
+- **The gloss pass (②) will NOT reorder this** — it only fills tier 0–2 meanings; tier 3 stays `뜻 미상`,
+  same positions. So a tidier tail is a *separate* decision from gloss.
+- If we want a tidier tail (e.g. push `뜻 미상` ghosts strictly last, or variants behind gloss-bearing rares),
+  add a secondary sort key in `build_tiers.py` — cheap, deterministic, no re-rank needed.
