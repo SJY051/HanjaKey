@@ -49,7 +49,9 @@ Real but deferred items. Not part of an active spec until promoted.
   the layout). Pre-existing; not touched by spec 005 M1.
 - **Direction:** scroll only when the target is off-screen, or scroll to the column (not the centered
   cell), or drop `.center`/animation. Verify with 가/정 + a large custom symbol set.
-- **Priority:** usability — cells can become visually unreachable (selection itself still works).
+- **✅ RESOLVED 2026-06-22:** auto-scroll now fires only when the column (wide grid) / row (square grid)
+  changes — `↑↓` within a column (and `←→` within a row) no longer scrolls — revealing minimally
+  (`anchor: nil`) with a `.smooth` spring instead of re-centering every cell.
 
 ### Candidate list doesn't appear until the window is re-focused (Chromium)
 - **Reported:** 2026-06-22 (ASQi).
@@ -107,6 +109,5 @@ HanjaKey is a public repo; before calling it released:
   refreshed, `THIRD_PARTY_DATA.md` first-party section + per-dir `LICENSE-DATA.md`, and an in-app 정보
   (About) credits section in Settings. CC BY-SA / KOGL attribution now visible to users.
 - **App icon**, **screenshots** — still TODO (need assets / real-run captures).
-- **Deployment-target mismatch:** `bundling/Info.plist` `LSMinimumSystemVersion` is **13.0** but the build
-  targets macOS **14** (Package.swift platform; README says 14+). Reconcile to 14.0 so it won't try to
-  launch on 13. (low-risk config fix; deferred per ASQi.)
+- **Deployment-target mismatch:** ✅ RESOLVED 2026-06-22 — `bundling/Info.plist` `LSMinimumSystemVersion`
+  set to **14.0** to match the build target (Package.swift `.macOS(.v14)`) and the README.

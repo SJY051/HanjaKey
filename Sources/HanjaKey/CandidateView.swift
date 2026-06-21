@@ -431,10 +431,13 @@ struct CandidateView: View {
                 .padding(8)
             }
             .frame(maxHeight: Self.cellHeight * CGFloat(rows) + 20)
-            .onChange(of: selection) { _, newValue in
-                withAnimation(.easeOut(duration: 0.12)) { proxy.scrollTo(newValue, anchor: .center) }
+            .onChange(of: selection) { oldValue, newValue in
+                // Horizontal grid: scroll ONLY when the column changes. ↑↓ moves within a column (±1) and
+                // must not scroll; ←→ / column-boundary crossings reveal the new column (minimally, nil).
+                guard oldValue / rows != newValue / rows else { return }
+                withAnimation(.smooth(duration: 0.25)) { proxy.scrollTo(newValue, anchor: nil) }
             }
-            .onAppear { proxy.scrollTo(selection, anchor: .center) }
+            .onAppear { proxy.scrollTo(selection, anchor: nil) }
         }
     }
 
@@ -457,10 +460,13 @@ struct CandidateView: View {
                 .padding(8)
             }
             .frame(maxHeight: 320)
-            .onChange(of: selection) { _, newValue in
-                withAnimation(.easeOut(duration: 0.12)) { proxy.scrollTo(newValue, anchor: .center) }
+            .onChange(of: selection) { oldValue, newValue in
+                // Vertical grid: scroll ONLY when the row changes. ←→ moves within a row (±1) and must
+                // not scroll; ↑↓ / row-boundary crossings reveal the new row (minimally, nil).
+                guard oldValue / Self.gridColumns != newValue / Self.gridColumns else { return }
+                withAnimation(.smooth(duration: 0.25)) { proxy.scrollTo(newValue, anchor: nil) }
             }
-            .onAppear { proxy.scrollTo(selection, anchor: .center) }
+            .onAppear { proxy.scrollTo(selection, anchor: nil) }
         }
     }
 
