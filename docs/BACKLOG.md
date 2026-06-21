@@ -23,7 +23,9 @@ Real but deferred items. Not part of an active spec until promoted.
 - **Update 2026-06-22:** a **reproducible** case surfaced in Chromium browsers (capture succeeds but the
   list doesn't show until re-focus) — see "Candidate list doesn't appear until the window is re-focused
   (Chromium)" below. Likely the same root cause; best current lead.
-- **Priority:** usability; intermittent — now has a reproducible Chromium trigger to investigate.
+- **✅ RESOLVED 2026-06-22 (spec 006):** the focus-steal popup was the root. Fixed via capture-time
+  selection collapse, unconditional focus-return, AX-less capture (-25212 tolerance), and
+  `hidesOnDeactivate=false` + an outside-click dismiss monitor.
 
 ### Word vs syllable/symbol recognition is weak — needs a rethink
 - **Reported:** 2026-06-19 (ASQi). Supersedes the earlier standalone lone-jamo item.
@@ -62,9 +64,11 @@ Real but deferred items. Not part of an active spec until promoted.
   AX-focus timing difference right after a keystroke.
 - **Likely area:** how the popup `NSPanel` is summoned/activated (`PopupPanel` / `AppDelegate` summon flow)
   and whether the target app's focus is settled when we show the panel / read AX.
-- **Relation:** probably the reproducible case of "Intermittent input drop" above (its "popup doesn't
-  appear" half). Investigate together.
-- **Priority:** usability — now reproducible, so the best lead on the long-standing drop.
+- **Relation:** the reproducible case of "Intermittent input drop" above (its "popup doesn't appear" half).
+- **✅ RESOLVED 2026-06-22 (spec 006):** root cause = **macOS 14 denies `activate(ignoringOtherApps:)` to
+  an app the user hasn't clicked** (a global hotkey doesn't count), so the cold popup wasn't truly
+  frontmost and `hidesOnDeactivate=true` hid the "deactivated" floating panel → it never rendered. Fixed
+  by `hidesOnDeactivate=false` + an outside-click dismiss monitor.
 
 ### Focus sometimes doesn't return to the original window
 - **Reported:** 2026-06-22 (ASQi).
@@ -73,7 +77,8 @@ Real but deferred items. Not part of an active spec until promoted.
 - **Likely area:** focus restoration when the `NSPanel` dismisses (after pick/cancel) — the
   previously-active app/window isn't reliably re-activated.
 - **Relation:** same focus-management cluster as the Chromium list bug above.
-- **Priority:** usability.
+- **✅ RESOLVED 2026-06-22 (spec 006):** track the source app before present and reactivate it on every
+  dismiss path (even when AX capture returns nil), so focus never sticks on HanjaKey.
 
 ## Enhancements
 
