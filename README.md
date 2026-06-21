@@ -44,12 +44,23 @@ macOS 한글 입력기에도 한자 변환(Option+Return)이 있지만, **자모
   (시스템 설정 → 개인정보 보호 및 보안 → 손쉬운 사용)
 - 단축키 라이브러리: [sindresorhus/KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
 
-## 데이터
+## 데이터 / 출처
 
-- 한자·한자어: [libhangul](https://github.com/libhangul/libhangul) `hanja.txt` (음·뜻 포함)
-- 특수문자: KS X 1001 자모별 배열
+코드는 MIT지만 **번들 데이터는 각 출처의 라이선스를 그대로 따릅니다**(MIT로 재라이선스하지 않음).
+전체 목록·전문은 [`THIRD_PARTY_DATA.md`](THIRD_PARTY_DATA.md)를 참고하세요.
+
+- **한자·한자어 표제어** — [libhangul](https://github.com/libhangul/libhangul) `hanja.txt` · BSD 3-Clause · ⓒ 2005,2006 Choe Hwanjin
+- **특수문자** — KS X 1001 자모별 배열 (자체 작성)
+- **한자어 빈도(동음어 정렬)** — 국립국어원 「현대 국어 사용 빈도 조사」(2002) · KOGL 제1유형(출처표시)
+- **한자어 뜻풀이** — 국립국어원 표준국어대사전 · **CC BY-SA 2.0 KR**
+- **단일 한자 훈음(보완)** — 한국어 위키낱말사전 · **CC BY-SA** / NeoMindStd [HanjaDB](https://github.com/NeoMindStd/HanjaDB) · MIT
+- **단일 한자 정렬·훈음(생성)** — LLM으로 생성한 HanjaKey 자체 데이터 · MIT
+
+> 표준국어대사전·위키낱말사전 데이터는 **CC BY-SA(동일조건변경허락)**, 국립국어원 빈도조사는
+> **KOGL 제1유형(출처표시)** 조건으로 배포됩니다. 재배포 시 위 출처 표시와 동일 라이선스 조건을 유지하세요.
 
 ## 라이선스
 
 - 코드: [MIT](LICENSE)
-- 번들 한자 데이터: libhangul, BSD 라이선스 — 원 저작권 고지를 데이터 파일 헤더에 유지합니다
+- 번들 데이터: 출처별 라이선스 유지 — 상세는 [`THIRD_PARTY_DATA.md`](THIRD_PARTY_DATA.md). CC BY-SA·KOGL
+  데이터는 MIT가 아니라 각자의 라이선스로 배포되며, 원 저작권·출처 고지를 데이터 파일에 유지합니다.
