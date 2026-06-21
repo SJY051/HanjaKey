@@ -34,7 +34,7 @@ Resume the ranking-swarm grind from here (survives compaction).
    line + sample readings. Spot-check every 2–3 batches.
 5. Repeat until `remaining_after=0`.
 
-## ② Gloss pass — IN PROGRESS (720 / 2,859 pairs done)
+## ② Gloss pass — ✅ COMPLETE (2,859 pairs → 1,586 글로스, 2026-06-22)
 Scope: empty-gloss pairs that are user-visible = ranked tier 0–2 **+ all unranked readings** (ranked tier 3
 stays `뜻 미상`). Per (reading, hanja) — 다음자. Output is OUR MIT data (short generated 훈음, not scraped).
 
@@ -47,11 +47,11 @@ stays `뜻 미상`). Per (reading, hanja) — 다음자. Output is OUR MIT data 
    wrong_reading) → `python3 scripts/build_tiers.py` (recompile) → `swift test`.
 5. Repeat until `pairs=0`.
 
-**Progress:** 2,070 attempted (gloss-1 720 + gloss-2 1,350) → **1,180 full glosses** + 860 미상 + 30 wrong_reading.
-뜻 미상 17,873 → 16,947. **Remaining 789** (t2 509 + unranked 269 + t1 11). Both passes hit the quota because the
-gloss agents over-used `web_search` (~1.3k tok/pair, 1.9M/pass); the harness is now **knowledge-only (no
-web_search, commit `35c38d3`)** — ~10× cheaper. Resume after the **2:30am KST** reset; one cheap pass should
-finish the 789.
+**Result:** 3 passes (gloss-1/2/3) → **1,586 full 훈음** in `hanja-gloss-swarm/hanja_gloss.txt`, 1,228 미상
+(stay empty by design), 45 wrong_reading. Ranked `뜻 미상` 17,873 → **16,655**; the 25 ranked wrong_reading
+chars demoted to tier 3 in `tier-overrides.txt` (cross-listings/간체 — 시 十·교 酵·방 棒 …). Commit `198822c`;
+`.app` rebuilt. **Lesson: the gloss agents over-used `web_search` (1.9M tok/pass, ~10× cost) until the harness
+went knowledge-only (`35c38d3`)** — see [[dynamic-workflow-harness]]. (Pipeline above kept for re-runs.)
 
 **After ② done:** review accumulated `wrong_reading` (build_gloss_compile reports them; e.g. 교 酵, 동 諌,
 돈 褪) → add demotions to `tier-overrides.txt` → recompile → rebuild `.app`. 미상 pairs stay empty by design.
