@@ -20,7 +20,10 @@ Real but deferred items. Not part of an active spec until promoted.
   or the hotkey event being dropped.
 - **Monitoring:** a debug logger already exists — flip `CaptureLog.enabled = true` in a local build and
   watch `/tmp/hanjakey-capture.log`. A drop shows up as a nil-guard line or a `⌘C poll: TIMEOUT`.
-- **Priority:** usability; intermittent — kept in monitoring mode (logging build) while ④ proceeds.
+- **Update 2026-06-22:** a **reproducible** case surfaced in Chromium browsers (capture succeeds but the
+  list doesn't show until re-focus) — see "Candidate list doesn't appear until the window is re-focused
+  (Chromium)" below. Likely the same root cause; best current lead.
+- **Priority:** usability; intermittent — now has a reproducible Chromium trigger to investigate.
 
 ### Word vs syllable/symbol recognition is weak — needs a rethink
 - **Reported:** 2026-06-19 (ASQi). Supersedes the earlier standalone lone-jamo item.
@@ -46,6 +49,32 @@ Real but deferred items. Not part of an active spec until promoted.
   cell), or drop `.center`/animation. Verify with 가/정 + a large custom symbol set.
 - **Priority:** usability — cells can become visually unreachable (selection itself still works).
 
+### Candidate list doesn't appear until the window is re-focused (Chromium)
+- **Reported:** 2026-06-22 (ASQi).
+- **Environment:** Chromium-based browsers (tested: ChatGPT Atlas). **Safari is unaffected.**
+- **Symptom:** in a web-page text input (search box, etc.), invoking ⌥⌘H **immediately after typing a
+  character** does NOT show the candidate list — even though the character is captured and the candidate
+  is selected correctly. Re-grabbing the window focus once (clicking the already-focused window) makes it
+  work. Recurs for every newly typed character; does NOT recur on a character whose window was already
+  re-focused once.
+- **Key signal:** capture/selection succeeds, so this is a **display / focus / activation** failure, not
+  an AX capture failure. Chromium-only (vs Safari) points to a window-activation / first-responder or
+  AX-focus timing difference right after a keystroke.
+- **Likely area:** how the popup `NSPanel` is summoned/activated (`PopupPanel` / `AppDelegate` summon flow)
+  and whether the target app's focus is settled when we show the panel / read AX.
+- **Relation:** probably the reproducible case of "Intermittent input drop" above (its "popup doesn't
+  appear" half). Investigate together.
+- **Priority:** usability — now reproducible, so the best lead on the long-standing drop.
+
+### Focus sometimes doesn't return to the original window
+- **Reported:** 2026-06-22 (ASQi).
+- **Symptom:** after the popup closes, focus occasionally fails to return to the window that had it before
+  the popup was summoned.
+- **Likely area:** focus restoration when the `NSPanel` dismisses (after pick/cancel) — the
+  previously-active app/window isn't reliably re-activated.
+- **Relation:** same focus-management cluster as the Chromium list bug above.
+- **Priority:** usability.
+
 ## Enhancements
 
 ### Single-Hanja gloss (훈음) — DONE (spec 004), with deferred follow-ups
@@ -68,10 +97,11 @@ Real but deferred items. Not part of an active spec until promoted.
 
 ## Public-release polish (planned 2026-06-21)
 HanjaKey is a public repo; before calling it released:
-- **Candidate curation + overall polish** — see the deferred items above (filter 유령문자/간체자/radicals,
-  swarm-built frequency + 선호 re-ranking).
-- **User-facing attribution (출처 표기):** surface data-source credits where users see them (README credits
-  / app About), not only in `THIRD_PARTY_DATA.md` — CC BY-SA requires visible attribution. Sources:
-  국립국어원 표준국어대사전 (CC BY-SA 2.0 KR), Wiktionary/위키낱말사전 (CC BY-SA), NeoMindStd/HanjaDB (MIT),
-  libhangul (BSD), 국립국어원 2002 빈도조사 (KOGL 제1유형).
-- **App icon**, **screenshots**, **README** polish.
+- **Candidate curation + overall polish** — ✅ DONE (spec 005 M2): swarm tier ordering + gloss fill shipped.
+- **User-facing attribution (출처 표기):** ✅ DONE (2026-06-22) — README (ko/en) data·license sections
+  refreshed, `THIRD_PARTY_DATA.md` first-party section + per-dir `LICENSE-DATA.md`, and an in-app 정보
+  (About) credits section in Settings. CC BY-SA / KOGL attribution now visible to users.
+- **App icon**, **screenshots** — still TODO (need assets / real-run captures).
+- **Deployment-target mismatch:** `bundling/Info.plist` `LSMinimumSystemVersion` is **13.0** but the build
+  targets macOS **14** (Package.swift platform; README says 14+). Reconcile to 14.0 so it won't try to
+  launch on 13. (low-risk config fix; deferred per ASQi.)
