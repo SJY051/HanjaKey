@@ -39,7 +39,8 @@ final class PopupPanel: NSPanel {
         let reading = context?.source ?? ""
         let view = CandidateView(
             reading: reading,
-            onPick: { [weak self] in self?.commit($0) },
+            autoCaptured: context?.autoCaptured ?? false,
+            onPick: { [weak self] chosen, back in self?.commit(chosen, selectBack: back) },
             onCancel: { [weak self] in self?.cancel() },
             onResize: { [weak self] size in self?.resize(to: size) }
         )
@@ -84,10 +85,10 @@ final class PopupPanel: NSPanel {
         if let m = clickMonitor { NSEvent.removeMonitor(m); clickMonitor = nil }
     }
 
-    private func commit(_ chosen: String) {
+    private func commit(_ chosen: String, selectBack: Int) {
         orderOut(nil)
         if let context {
-            context.insert(chosen)          // in-place: re-select source, reactivate target, ⌘V
+            context.insert(chosen, selectBack: selectBack)  // in-place: re-select the active token, ⌘V
         } else {
             Output.copyToClipboard(chosen)  // no context → clipboard (M1 fallback)
             target?.activate(options: [.activateAllWindows]) // still return focus to the source app

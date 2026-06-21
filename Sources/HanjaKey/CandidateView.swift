@@ -10,9 +10,11 @@ import HanjaKitCore
 /// ↵ pick · esc cancel.
 struct CandidateView: View {
     let reading: String
-    let onPick: (String) -> Void
+    let isWord: Bool                 // spec 007: word/decompose (multi) vs single — decided by the segmenter
+    let onPick: (String, Int) -> Void
     let onCancel: () -> Void
     let onResize: (CGSize) -> Void
+    private let replaceLength: Int   // chars insertion replaces = active-token length (0 = live selection)
 
     private let candidates: [Candidate]
     @State private var selection = 0
@@ -54,26 +56,45 @@ struct CandidateView: View {
     private static let cellWidth: CGFloat = 32
     private static let cellHeight: CGFloat = 28
 
-    init(reading: String, onPick: @escaping (String) -> Void, onCancel: @escaping () -> Void,
+    init(reading rawReading: String, autoCaptured: Bool = false,
+         onPick: @escaping (String, Int) -> Void, onCancel: @escaping () -> Void,
          onResize: @escaping (CGSize) -> Void = { _ in }) {
-        self.reading = reading
         self.onPick = onPick
         self.onCancel = onCancel
         self.onResize = onResize
-        if reading.count >= 2 {
-            // Multi-syllable → whole-word Hanja candidates from the (lazy) word dictionary.
-            self.candidates = Self.wordTable.flatMap { table in
-                Self.converter?.candidates(forWord: reading, using: table, freq: Self.freqTable)
-            } ?? []
+
+        // spec 007: for an auto-captured run, segment to the active token at the caret — a trailing lone
+        // jamo → symbol, the longest dictionary suffix → word, else a single syllable or per-syllable
+        // decomposition. A user's explicit selection is respected as-is (route by length, replace it all).
+        if autoCaptured {
+            let seg = Segmenter.segment(rawReading, words: Self.wordTable ?? WordTable(readingToEntries: [:]))
+            self.reading = seg.text
+            self.replaceLength = seg.text.count
+            switch seg {
+            case .single(let s):
+                self.isWord = false
+                self.candidates = Self.converter?.candidates(for: s, halfwidthSymbols: AppSettings.halfwidthSymbols) ?? []
+            case .word(let s):
+                self.isWord = true
+                self.candidates = Self.wordTable.flatMap { Self.converter?.candidates(forWord: s, using: $0, freq: Self.freqTable) } ?? []
+            case .decompose:
+                self.isWord = true
+                self.candidates = []   // no dictionary word → wordMissState → 음절별로 만들기
+            }
         } else {
-            self.candidates = Self.converter?.candidates(
-                for: reading, halfwidthSymbols: AppSettings.halfwidthSymbols
-            ) ?? []
+            let word = rawReading.count >= 2
+            self.reading = rawReading
+            self.isWord = word
+            self.replaceLength = 0      // a live user selection → ⌘V replaces it (insert selectBack 0)
+            if word {
+                self.candidates = Self.wordTable.flatMap { Self.converter?.candidates(forWord: rawReading, using: $0, freq: Self.freqTable) } ?? []
+            } else {
+                self.candidates = Self.converter?.candidates(for: rawReading, halfwidthSymbols: AppSettings.halfwidthSymbols) ?? []
+            }
         }
     }
 
     // Paging math, derived from the current selection.
-    private var isWord: Bool { reading.count >= 2 }
     // spec 005: the collapsed single-syllable list shows only the curated head; Tab (the grid) reveals
     // the full set. Words and the expanded grid stay uncapped.
     private var visibleCount: Int {
@@ -354,7 +375,7 @@ struct CandidateView: View {
 
     private func confirmDecomposition() {
         guard allPicked else { return }
-        onPick(picks.compactMap { $0 }.joined())
+        onPick(picks.compactMap { $0 }.joined(), replaceLength)
     }
 
     // MARK: - Paged list (collapsed)
@@ -395,7 +416,7 @@ struct CandidateView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(highlight(index == selection), in: RoundedRectangle(cornerRadius: 6))
         .contentShape(Rectangle())
-        .onTapGesture { onPick(candidate.value) }
+        .onTapGesture { onPick(candidate.value, replaceLength) }
     }
 
     // MARK: - Wide grid (Windows-style: 9 rows, columns scroll horizontally)
@@ -492,7 +513,7 @@ struct CandidateView: View {
                 }
             }
             .contentShape(Rectangle())
-            .onTapGesture { onPick(candidates[index].value) }
+            .onTapGesture { onPick(candidates[index].value, replaceLength) }
     }
 
     private func highlight(_ on: Bool) -> AnyShapeStyle {
@@ -587,7 +608,7 @@ struct CandidateView: View {
 
     private func pick(_ index: Int) {
         guard candidates.indices.contains(index) else { return }
-        onPick(candidates[index].value)
+        onPick(candidates[index].value, replaceLength)
     }
 }
 

@@ -35,9 +35,10 @@ private func axString(_ el: AXUIElement, _ attr: String) -> String? {
 struct AXContext {
     let app: NSRunningApplication
     let source: String
-    let selectBack: Int     // chars to select backward before pasting (0 if already selected)
+    let selectBack: Int     // captured-run length; the active-token length is passed to insert() per pick
     let screenRect: CGRect
     let canReplace: Bool    // false → no confirmed selection; insert() copies to the clipboard instead
+    let autoCaptured: Bool  // true → we synthesized the grab (segment it); false → user's own selection
 
     static let maxCapture = 6 // grab up to a 6-syllable 어절 before the caret (matches the word dict)
 
@@ -106,6 +107,7 @@ struct AXContext {
         var source = ""
         var selectBack = 0
         var canReplace = true
+        var autoCaptured = false
         var rectRange = caretRange
         let caret = Int(caretRange.location)
         CaptureLog.log("initial: selected=\(CaptureLog.vis(selected)) caretRange=(loc=\(caretRange.location), len=\(caretRange.length))")
@@ -149,6 +151,7 @@ struct AXContext {
                 Output.synthesizeRightArrow()  // nothing to convert → collapse, restoring the caret
             } else {
                 source = run
+                autoCaptured = true
                 let n = run.count
                 rectRange = caret > 0 ? CFRange(location: max(0, caret - n), length: n) : caretRange
 
@@ -196,7 +199,7 @@ struct AXContext {
             }
         }
         CaptureLog.log("RESULT: source=\(CaptureLog.vis(source)) selectBack=\(selectBack) canReplace=\(canReplace) screenRect=\(screenRect)")
-        return AXContext(app: frontApp, source: source, selectBack: selectBack, screenRect: screenRect, canReplace: canReplace)
+        return AXContext(app: frontApp, source: source, selectBack: selectBack, screenRect: screenRect, canReplace: canReplace, autoCaptured: autoCaptured)
     }
 
     /// Shrink the live selection from its LEFT edge down to exactly `run`, confirming via the clipboard
@@ -249,8 +252,9 @@ struct AXContext {
 
     /// Insert `replacement` over the source using synthesized keys: reactivate the target, select
     /// `selectBack` chars to the left (if not already selected), then ⌘V; restore the clipboard.
-    func insert(_ replacement: String) {
-        CaptureLog.log("insert: replacement=\(CaptureLog.vis(replacement)) selectBack=\(selectBack) canReplace=\(canReplace) app=\(app.bundleIdentifier ?? "?")")
+    func insert(_ replacement: String, selectBack overrideBack: Int? = nil) {
+        let back = overrideBack ?? selectBack   // the active token's length (spec 007), else the whole run
+        CaptureLog.log("insert: replacement=\(CaptureLog.vis(replacement)) selectBack=\(back) canReplace=\(canReplace) app=\(app.bundleIdentifier ?? "?")")
         guard canReplace else {
             // No selection we could confirm → don't paste over the wrong text. Hand the result to the
             // clipboard and return focus; the user pastes it where they want.
@@ -264,7 +268,6 @@ struct AXContext {
         let saved = pasteboard.string(forType: .string)
         Output.writeTransient(replacement, to: pasteboard) // stage the paste, marked transient (managers skip)
 
-        let back = selectBack
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) { // let focus return to the target
             for _ in 0..<back { Output.synthesizeShiftLeft() }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
