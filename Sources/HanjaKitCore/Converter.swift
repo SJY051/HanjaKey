@@ -7,15 +7,21 @@ import Foundation
 public struct Converter {
     private let hanja: HanjaTable
     private let symbols: SymbolTable
+    private let tiers: TierTable
 
-    public init(hanja: HanjaTable, symbols: SymbolTable) {
+    public init(hanja: HanjaTable, symbols: SymbolTable, tiers: TierTable = TierTable(positions: [:])) {
         self.hanja = hanja
         self.symbols = symbols
+        self.tiers = tiers
     }
 
     /// A converter wired to the bundled data tables.
     public static func bundled() throws -> Converter {
-        Converter(hanja: try HanjaTable.bundled(), symbols: try SymbolTable.bundled())
+        Converter(
+            hanja: try HanjaTable.bundled(),
+            symbols: try SymbolTable.bundled(),
+            tiers: TierTable.bundled()
+        )
     }
 
     /// Candidates for a reading:
@@ -25,7 +31,7 @@ public struct Converter {
     public func candidates(for input: String, halfwidthSymbols: Bool = false) -> [Candidate] {
         switch HangulUtil.classify(input) {
         case .syllable:
-            return Self.curate(hanja.entries(for: input)).map {
+            return curate(hanja.entries(for: input), for: input).map {
                 Candidate(value: $0.hanja, kind: .hanja, gloss: $0.gloss)
             }
         case .jamo:
@@ -37,11 +43,25 @@ public struct Converter {
         }
     }
 
-    /// Curate single-Hanja candidates (spec 005 v1): stable-partition into clean-gloss → empty-gloss →
-    /// variant-pointer-gloss, preserving libhangul's order within each tier. Demotes explicit variants
-    /// (同字/略字/俗字/簡體) and glossless rares below the common, meaning-bearing chars. Never drops a
-    /// candidate — the full set is reordered, and the UI keeps the tail one affordance away (the grid).
-    static func curate(_ entries: [HanjaTable.Entry]) -> [HanjaTable.Entry] {
+    /// Order single-Hanja candidates for display. For a reading the M2 swarm ranked (spec 005), use the
+    /// bundled tier/rank order (`tiers.txt`); otherwise fall back to the M1 rule. Never drops a candidate —
+    /// the full set is reordered, and the UI keeps the tail one affordance away (the grid).
+    func curate(_ entries: [HanjaTable.Entry], for reading: String) -> [HanjaTable.Entry] {
+        guard tiers.hasReading(reading) else { return Self.curateByRule(entries) }
+        return entries.enumerated()
+            .sorted { lhs, rhs in
+                let pl = tiers.position(of: lhs.element.hanja, for: reading) ?? Int.max
+                let pr = tiers.position(of: rhs.element.hanja, for: reading) ?? Int.max
+                if pl != pr { return pl < pr }
+                return lhs.offset < rhs.offset // a char missing from tiers keeps libhangul order, at the back
+            }
+            .map(\.element)
+    }
+
+    /// M1 fallback (spec 005 v1) for readings the swarm never ranked (≤20 candidates): stable-partition
+    /// into clean-gloss → empty-gloss → variant-pointer-gloss, preserving libhangul's order within each
+    /// tier. Demotes explicit variants (同字/略字/俗字/簡體) and glossless rares below the meaning-bearing.
+    static func curateByRule(_ entries: [HanjaTable.Entry]) -> [HanjaTable.Entry] {
         func tier(_ entry: HanjaTable.Entry) -> Int {
             guard let gloss = entry.gloss, !gloss.isEmpty else { return 1 } // no meaning → middle
             return isVariantPointer(gloss) ? 2 : 0                          // variant pointer → back

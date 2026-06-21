@@ -40,10 +40,16 @@ Resume the ranking-swarm grind from here (survives compaction).
   non-full to the back. Save to `swarm-raw/gloss-*.json` → `build_tiers.py` merges (it already prefers a
   found full 훈독 over `뜻 미상`).
 
-## Engine integration (after the data is complete)
-- `HanjaTable`/`Converter` single-syllable path orders by `tiers.txt` `(tier, file order)`; M1 cutoff (20)
-  + grid stays; held/`뜻 미상` sink to the back. Keep pure + unit-tested. Add a `tiers.txt` loader to
-  `HanjaTable.bundled()` (like the 004 overlays) and order in `Converter.curate` (or replace it).
+## Engine integration — ✅ DONE (2026-06-21)
+- New **`TierTable`** (`Sources/HanjaKitCore/TierTable.swift`) loads `tiers.txt` → `reading → (hanja →
+  position)` (file order = (tier, rank)). `Converter.curate(_:for:)` orders the single-syllable list by
+  it when the reading is ranked, else falls back to the renamed rule `Converter.curateByRule` (≤20-cand
+  readings). `Converter.bundled()` + the app (`CandidateView`) wire `TierTable.bundled()` in. M1 top-20
+  cutoff + grid unchanged.
+- **Deviation from the original plan (intentional):** did NOT reorder `HanjaTable` itself. Its libhangul
+  order backs `HanjaTable.rank(of:for:)`, which the multi-syllable **word scorer** depends on — reordering
+  it would silently change word ranking. A separate `TierTable` keeps display order and frequency rank
+  decoupled. All 40 unit tests green (incl. new `TierTableTests` + tiers/fallback `Converter` tests).
 
 ## Gotchas
 - Workflow `args` may arrive as a STRING → the harness `JSON.parse`s defensively.

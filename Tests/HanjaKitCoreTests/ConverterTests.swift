@@ -99,9 +99,9 @@ final class ConverterTests: XCTestCase {
 
     // MARK: - 005 single-Hanja curation
 
-    func testCurateGlossFirstThenEmptyThenVariant() {
-        // spec 005 v1: clean gloss → empty gloss → variant-pointer, libhangul order within each tier;
-        // never drops a candidate.
+    func testCurateByRuleGlossFirstThenEmptyThenVariant() {
+        // spec 005 M1 fallback (readings the swarm never ranked): clean gloss → empty gloss →
+        // variant-pointer, libhangul order within each tier; never drops a candidate.
         let entries = [
             HanjaTable.Entry(hanja: "可", gloss: "옳을 가"),    // clean
             HanjaTable.Entry(hanja: "价", gloss: nil),          // empty
@@ -110,18 +110,42 @@ final class ConverterTests: XCTestCase {
             HanjaTable.Entry(hanja: "椵", gloss: nil),          // empty
             HanjaTable.Entry(hanja: "謌", gloss: "歌와 同字"),   // variant pointer
         ]
-        let got = Converter.curate(entries)
+        let got = Converter.curateByRule(entries)
         XCTAssertEqual(got.map(\.hanja), ["可", "家", "价", "椵", "仮", "謌"])
         XCTAssertEqual(got.count, entries.count) // reordered, never dropped
     }
 
-    func testSyllableCandidatesAreCurated() throws {
-        // End-to-end through the bundled tables: a clean-gloss common char still leads, and any
-        // variant-pointer char lands after the meaning-bearing ones.
+    func testSyllableCandidatesUseSwarmOrder() throws {
+        // End-to-end through the bundled tables: 가 is an M2-ranked reading, so the swarm tier/rank order
+        // leads (家 = rank 1), and the variant-pointer 仮 (假의 略字) is demoted into the tail.
         let result = try makeConverter().candidates(for: "가").map(\.value)
-        XCTAssertEqual(result.first, "可")  // libhangul head, clean gloss → stays first
+        XCTAssertEqual(result.first, "家")  // M2 swarm rank 1 for 가 (was 可 under the M1 rule)
         if let kao = result.firstIndex(of: "仮") {  // 假의 略字 (variant) — demoted to the tail
             XCTAssertGreaterThan(kao, 20)
         }
+    }
+
+    func testRankedReadingFollowsTierOrder() {
+        // A reading present in the tier table is ordered by it (家 → 歌 → 可), overriding libhangul order.
+        let hanja = HanjaTable(readingToEntries: ["가": [
+            .init(hanja: "可", gloss: "옳을 가"),   // libhangul-first
+            .init(hanja: "家", gloss: "집 가"),
+            .init(hanja: "歌", gloss: "노래 가"),
+        ]])
+        let tiers = TierTable.parse("가:家:0:집 가\n가:歌:0:노래 가\n가:可:1:옳을 가\n")
+        let conv = Converter(hanja: hanja, symbols: SymbolTable(jamoToSymbols: [:]), tiers: tiers)
+        XCTAssertEqual(conv.candidates(for: "가").map(\.value), ["家", "歌", "可"])
+    }
+
+    func testUnrankedReadingFallsBackToRule() {
+        // A reading absent from the tier table keeps the M1 rule order: clean → empty → variant.
+        let hanja = HanjaTable(readingToEntries: ["나": [
+            .init(hanja: "懦", gloss: nil),          // empty
+            .init(hanja: "羅", gloss: "벌일 라"),     // clean
+            .init(hanja: "儺", gloss: "難의 俗字"),    // variant pointer
+        ]])
+        let tiers = TierTable.parse("가:家:0:집 가\n")  // has 가, not 나
+        let conv = Converter(hanja: hanja, symbols: SymbolTable(jamoToSymbols: [:]), tiers: tiers)
+        XCTAssertEqual(conv.candidates(for: "나").map(\.value), ["羅", "懦", "儺"])
     }
 }

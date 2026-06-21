@@ -29,11 +29,12 @@ struct CandidateView: View {
     // on reload (after the user edits their symbols.json).
     private static let hanja = try? HanjaTable.bundled()
     private static let baseSymbols = try? SymbolTable.bundled()
+    private static let tiers = TierTable.bundled()   // spec 005 M2: single-syllable display ordering
     private static var converter: Converter? = buildConverter()
 
     static func buildConverter() -> Converter? {
         guard let hanja, let baseSymbols else { return nil }
-        return Converter(hanja: hanja, symbols: baseSymbols.merging(UserSymbols.load()))
+        return Converter(hanja: hanja, symbols: baseSymbols.merging(UserSymbols.load()), tiers: tiers)
     }
 
     /// Rebuild the converter after the user edits their symbol file (cheap — Hanja stays cached).
