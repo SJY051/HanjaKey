@@ -10,11 +10,17 @@ owner: ASQi
 Resume the ranking-swarm grind from here (survives compaction).
 
 ## Progress
-- **Ranking: 123 / 352 readings done** (the >20-candidate readings). = pilot (가·갑·난) + batch1 (15) + batch2 (25) + batch3 (40) + batch4 (40).
-- **Remaining: 229 readings.** Then the gloss workflow.
-- Raw swarm outputs persisted: `swarm-raw/pilot.json`, `rank-batch1.json`, `rank-batch2.json`, `rank-batch3.json`, `rank-batch4.json`.
-- Compiled table: `Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt` (123 readings, 16,762 rows).
-- Quality: top tiers are correct common chars; 간체/이체/유령 → tier 3; integrity 25 dropped cumulative (~0.15%); batch-3/4 fallbacks ≤1-2/reading (big >160-cap readings sink the long tail to tier 3 by design).
+- **Ranking: 141 / 352 readings done.** = pilot (가·갑·난) + batch1 (15) + batch2 (25) + batch3 (40) + batch4 (40) + batch5-partial (18).
+- **Remaining: 211 readings** (includes the 22 from batch 5 that hit the session limit — see below). Then the gloss workflow.
+- Raw swarm outputs persisted: `swarm-raw/pilot.json`, `rank-batch1.json`, `rank-batch2.json`, `rank-batch3.json`, `rank-batch4.json`, `rank-batch5.json` (PARTIAL — 18 readings, verify=0).
+- Compiled table: `Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt` (141 readings, 18,100 rows).
+- Quality: top tiers are correct common chars; 간체/이체/유령 → tier 3; integrity 26 dropped cumulative (~0.14%).
+
+### ⚠ Batch 5 hit the session usage limit (resets 3:10am KST, 2026-06-21)
+- 22 rank agents + both verify agents failed mid-run; 18 readings completed and were saved to `rank-batch5.json`.
+- Completed (saved): 뢰 침 금 마 배 작 문 빈 총 설 태 라 망 여 란 보 첩 두 (18).
+- **PENDING (22, re-rank after the limit resets):** 형 석 탁 필 록 각 권 성 격 궤 운 변 롱 철 삼 악 척 패 건 등 암 재.
+- These 22 are NOT in any swarm-raw file, so `build_swarm_input.py` auto-includes them in the next dump. **No special handling** — just run the normal "next ranking batch" steps below once the limit resets (next dump = 22 pending + 18 new = 40).
 
 ## Run the next ranking batch
 1. **Dump args** (auto-excludes done): `python3 scripts/build_swarm_input.py --count 40` → copy the stdout JSON.
