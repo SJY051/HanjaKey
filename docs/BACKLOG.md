@@ -36,7 +36,10 @@ Real but deferred items. Not part of an active spec until promoted.
   and can't distinguish word vs syllable vs symbol-jamo boundaries.
 - **Direction:** rethink capture/segmentation — read the real word boundary from the AX value + caret
   offset, and/or word-dictionary-aware segmentation; likely a research → spec (phase 1) effort.
-- **Priority:** significant UX; design needed.
+- **✅ RESOLVED 2026-06-22 (spec 007 M1):** segment the captured run to the active token at the caret —
+  trailing lone jamo → symbol, longest dictionary suffix → word, else per-syllable decomposition — and
+  replace only that token (가ㄱ→ㄱ; 나는한국→한국). M2 (native AX-value 어절) deferred. Commits
+  `2bb8636` + `f1c7297`.
 
 ### Expanded-grid horizontal scroll jumps on arrow navigation
 - **Reported:** 2026-06-20 (ASQi).

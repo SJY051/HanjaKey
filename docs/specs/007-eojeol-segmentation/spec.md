@@ -1,6 +1,6 @@
 ---
 title: 어절 segmentation — word/syllable/symbol boundary
-status: approved     # draft -> approved -> implemented
+status: implemented  # draft -> approved -> implemented  (M1 done; M2 deferred)
 created: 2026-06-22
 owner: ASQi
 tags: [capture, segmentation, routing, word, syllable, symbol, ax]
@@ -103,9 +103,11 @@ routing on the captured text**, not switching to AX-value reads.
 - **SC-004**: No regression to spec-006 capture/insert or to existing single/word conversion.
 
 ## Milestones
-- **M1 — engine segmenter + integration.** The pure `HanjaKitCore` segmenter (FR-001/002/003/004) +
-  `WordTable` longest-suffix lookup (FR-005) + `AXContext` `selectBack` token-alignment + `CandidateView`
-  routing-by-kind + unit tests. App-agnostic; fixes the reported bugs. This is the whole shippable fix.
+- **M1 — engine segmenter + integration. ✅ DONE 2026-06-22** (`2bb8636` engine + `f1c7297` wiring).
+  The pure `HanjaKitCore` `Segmenter` (FR-001/002/003/004) + `WordTable.longestWordSuffix` (FR-005) +
+  `AXContext.autoCaptured` + `insert(selectBack:)` token-alignment + `CandidateView` routing-by-kind + 9
+  unit tests (49 green). Verified in real use (가ㄱ→ㄱ symbol; 나는한국→한국 word; 대한민국→word;
+  non-dict multi→decompose; single unchanged; spec-006 path intact). App-agnostic; fixes the reported bugs.
 - **M2 — native-only AX-value 어절 (deferred, low priority).** Use `kAXValue` + caret offset to find the
   true whitespace/punctuation 어절 for extent edge cases (>6 syllables, punctuation), with the ⌘C
   synth-probe as the Electron/unsupported fallback. Only if M1 proves insufficient in practice.
