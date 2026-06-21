@@ -47,9 +47,11 @@ stays `뜻 미상`). Per (reading, hanja) — 다음자. Output is OUR MIT data 
    wrong_reading) → `python3 scripts/build_tiers.py` (recompile) → `swift test`.
 5. Repeat until `pairs=0`.
 
-**Progress:** gloss-1.json = 720 done (423 full + 292 미상 + 5 wrong_reading). **Remaining 2,139** (t2 1,421 +
-unranked 693 + t0-1 25). Quota hit mid-run (only ~8 of 32 agents ran — the window was already mostly spent);
-**resumes after the 9:30pm KST reset** — a fresh window should finish the rest in one pass.
+**Progress:** 2,070 attempted (gloss-1 720 + gloss-2 1,350) → **1,180 full glosses** + 860 미상 + 30 wrong_reading.
+뜻 미상 17,873 → 16,947. **Remaining 789** (t2 509 + unranked 269 + t1 11). Both passes hit the quota because the
+gloss agents over-used `web_search` (~1.3k tok/pair, 1.9M/pass); the harness is now **knowledge-only (no
+web_search, commit `35c38d3`)** — ~10× cheaper. Resume after the **2:30am KST** reset; one cheap pass should
+finish the 789.
 
 **After ② done:** review accumulated `wrong_reading` (build_gloss_compile reports them; e.g. 교 酵, 동 諌,
 돈 褪) → add demotions to `tier-overrides.txt` → recompile → rebuild `.app`. 미상 pairs stay empty by design.
