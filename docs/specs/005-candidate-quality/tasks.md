@@ -1,6 +1,6 @@
 ---
 title: M2 candidate-ranking swarm — runbook & progress
-status: in-progress
+status: complete
 created: 2026-06-20
 owner: ASQi
 ---

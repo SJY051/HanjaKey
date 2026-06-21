@@ -1,6 +1,6 @@
 ---
 title: Single-Hanja candidate curation & re-ranking
-status: approved     # draft -> approved -> implemented
+status: implemented  # draft -> approved -> implemented
 created: 2026-06-20
 owner: ASQi
 tags: [candidate, curation, ranking, ux, swarm, data]

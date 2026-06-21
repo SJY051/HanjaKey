@@ -1,6 +1,6 @@
 ---
 title: M2 — swarm preference tiering + gloss fill (plan)
-status: draft        # draft -> approved -> implemented
+status: implemented  # draft -> approved -> implemented
 created: 2026-06-20
 owner: ASQi
 tags: [plan, swarm, workflow, ranking, gloss]
