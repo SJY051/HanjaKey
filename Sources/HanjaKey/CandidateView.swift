@@ -49,6 +49,7 @@ struct CandidateView: View {
 
     private static let pageSize = 9
     private static let visibleCutoff = 20   // spec 005: collapsed single-syllable list cap; the grid shows all
+    private static let glossLineFit = 16    // collapsed-footer gloss length that fits one line → no "more" chevron
     private static let gridColumns = 5
     private static let cellWidth: CGFloat = 32
     private static let cellHeight: CGFloat = 28
@@ -189,23 +190,34 @@ struct CandidateView: View {
                         }
                     }
                 } else if !gloss.isEmpty {
-                    // List: one faded line + a disclosure (chevron) to expand for the full text.
+                    // List: one faded line. The disclosure (chevron) that expands to the full text shows
+                    // only when the gloss is long enough to be truncated — a short 훈음 (single Hanja) fits
+                    // on one line, so there is nothing more to reveal (spec 005 follow-up / BACKLOG #16).
+                    let truncated = gloss.count > Self.glossLineFit
                     HStack(spacing: 6) {
                         Text(gloss)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
                             .matchedGeometryEffect(id: "footerGloss", in: glyphNS)
-                            .mask(LinearGradient(
-                                stops: [.init(color: .black, location: 0.82), .init(color: .clear, location: 1)],
-                                startPoint: .leading, endPoint: .trailing))
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.18)) { expanded = true }
-                        } label: { Image(systemName: "chevron.down") }
-                            .buttonStyle(.plain)
-                            .font(.caption2)
-                            .foregroundStyle(.tint)
-                            .help("전체 뜻 보기")
+                            .mask {
+                                if truncated {
+                                    LinearGradient(
+                                        stops: [.init(color: .black, location: 0.82), .init(color: .clear, location: 1)],
+                                        startPoint: .leading, endPoint: .trailing)
+                                } else {
+                                    Color.black
+                                }
+                            }
+                        if truncated {
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.18)) { expanded = true }
+                            } label: { Image(systemName: "chevron.down") }
+                                .buttonStyle(.plain)
+                                .font(.caption2)
+                                .foregroundStyle(.tint)
+                                .help("전체 뜻 보기")
+                        }
                         Spacer(minLength: 0)
                     }
                     .frame(height: 15)
