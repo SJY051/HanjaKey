@@ -34,11 +34,26 @@ Resume the ranking-swarm grind from here (survives compaction).
    line + sample readings. Spot-check every 2–3 batches.
 5. Repeat until `remaining_after=0`.
 
-## After ranking — gloss workflow (separate)
-- Scope (decided): **tier 0–2 gloss-less only**; tier 3 stays `뜻 미상`; full sweep deferred ("budget-to-burn").
-- Build a SEPARATE gloss harness (Sonnet, knowledge→web), classify `full / 발음만 / 뜻만 / 미상`; hold the
-  non-full to the back. Save to `swarm-raw/gloss-*.json` → `build_tiers.py` merges (it already prefers a
-  found full 훈독 over `뜻 미상`).
+## ② Gloss pass — IN PROGRESS (720 / 2,859 pairs done)
+Scope: empty-gloss pairs that are user-visible = ranked tier 0–2 **+ all unranked readings** (ranked tier 3
+stays `뜻 미상`). Per (reading, hanja) — 다음자. Output is OUR MIT data (short generated 훈음, not scraped).
+
+**Pipeline (resumable, done-excluded, self-healing — a dropped/quota-lost pair just reappears next dump):**
+1. `python3 scripts/build_gloss_input.py` → grouped `{읽기:"한자들"}` JSON of the remaining pairs.
+2. `Workflow({scriptPath: "docs/specs/005-candidate-quality/gloss-harness.js", args: <pasted JSON>})` —
+   Sonnet batches (90/agent) + 1 Opus verify. status = full / 미상 / wrong_reading.
+3. `cp /private/tmp/.../tasks/<taskid>.output docs/specs/005-candidate-quality/swarm-raw/gloss-<N>.json`
+4. `python3 scripts/build_gloss_compile.py` (→ overlay `hanja-gloss-swarm/hanja_gloss.txt`, reports
+   wrong_reading) → `python3 scripts/build_tiers.py` (recompile) → `swift test`.
+5. Repeat until `pairs=0`.
+
+**Progress:** gloss-1.json = 720 done (423 full + 292 미상 + 5 wrong_reading). **Remaining 2,139** (t2 1,421 +
+unranked 693 + t0-1 25). Quota hit mid-run (only ~8 of 32 agents ran — the window was already mostly spent);
+**resumes after the 9:30pm KST reset** — a fresh window should finish the rest in one pass.
+
+**After ② done:** review accumulated `wrong_reading` (build_gloss_compile reports them; e.g. 교 酵, 동 諌,
+돈 褪) → add demotions to `tier-overrides.txt` → recompile → rebuild `.app`. 미상 pairs stay empty by design.
+NB: `build_tiers.py` must SKIP `gloss-*.json` (they feed only the overlay, never the ranking) — already handled.
 
 ## Engine integration — ✅ DONE (2026-06-21)
 - New **`TierTable`** (`Sources/HanjaKitCore/TierTable.swift`) loads `tiers.txt` → `reading → (hanja →
