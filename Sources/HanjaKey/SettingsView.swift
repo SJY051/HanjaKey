@@ -21,6 +21,10 @@ private struct GeneralSettingsView: View {
     @AppStorage(AppSettings.halfwidthSymbolsKey) private var halfwidthSymbols = false
     @AppStorage(AppSettings.showMenuBarIconKey) private var showMenuBarIcon = true
 
+    private static var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "—"
+    }
+
     var body: some View {
         Form {
             Section("단축키") {
@@ -52,6 +56,12 @@ private struct GeneralSettingsView: View {
                     Button("다시 불러오기") { CandidateView.reloadUserSymbols() }
                 }
                 Text("‘사용자 세트’ 탭에서 직접 편집하거나, JSON 파일을 열어 수정할 수 있습니다.")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            Section("정보") {
+                LabeledContent("HanjaKey", value: Self.appVersion)
+                Link("GitHub 저장소", destination: URL(string: "https://github.com/SJY051/HanjaKey")!)
+                Text("데이터 출처 — libhangul(BSD), 국립국어원 표준국어대사전·한국어 위키낱말사전(CC BY-SA), 국립국어원 2002 빈도조사(KOGL 제1유형), NeoMindStd/HanjaDB(MIT). 단일 한자 정렬·훈음은 자체 생성(MIT).")
                     .font(.caption).foregroundStyle(.secondary)
             }
         }
