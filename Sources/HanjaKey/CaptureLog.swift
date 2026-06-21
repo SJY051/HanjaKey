@@ -7,10 +7,12 @@ import Foundation
 /// app and reproduces the bug, then this file is read back for analysis — no Console.app, no
 /// copy/paste. Remove this file (and its call sites in `AXSupport.capture`) once both bugs are fixed.
 enum CaptureLog {
-    /// Off by default. Flip to true in a local debug build to diagnose capture issues (e.g. the
-    /// intermittent input drop ② or 어절 segmentation ③). Output goes to `path` under /tmp, so it never
-    /// touches the repo; nothing is written while disabled.
-    static var enabled = false
+    /// Off by default. Enable for a run WITHOUT a rebuild via either the env var `HANJAKEY_LOG=1` (when
+    /// launching the binary directly) OR the sentinel file `/tmp/hanjakey-log` — so a normal `open` launch
+    /// can log too (`touch /tmp/hanjakey-log` before opening). Output goes to `path` under /tmp; it never
+    /// touches the repo, and nothing is written while disabled.
+    static let enabled = ProcessInfo.processInfo.environment["HANJAKEY_LOG"] == "1"
+        || FileManager.default.fileExists(atPath: "/tmp/hanjakey-log")
     static let path = "/tmp/hanjakey-capture.log"
 
     /// Append one timestamped line. `message` is an autoclosure so it costs nothing when disabled.

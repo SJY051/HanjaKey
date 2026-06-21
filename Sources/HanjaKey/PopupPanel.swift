@@ -5,7 +5,9 @@ import SwiftUI
 /// the pick back into the frontmost app (in place when possible).
 final class PopupPanel: NSPanel {
     private var context: AXContext?
+    private var target: NSRunningApplication?  // app to return focus to, even when capture (context) is nil
     private var lastScreenRect: CGRect?
+    private var clickMonitor: Any?             // global click-away → dismiss (replaces hidesOnDeactivate)
 
     init() {
         super.init(
@@ -20,13 +22,19 @@ final class PopupPanel: NSPanel {
         backgroundColor = .clear // let the SwiftUI material + rounded corners show through
         hasShadow = true
         isMovableByWindowBackground = true
-        hidesOnDeactivate = true
+        // spec 006 cold-start fix: macOS 14 can deny a not-user-clicked app's activate-steal (a global
+        // hotkey doesn't count), so HanjaKey isn't truly frontmost on the first invocation. With
+        // auto-hide ON, the floating panel is then hidden as "deactivated" and never renders (onScreen
+        // stayed false for 18s in the log). Keep it visible regardless of active state; dismissal is
+        // explicit (esc / pick / toggle, + an outside-click monitor to be added).
+        hidesOnDeactivate = false
         animationBehavior = .utilityWindow
     }
 
     /// Show the popup for a captured context (nil → type-in + clipboard fallback).
-    func present(context: AXContext?) {
+    func present(context: AXContext?, target: NSRunningApplication?) {
         self.context = context
+        self.target = target
         self.lastScreenRect = context?.screenRect
         let reading = context?.source ?? ""
         let view = CandidateView(
@@ -44,8 +52,36 @@ final class PopupPanel: NSPanel {
         hosting.layoutSubtreeIfNeeded()      // ensure fittingSize reflects the laid-out SwiftUI content
         setContentSize(hosting.fittingSize)  // size the panel to the SwiftUI content
         positionNearCaret(lastScreenRect)
+        // spec 006 A1 (drop NSApp.activate) was tried and FAILED: a floating panel of an inactive agent
+        // app does not render — present logged visible=true but nothing drew. The popup REQUIRES
+        // activation to display, so focus theft is unavoidable with this panel; char-loss is addressed at
+        // the selection layer instead (see spec 006, revised).
         makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+        CaptureLog.log("present: key=\(isKeyWindow) appActive=\(NSApp.isActive) visible=\(isVisible) onScreen=\(occlusionState.contains(.visible))")
+        // occlusionState settles async; re-check whether the panel actually rendered on screen (the
+        // present-time visible=true can lie — see the A1 cold-start finding, spec 006).
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            guard let self else { return }
+            CaptureLog.log("present+250ms: onScreen=\(self.occlusionState.contains(.visible)) key=\(self.isKeyWindow) appActive=\(NSApp.isActive) front=\(NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?")")
+        }
+        installOutsideClickDismiss()
+    }
+
+    /// Dismiss when the user clicks another app/window — replaces `hidesOnDeactivate` (turned off for the
+    /// cold-start fix). A GLOBAL monitor only sees clicks OUTSIDE our own app, so clicking the panel
+    /// itself never triggers it; installed on present, torn down on any orderOut.
+    private func installOutsideClickDismiss() {
+        guard clickMonitor == nil else { return }
+        clickMonitor = NSEvent.addGlobalMonitorForEvents(
+            matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown]) { [weak self] _ in
+            self?.dismiss()
+        }
+    }
+
+    override func orderOut(_ sender: Any?) {
+        super.orderOut(sender)
+        if let m = clickMonitor { NSEvent.removeMonitor(m); clickMonitor = nil }
     }
 
     private func commit(_ chosen: String) {
@@ -54,6 +90,10 @@ final class PopupPanel: NSPanel {
             context.insert(chosen)          // in-place: re-select source, reactivate target, ⌘V
         } else {
             Output.copyToClipboard(chosen)  // no context → clipboard (M1 fallback)
+            target?.activate(options: [.activateAllWindows]) // still return focus to the source app
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            CaptureLog.log("commit+200ms: front=\(NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?")")
         }
     }
 
@@ -68,9 +108,22 @@ final class PopupPanel: NSPanel {
     }
 
     /// Dismiss without inserting; return focus to the original app.
-    private func cancel() {
+    private func cancel() { dismiss() }
+
+    /// Hide the panel and return focus to the source app. Used by cancel/esc AND by the hotkey
+    /// toggle-close — both must restore focus or HanjaKey stays frontmost and the next capture sees
+    /// itself as front (the Chromium "list doesn't appear / focus doesn't return" cascade). Falls back
+    /// to `target` (recorded before the panel stole focus) when there is no AX context.
+    func dismiss() {
         orderOut(nil)
-        context?.app.activate(options: [.activateAllWindows])
+        let back = context?.app ?? target
+        back?.activate(options: [.activateAllWindows])
+        // No selection to restore: capture collapses its probe selection at capture time (spec 006), so
+        // cancel is a true no-op for the source text — just hide and return focus.
+        CaptureLog.log("dismiss: reactivate \(back?.bundleIdentifier ?? "?")")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            CaptureLog.log("dismiss+200ms: front=\(NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?")")
+        }
     }
 
     private func positionNearCaret(_ rect: CGRect?) {

@@ -68,25 +68,39 @@ struct AXContext {
 
         var focusedObj: CFTypeRef?
         var err = AXUIElementCopyAttributeValue(appEl, kAXFocusedUIElementAttribute as CFString, &focusedObj)
-        if err != .success { // Electron may need a beat after enabling AX; retry once.
-            CaptureLog.log("focused: first read err=\(err.rawValue), retrying once")
+        // Chromium/Electron build their AX tree lazily after AXManualAccessibility is set, so the first
+        // read right after a keystroke often returns -25212 (cannotComplete). Retry a few times; if it
+        // still fails we DON'T give up (spec 006 FR-006) — the ⌘C auto-capture path below needs no AX element.
+        var tries = 1
+        while err != .success && tries < 4 {
+            usleep(25_000)
             err = AXUIElementCopyAttributeValue(appEl, kAXFocusedUIElementAttribute as CFString, &focusedObj)
+            tries += 1
         }
-        guard err == .success, let focused = focusedObj, CFGetTypeID(focused) == AXUIElementGetTypeID() else {
-            CaptureLog.log("guard: focused element unavailable (err=\(err.rawValue)) → nil"); return nil
+        let el: AXUIElement? = (err == .success && focusedObj != nil
+            && CFGetTypeID(focusedObj!) == AXUIElementGetTypeID()) ? (focusedObj as! AXUIElement) : nil
+        if el == nil {
+            CaptureLog.log("focused unavailable (err=\(err.rawValue)) after \(tries) tries → AX-less ⌘C capture")
+        } else if tries > 1 {
+            CaptureLog.log("focused: ok after \(tries) tries")
         }
-        let el = focused as! AXUIElement
-        if let role = axString(el, kAXRoleAttribute) { CaptureLog.log("focused role: \(role)") }
+        if let el, let role = axString(el, kAXRoleAttribute) { CaptureLog.log("focused role: \(role)") }
 
-        var selObj: CFTypeRef?
-        let selected = (AXUIElementCopyAttributeValue(el, kAXSelectedTextAttribute as CFString, &selObj) == .success)
-            ? (selObj as? String ?? "") : ""
+        var selected = ""
+        if let el {
+            var selObj: CFTypeRef?
+            if AXUIElementCopyAttributeValue(el, kAXSelectedTextAttribute as CFString, &selObj) == .success {
+                selected = selObj as? String ?? ""
+            }
+        }
 
         var caretRange = CFRange(location: 0, length: 0)
-        var rangeObj: CFTypeRef?
-        if AXUIElementCopyAttributeValue(el, kAXSelectedTextRangeAttribute as CFString, &rangeObj) == .success,
-           let ro = rangeObj, CFGetTypeID(ro) == AXValueGetTypeID() {
-            AXValueGetValue((ro as! AXValue), .cfRange, &caretRange)
+        if let el {
+            var rangeObj: CFTypeRef?
+            if AXUIElementCopyAttributeValue(el, kAXSelectedTextRangeAttribute as CFString, &rangeObj) == .success,
+               let ro = rangeObj, CFGetTypeID(ro) == AXValueGetTypeID() {
+                AXValueGetValue((ro as! AXValue), .cfRange, &caretRange)
+            }
         }
 
         var source = ""
@@ -150,8 +164,18 @@ struct AXContext {
                 // The clipboard is the only reliable witness of the live selection in Electron; native
                 // fields shrink cleanly too, so one path covers both.
                 canReplace = shrinkSelectionToRun(run: run)
-                selectBack = 0
-                CaptureLog.log("shrink result: canReplace=\(canReplace)")
+                if canReplace {
+                    // spec 006: collapse the probe selection NOW, while focus is still clean (the popup
+                    // hasn't stolen it yet) — a right-arrow lands the caret at the run's right edge (the
+                    // original caret). insert() re-selects via selectBack before ⌘V. Leaving NO live
+                    // selection means cancelling can't clobber the user's text (the post-blur collapse on
+                    // cancel was unreliable).
+                    Output.synthesizeRightArrow()
+                    selectBack = n
+                } else {
+                    selectBack = 0
+                }
+                CaptureLog.log("shrink result: canReplace=\(canReplace) selectBack=\(selectBack)")
             }
         }
 
@@ -161,12 +185,14 @@ struct AXContext {
 
         // On-screen rect of the source, for positioning the popup near the caret (best-effort).
         var screenRect = CGRect.zero
-        var tr = rectRange
-        if let axRange = AXValueCreate(.cfRange, &tr) {
-            var boundsObj: CFTypeRef?
-            if AXUIElementCopyParameterizedAttributeValue(el, kAXBoundsForRangeParameterizedAttribute as CFString, axRange, &boundsObj) == .success,
-               let bo = boundsObj, CFGetTypeID(bo) == AXValueGetTypeID() {
-                AXValueGetValue((bo as! AXValue), .cgRect, &screenRect)
+        if let el {
+            var tr = rectRange
+            if let axRange = AXValueCreate(.cfRange, &tr) {
+                var boundsObj: CFTypeRef?
+                if AXUIElementCopyParameterizedAttributeValue(el, kAXBoundsForRangeParameterizedAttribute as CFString, axRange, &boundsObj) == .success,
+                   let bo = boundsObj, CFGetTypeID(bo) == AXValueGetTypeID() {
+                    AXValueGetValue((bo as! AXValue), .cgRect, &screenRect)
+                }
             }
         }
         CaptureLog.log("RESULT: source=\(CaptureLog.vis(source)) selectBack=\(selectBack) canReplace=\(canReplace) screenRect=\(screenRect)")

@@ -13,6 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem?
     private var panel: PopupPanel?
     private var settingsWindow: NSWindow?
+    private var lastTarget: NSRunningApplication?  // app focus should return to after the popup closes
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         UserDefaults.standard.register(defaults: [
@@ -86,12 +87,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// Capture the editing context in the frontmost app, then show the candidate popup.
     private func togglePanel() {
         if let panel, panel.isVisible {
-            panel.orderOut(nil)
+            CaptureLog.log("toggle: panel already visible → dismiss")
+            panel.dismiss()
             return
         }
+        // Remember the real target app BEFORE showing the panel (which steals focus via NSApp.activate),
+        // so focus can be returned even when AX capture fails (nil context). Skip self: when we're stuck
+        // frontmost, keep the previous target so focus can still be handed back to it.
+        if let front = NSWorkspace.shared.frontmostApplication,
+           front.processIdentifier != NSRunningApplication.current.processIdentifier {
+            lastTarget = front
+        }
         let context = AXContext.capture() // nil → popup falls back to type-in + clipboard
+        CaptureLog.log("toggle: capture \(context == nil ? "nil" : "ok") target=\(lastTarget?.bundleIdentifier ?? "?") → present")
         let panel = self.panel ?? PopupPanel()
         self.panel = panel
-        panel.present(context: context)
+        panel.present(context: context, target: lastTarget)
     }
 }
