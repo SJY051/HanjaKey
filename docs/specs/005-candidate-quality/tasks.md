@@ -10,11 +10,12 @@ owner: ASQi
 Resume the ranking-swarm grind from here (survives compaction).
 
 ## Progress
-- **Ranking: 181 / 352 readings done.** = pilot (가·갑·난) + batch1 (15) + batch2 (25) + batch3 (40) + batch4 (40) + batch5-partial (18) + batch6 (40, incl. the 22 batch-5 leftovers).
-- **Remaining: 171 readings.** Then the gloss workflow.
-- Raw swarm outputs persisted: `swarm-raw/pilot.json`, `rank-batch1.json`, `rank-batch2.json`, `rank-batch3.json`, `rank-batch4.json`, `rank-batch5.json` (partial, 18), `rank-batch6.json`.
-- Compiled table: `Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt` (181 readings, 20,680 rows).
-- Quality: top tiers are correct common chars; 간체/이체/유령 → tier 3; integrity 28 dropped cumulative (~0.14%).
+- **Ranking: 221 / 352 readings done.** = pilot (가·갑·난) + batch1 (15) + batch2 (25) + batch3 (40) + batch4 (40) + batch5-partial (18) + batch6 (40) + batch7 (40).
+- **Remaining: 131 readings.** Then the gloss workflow.
+- Raw swarm outputs persisted: `swarm-raw/pilot.json` + `rank-batch1.json` … `rank-batch7.json` (batch5 = partial 18, verify=0).
+- Compiled table: `Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt` (221 readings, 22,808 rows).
+- Quality: top tiers are correct common chars; 간체/이체/유령 → tier 3; integrity 31 dropped cumulative (~0.14%).
+- **Sample-check TODO (after ranking):** each batch file keeps its `verify[]` issues — extract & review them all in the sample-check pass. Known flag: **삽** head is off (颯 ranked above 插/揷=삽입); re-rank 삽 and any verify-flagged readings then.
 
 ### Batch 5 session-limit interruption — RESOLVED
 - Batch 5 hit the session usage limit; 18 readings completed (saved to `rank-batch5.json`), 22 failed.
