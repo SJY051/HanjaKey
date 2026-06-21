@@ -10,11 +10,11 @@ owner: ASQi
 Resume the ranking-swarm grind from here (survives compaction).
 
 ## Progress
-- **Ranking: 301 / 352 readings done.** = pilot (가·갑·난) + batch1 (15) + batch2 (25) + batch3 (40) + batch4 (40) + batch5-partial (18) + batch6 (40) + batch7 (40) + batch8 (40) + batch9 (40).
-- **Remaining: 51 readings** (batches 10–11). Then the gloss workflow.
-- Raw swarm outputs persisted: `swarm-raw/pilot.json` + `rank-batch1.json` … `rank-batch9.json` (batch5 = partial 18, verify=0).
-- Compiled table: `Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt` (301 readings, 25,736 rows).
-- Quality: top tiers are correct common chars; 간체/이체/유령 → tier 3; integrity 32 dropped cumulative (~0.12%).
+- **Ranking: 341 / 352 readings done.** = pilot (가·갑·난) + batch1 (15) + batch2 (25) + batch3 (40) + batch4 (40) + batch5-partial (18) + batch6 (40) + batch7 (40) + batch8 (40) + batch9 (40) + batch10 (40).
+- **Remaining: 11 readings** (final batch 11). Then the gloss workflow.
+- Raw swarm outputs persisted: `swarm-raw/pilot.json` + `rank-batch1.json` … `rank-batch10.json` (batch5 = partial 18, verify=0).
+- Compiled table: `Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt` (341 readings, 26,751 rows).
+- Quality: top tiers are correct common chars; 간체/이체/유령 → tier 3; integrity 33 dropped cumulative (~0.12%).
 - **Sample-check TODO (after ranking):** mid-point audit → see [`sample-check-notes.md`](sample-check-notes.md). Re-audit any time with `python3 scripts/audit_tiers.py` (`--issues` for the full verifier dump). The compile already absorbs the structural verifier noise (duplicate padding, wrong-reading, corruption); the residual *judgment* fixes (under-tiered 음 `飮`→0, 탑 `搭`→1, 령 `靈`; no-tier-0 삽/팽/알/랄/훤; dropped 도 `屠`) are catalogued in that note.
 
 ### Batch 5 session-limit interruption — RESOLVED
