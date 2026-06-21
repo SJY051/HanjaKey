@@ -1,0 +1,4806 @@
+{
+  "summary": "Find 훈음 (訓音) glosses for empty single-Hanja (spec 005 M2 ②) — Sonnet batches + 1 Opus verify",
+  "agentCount": 10,
+  "logs": [
+    "789 pairs → 9 gloss agents (90 each)"
+  ],
+  "result": {
+    "combined": [
+      {
+        "reading": "롱",
+        "hanja": "龐",
+        "gloss": "클 롱",
+        "status": "full"
+      },
+      {
+        "reading": "롱",
+        "hanja": "竉",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "롱",
+        "hanja": "豅",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "뢰",
+        "hanja": "鐳",
+        "gloss": "라듐 뢰",
+        "status": "full"
+      },
+      {
+        "reading": "뢰",
+        "hanja": "壨",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "뢰",
+        "hanja": "擂",
+        "gloss": "갈 뢰",
+        "status": "full"
+      },
+      {
+        "reading": "뢰",
+        "hanja": "檑",
+        "gloss": "굴릴 뢰",
+        "status": "full"
+      },
+      {
+        "reading": "료",
+        "hanja": "憀",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "료",
+        "hanja": "憭",
+        "gloss": "밝을 료",
+        "status": "full"
+      },
+      {
+        "reading": "료",
+        "hanja": "鷯",
+        "gloss": "굴뚝새 료",
+        "status": "full"
+      },
+      {
+        "reading": "료",
+        "hanja": "髎",
+        "gloss": "뼈 구멍 료",
+        "status": "full"
+      },
+      {
+        "reading": "룡",
+        "hanja": "矓",
+        "gloss": "눈 흐릴 룡",
+        "status": "full"
+      },
+      {
+        "reading": "룡",
+        "hanja": "眬",
+        "gloss": "눈 어릿어릿할 룡",
+        "status": "full"
+      },
+      {
+        "reading": "룡",
+        "hanja": "徿",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "룡",
+        "hanja": "爖",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "룡",
+        "hanja": "蠬",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "룡",
+        "hanja": "贚",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "룡",
+        "hanja": "躘",
+        "gloss": "비틀거릴 룡",
+        "status": "full"
+      },
+      {
+        "reading": "룡",
+        "hanja": "驡",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "룡",
+        "hanja": "㡣",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "류",
+        "hanja": "繆",
+        "gloss": "얽힐 류",
+        "status": "full"
+      },
+      {
+        "reading": "류",
+        "hanja": "瑬",
+        "gloss": "옥 흐를 류",
+        "status": "full"
+      },
+      {
+        "reading": "류",
+        "hanja": "騮",
+        "gloss": "붉은 말 류",
+        "status": "full"
+      },
+      {
+        "reading": "류",
+        "hanja": "鏐",
+        "gloss": "순금 류",
+        "status": "full"
+      },
+      {
+        "reading": "류",
+        "hanja": "駵",
+        "gloss": "붉은 말 류",
+        "status": "full"
+      },
+      {
+        "reading": "류",
+        "hanja": "綹",
+        "gloss": "실 묶음 류",
+        "status": "full"
+      },
+      {
+        "reading": "류",
+        "hanja": "餾",
+        "gloss": "찔 류",
+        "status": "full"
+      },
+      {
+        "reading": "륙",
+        "hanja": "稑",
+        "gloss": "올벼 륙",
+        "status": "full"
+      },
+      {
+        "reading": "륙",
+        "hanja": "穋",
+        "gloss": "올벼 륙",
+        "status": "full"
+      },
+      {
+        "reading": "륙",
+        "hanja": "陆",
+        "gloss": "뭍 륙",
+        "status": "full"
+      },
+      {
+        "reading": "륙",
+        "hanja": "勎",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륙",
+        "hanja": "坴",
+        "gloss": "언덕 륙",
+        "status": "full"
+      },
+      {
+        "reading": "륙",
+        "hanja": "淕",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륙",
+        "hanja": "磟",
+        "gloss": "돌 고르개 륙",
+        "status": "full"
+      },
+      {
+        "reading": "륙",
+        "hanja": "踛",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륙",
+        "hanja": "鯥",
+        "gloss": "물고기 이름 륙",
+        "status": "full"
+      },
+      {
+        "reading": "륙",
+        "hanja": "鵱",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륙",
+        "hanja": "㓐",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륙",
+        "hanja": "㛬",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륙",
+        "hanja": "䡜",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "률",
+        "hanja": "硉",
+        "gloss": "돌 울퉁불퉁할 률",
+        "status": "full"
+      },
+      {
+        "reading": "률",
+        "hanja": "瑮",
+        "gloss": "옥 무늬 률",
+        "status": "full"
+      },
+      {
+        "reading": "률",
+        "hanja": "膟",
+        "gloss": "제사 기름 률",
+        "status": "full"
+      },
+      {
+        "reading": "률",
+        "hanja": "凓",
+        "gloss": "찰 률",
+        "status": "full"
+      },
+      {
+        "reading": "률",
+        "hanja": "寽",
+        "gloss": "손아귀 률",
+        "status": "full"
+      },
+      {
+        "reading": "률",
+        "hanja": "繂",
+        "gloss": "줄 률",
+        "status": "full"
+      },
+      {
+        "reading": "률",
+        "hanja": "葎",
+        "gloss": "환삼덩굴 률",
+        "status": "full"
+      },
+      {
+        "reading": "률",
+        "hanja": "鷅",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "률",
+        "hanja": "麜",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륭",
+        "hanja": "瀜",
+        "gloss": "물 깊을 륭",
+        "status": "full"
+      },
+      {
+        "reading": "륭",
+        "hanja": "烿",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륭",
+        "hanja": "嶐",
+        "gloss": "산 높을 륭",
+        "status": "full"
+      },
+      {
+        "reading": "륭",
+        "hanja": "蕯",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륭",
+        "hanja": "湰",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륭",
+        "hanja": "霳",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륭",
+        "hanja": "㚅",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륭",
+        "hanja": "㝫",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륭",
+        "hanja": "㦕",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륭",
+        "hanja": "䃧",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륭",
+        "hanja": "䥢",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륵",
+        "hanja": "玏",
+        "gloss": "옥 이름 륵",
+        "status": "full"
+      },
+      {
+        "reading": "륵",
+        "hanja": "扐",
+        "gloss": "점 끝수 륵",
+        "status": "full"
+      },
+      {
+        "reading": "륵",
+        "hanja": "鳓",
+        "gloss": "준치 륵",
+        "status": "full"
+      },
+      {
+        "reading": "륵",
+        "hanja": "忇",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륵",
+        "hanja": "氻",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륵",
+        "hanja": "簕",
+        "gloss": "가시 대 륵",
+        "status": "full"
+      },
+      {
+        "reading": "륵",
+        "hanja": "艻",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "륵",
+        "hanja": "阞",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "를",
+        "hanja": "㔹",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "름",
+        "hanja": "檩",
+        "gloss": "도리 름",
+        "status": "full"
+      },
+      {
+        "reading": "름",
+        "hanja": "廪",
+        "gloss": "곳집 름",
+        "status": "full"
+      },
+      {
+        "reading": "름",
+        "hanja": "懍",
+        "gloss": "두려울 름",
+        "status": "full"
+      },
+      {
+        "reading": "름",
+        "hanja": "懔",
+        "gloss": "두려울 름",
+        "status": "full"
+      },
+      {
+        "reading": "름",
+        "hanja": "檁",
+        "gloss": "도리 름",
+        "status": "full"
+      },
+      {
+        "reading": "름",
+        "hanja": "癛",
+        "gloss": "추울 름",
+        "status": "full"
+      },
+      {
+        "reading": "름",
+        "hanja": "癝",
+        "gloss": "추울 름",
+        "status": "full"
+      },
+      {
+        "reading": "름",
+        "hanja": "菻",
+        "gloss": "쑥 름",
+        "status": "full"
+      },
+      {
+        "reading": "름",
+        "hanja": "㐭",
+        "gloss": "곳집 름",
+        "status": "full"
+      },
+      {
+        "reading": "름",
+        "hanja": "㨆",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "름",
+        "hanja": "䕲",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "릉",
+        "hanja": "崚",
+        "gloss": "산 높을 릉",
+        "status": "full"
+      },
+      {
+        "reading": "릉",
+        "hanja": "睖",
+        "gloss": "눈 부릅뜰 릉",
+        "status": "full"
+      },
+      {
+        "reading": "리",
+        "hanja": "詈",
+        "gloss": "꾸짖을 리",
+        "status": "full"
+      },
+      {
+        "reading": "리",
+        "hanja": "纚",
+        "gloss": "머리 동여맬 리",
+        "status": "full"
+      },
+      {
+        "reading": "리",
+        "hanja": "摛",
+        "gloss": "펼칠 리",
+        "status": "full"
+      },
+      {
+        "reading": "리",
+        "hanja": "醨",
+        "gloss": "묽은 술 리",
+        "status": "full"
+      },
+      {
+        "reading": "리",
+        "hanja": "蘺",
+        "gloss": "향풀 리",
+        "status": "full"
+      },
+      {
+        "reading": "리",
+        "hanja": "褵",
+        "gloss": "패옥 끈 리",
+        "status": "full"
+      },
+      {
+        "reading": "리",
+        "hanja": "縭",
+        "gloss": "패옥 끈 리",
+        "status": "full"
+      },
+      {
+        "reading": "리",
+        "hanja": "悝",
+        "gloss": "근심할 리",
+        "status": "full"
+      },
+      {
+        "reading": "찰",
+        "hanja": "鑔",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "찰",
+        "hanja": "嚓",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "찰",
+        "hanja": "攃",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "찰",
+        "hanja": "桚",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "찰",
+        "hanja": "礤",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "찰",
+        "hanja": "糌",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "찰",
+        "hanja": "耫",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "찰",
+        "hanja": "蚻",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "찰",
+        "hanja": "蠿",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "찰",
+        "hanja": "鍘",
+        "gloss": "작두 찰",
+        "status": "full"
+      },
+      {
+        "reading": "참",
+        "hanja": "摻",
+        "gloss": "잡을 참",
+        "status": "full"
+      },
+      {
+        "reading": "창",
+        "hanja": "閶",
+        "gloss": "천문 창",
+        "status": "full"
+      },
+      {
+        "reading": "창",
+        "hanja": "鶬",
+        "gloss": "왜가리 창",
+        "status": "full"
+      },
+      {
+        "reading": "채",
+        "hanja": "瘵",
+        "gloss": "폐병 채",
+        "status": "full"
+      },
+      {
+        "reading": "채",
+        "hanja": "蠆",
+        "gloss": "전갈 채",
+        "status": "full"
+      },
+      {
+        "reading": "채",
+        "hanja": "瘥",
+        "gloss": "병 나을 채",
+        "status": "full"
+      },
+      {
+        "reading": "채",
+        "hanja": "婇",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "채",
+        "hanja": "榸",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "책",
+        "hanja": "帻",
+        "gloss": "두건 책",
+        "status": "full"
+      },
+      {
+        "reading": "처",
+        "hanja": "竌",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "척",
+        "hanja": "蹐",
+        "gloss": "발 조심히 디딜 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "鶺",
+        "gloss": "할미새 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "隲",
+        "gloss": "숫말 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "蹢",
+        "gloss": "발굽 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "踢",
+        "gloss": "찰 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "墄",
+        "gloss": "섬돌 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "鼜",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "척",
+        "hanja": "嵴",
+        "gloss": "산등성이 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "徏",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "척",
+        "hanja": "硩",
+        "gloss": "돌 던질 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "磩",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "척",
+        "hanja": "粎",
+        "gloss": "센티미터 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "膌",
+        "gloss": "여윌 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "蚇",
+        "gloss": "자벌레 척",
+        "status": "full"
+      },
+      {
+        "reading": "척",
+        "hanja": "鏚",
+        "gloss": "도끼 척",
+        "status": "full"
+      },
+      {
+        "reading": "천",
+        "hanja": "茜",
+        "gloss": "꼭두서니 천",
+        "status": "full"
+      },
+      {
+        "reading": "철",
+        "hanja": "鋨",
+        "gloss": "오스뮴 철",
+        "status": "full"
+      },
+      {
+        "reading": "첨",
+        "hanja": "憸",
+        "gloss": "간사할 첨",
+        "status": "full"
+      },
+      {
+        "reading": "첨",
+        "hanja": "栝",
+        "gloss": "노끝 첨",
+        "status": "full"
+      },
+      {
+        "reading": "첨",
+        "hanja": "韂",
+        "gloss": "안장 드리개 첨",
+        "status": "full"
+      },
+      {
+        "reading": "첨",
+        "hanja": "籖",
+        "gloss": "점대 첨",
+        "status": "full"
+      },
+      {
+        "reading": "첨",
+        "hanja": "悿",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "첨",
+        "hanja": "湉",
+        "gloss": "물 고요할 첨",
+        "status": "full"
+      },
+      {
+        "reading": "첨",
+        "hanja": "掭",
+        "gloss": "붓 놀릴 첨",
+        "status": "full"
+      },
+      {
+        "reading": "첩",
+        "hanja": "鰈",
+        "gloss": "가자미 첩",
+        "status": "full"
+      },
+      {
+        "reading": "첩",
+        "hanja": "氎",
+        "gloss": "모직물 첩",
+        "status": "full"
+      },
+      {
+        "reading": "첩",
+        "hanja": "耴",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "첩",
+        "hanja": "婕",
+        "gloss": "여관 이름 첩",
+        "status": "full"
+      },
+      {
+        "reading": "첩",
+        "hanja": "牃",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "첩",
+        "hanja": "穕",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "첩",
+        "hanja": "萜",
+        "gloss": "테르펜 첩",
+        "status": "full"
+      },
+      {
+        "reading": "청",
+        "hanja": "倩",
+        "gloss": "예쁠 청",
+        "status": "full"
+      },
+      {
+        "reading": "청",
+        "hanja": "婧",
+        "gloss": "날씬할 청",
+        "status": "full"
+      },
+      {
+        "reading": "청",
+        "hanja": "氰",
+        "gloss": "시안 청",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "泚",
+        "gloss": "맑을 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "薙",
+        "gloss": "풀 벨 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "髰",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "禘",
+        "gloss": "큰 제사 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "杕",
+        "gloss": "외로운 나무 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "髢",
+        "gloss": "다리 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "疐",
+        "gloss": "넘어질 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "蝃",
+        "gloss": "무지개 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "嵽",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "螮",
+        "gloss": "무지개 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "餟",
+        "gloss": "제사 음식 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "屜",
+        "gloss": "서랍 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "懘",
+        "gloss": "근심할 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "栘",
+        "gloss": "산앵두나무 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "褅",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "揥",
+        "gloss": "비녀 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "摰",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "叇",
+        "gloss": "구름 낄 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "墆",
+        "gloss": "쌓을 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "崹",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "挮",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "搋",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "摖",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "楴",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "璏",
+        "gloss": "칼집 장식 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "痸",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "皉",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "矵",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "磜",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "祶",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "笍",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "迏",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "迖",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "釱",
+        "gloss": "발 채울 체",
+        "status": "full"
+      },
+      {
+        "reading": "체",
+        "hanja": "鉪",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "체",
+        "hanja": "銐",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "친",
+        "hanja": "亲",
+        "gloss": "친할 친",
+        "status": "full"
+      },
+      {
+        "reading": "친",
+        "hanja": "榇",
+        "gloss": "널 친",
+        "status": "full"
+      },
+      {
+        "reading": "친",
+        "hanja": "衬",
+        "gloss": "받칠 친",
+        "status": "full"
+      },
+      {
+        "reading": "친",
+        "hanja": "龀",
+        "gloss": "이 갈 친",
+        "status": "full"
+      },
+      {
+        "reading": "친",
+        "hanja": "儬",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "친",
+        "hanja": "媇",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "친",
+        "hanja": "寴",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "친",
+        "hanja": "澵",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "친",
+        "hanja": "齓",
+        "gloss": "이 갈 친",
+        "status": "full"
+      },
+      {
+        "reading": "친",
+        "hanja": "䠳",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "친",
+        "hanja": "䠴",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칠",
+        "hanja": "㓒",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칠",
+        "hanja": "㭍",
+        "gloss": "일곱 칠",
+        "status": "full"
+      },
+      {
+        "reading": "칠",
+        "hanja": "桼",
+        "gloss": "옻 칠",
+        "status": "full"
+      },
+      {
+        "reading": "칠",
+        "hanja": "㓼",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칠",
+        "hanja": "㓿",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칠",
+        "hanja": "㔑",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칠",
+        "hanja": "㯃",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칠",
+        "hanja": "䜉",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칠",
+        "hanja": "䣛",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "침",
+        "hanja": "諶",
+        "gloss": "참될 침",
+        "status": "full"
+      },
+      {
+        "reading": "침",
+        "hanja": "梣",
+        "gloss": "물푸레나무 침",
+        "status": "full"
+      },
+      {
+        "reading": "침",
+        "hanja": "祲",
+        "gloss": "요기 침",
+        "status": "full"
+      },
+      {
+        "reading": "침",
+        "hanja": "抌",
+        "gloss": "찌를 침",
+        "status": "full"
+      },
+      {
+        "reading": "침",
+        "hanja": "踸",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "침",
+        "hanja": "揕",
+        "gloss": "찌를 침",
+        "status": "full"
+      },
+      {
+        "reading": "침",
+        "hanja": "枮",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "침",
+        "hanja": "梫",
+        "gloss": "계수나무 침",
+        "status": "full"
+      },
+      {
+        "reading": "침",
+        "hanja": "賝",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칩",
+        "hanja": "馽",
+        "gloss": "말 발 묶을 칩",
+        "status": "full"
+      },
+      {
+        "reading": "칩",
+        "hanja": "㙷",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칩",
+        "hanja": "㞏",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칩",
+        "hanja": "㞚",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칩",
+        "hanja": "㮑",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칭",
+        "hanja": "穪",
+        "gloss": "저울 칭",
+        "status": "full"
+      },
+      {
+        "reading": "칭",
+        "hanja": "爯",
+        "gloss": "들 칭",
+        "status": "full"
+      },
+      {
+        "reading": "칭",
+        "hanja": "㛵",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "칭",
+        "hanja": "䕝",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "쾌",
+        "hanja": "儈",
+        "gloss": "거간꾼 쾌",
+        "status": "full"
+      },
+      {
+        "reading": "쾌",
+        "hanja": "侩",
+        "gloss": "거간꾼 쾌",
+        "status": "full"
+      },
+      {
+        "reading": "쾌",
+        "hanja": "哙",
+        "gloss": "삼킬 쾌",
+        "status": "full"
+      },
+      {
+        "reading": "쾌",
+        "hanja": "叏",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "쾌",
+        "hanja": "筷",
+        "gloss": "젓가락 쾌",
+        "status": "full"
+      },
+      {
+        "reading": "탁",
+        "hanja": "趠",
+        "gloss": "뛸 탁",
+        "status": "full"
+      },
+      {
+        "reading": "탁",
+        "hanja": "椓",
+        "gloss": "칠 탁",
+        "status": "full"
+      },
+      {
+        "reading": "탁",
+        "hanja": "跅",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탁",
+        "hanja": "魠",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탄",
+        "hanja": "暺",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탄",
+        "hanja": "汆",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탄",
+        "hanja": "湠",
+        "gloss": "넘칠 탄",
+        "status": "full"
+      },
+      {
+        "reading": "탄",
+        "hanja": "疃",
+        "gloss": "마을 탄",
+        "status": "full"
+      },
+      {
+        "reading": "탄",
+        "hanja": "碳",
+        "gloss": "탄소 탄",
+        "status": "full"
+      },
+      {
+        "reading": "탄",
+        "hanja": "羰",
+        "gloss": "카르보닐 탄",
+        "status": "full"
+      },
+      {
+        "reading": "탄",
+        "hanja": "譠",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탈",
+        "hanja": "梲",
+        "gloss": "동자기둥 탈",
+        "status": "full"
+      },
+      {
+        "reading": "탈",
+        "hanja": "敓",
+        "gloss": "빼앗을 탈",
+        "status": "full"
+      },
+      {
+        "reading": "탈",
+        "hanja": "夺",
+        "gloss": "빼앗을 탈",
+        "status": "full"
+      },
+      {
+        "reading": "탈",
+        "hanja": "捝",
+        "gloss": "벗을 탈",
+        "status": "full"
+      },
+      {
+        "reading": "탈",
+        "hanja": "敚",
+        "gloss": "빼앗을 탈",
+        "status": "full"
+      },
+      {
+        "reading": "탈",
+        "hanja": "毲",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탈",
+        "hanja": "痥",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탈",
+        "hanja": "莌",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탈",
+        "hanja": "鮵",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탈",
+        "hanja": "鵽",
+        "gloss": "사막꿩 탈",
+        "status": "full"
+      },
+      {
+        "reading": "탈",
+        "hanja": "㣞",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탈",
+        "hanja": "䫄",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탐",
+        "hanja": "忐",
+        "gloss": "마음 불안할 탐",
+        "status": "full"
+      },
+      {
+        "reading": "탐",
+        "hanja": "醓",
+        "gloss": "육장 탐",
+        "status": "full"
+      },
+      {
+        "reading": "탐",
+        "hanja": "撢",
+        "gloss": "털 탐",
+        "status": "full"
+      },
+      {
+        "reading": "탐",
+        "hanja": "躭",
+        "gloss": "빠질 탐",
+        "status": "full"
+      },
+      {
+        "reading": "탐",
+        "hanja": "贪",
+        "gloss": "탐할 탐",
+        "status": "full"
+      },
+      {
+        "reading": "탐",
+        "hanja": "赕",
+        "gloss": "재물로 속죄할 탐",
+        "status": "full"
+      },
+      {
+        "reading": "탐",
+        "hanja": "沊",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탐",
+        "hanja": "賧",
+        "gloss": "재물로 속죄할 탐",
+        "status": "full"
+      },
+      {
+        "reading": "탐",
+        "hanja": "㤾",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탐",
+        "hanja": "㴷",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탐",
+        "hanja": "㵅",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탐",
+        "hanja": "䏙",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탐",
+        "hanja": "䏥",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탑",
+        "hanja": "鰈",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "탕",
+        "hanja": "簜",
+        "gloss": "큰 대 탕",
+        "status": "full"
+      },
+      {
+        "reading": "탕",
+        "hanja": "璗",
+        "gloss": "황금빛 옥 탕",
+        "status": "full"
+      },
+      {
+        "reading": "탕",
+        "hanja": "鐋",
+        "gloss": "가마솥 탕",
+        "status": "full"
+      },
+      {
+        "reading": "탕",
+        "hanja": "菪",
+        "gloss": "독초 탕",
+        "status": "full"
+      },
+      {
+        "reading": "태",
+        "hanja": "呆",
+        "gloss": "어리석을 태",
+        "status": "full"
+      },
+      {
+        "reading": "태",
+        "hanja": "駄",
+        "gloss": "짐 실을 태",
+        "status": "full"
+      },
+      {
+        "reading": "태",
+        "hanja": "蛻",
+        "gloss": "허물 태",
+        "status": "full"
+      },
+      {
+        "reading": "태",
+        "hanja": "駘",
+        "gloss": "둔한 말 태",
+        "status": "full"
+      },
+      {
+        "reading": "태",
+        "hanja": "紿",
+        "gloss": "속일 태",
+        "status": "full"
+      },
+      {
+        "reading": "태",
+        "hanja": "忕",
+        "gloss": "버릇 들 태",
+        "status": "full"
+      },
+      {
+        "reading": "태",
+        "hanja": "炱",
+        "gloss": "그을음 태",
+        "status": "full"
+      },
+      {
+        "reading": "태",
+        "hanja": "肽",
+        "gloss": "펩타이드 태",
+        "status": "full"
+      },
+      {
+        "reading": "태",
+        "hanja": "酞",
+        "gloss": "프탈 태",
+        "status": "full"
+      },
+      {
+        "reading": "태",
+        "hanja": "鈦",
+        "gloss": "타이타늄 태",
+        "status": "full"
+      },
+      {
+        "reading": "택",
+        "hanja": "择",
+        "gloss": "가릴 택",
+        "status": "full"
+      },
+      {
+        "reading": "택",
+        "hanja": "泽",
+        "gloss": "못 택",
+        "status": "full"
+      },
+      {
+        "reading": "택",
+        "hanja": "伬",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "택",
+        "hanja": "烢",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "택",
+        "hanja": "礋",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "택",
+        "hanja": "蠌",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "택",
+        "hanja": "鸅",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "택",
+        "hanja": "㡯",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "택",
+        "hanja": "㭦",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "택",
+        "hanja": "䕉",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "택",
+        "hanja": "䕪",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "택",
+        "hanja": "垞",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탱",
+        "hanja": "竀",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탱",
+        "hanja": "樘",
+        "gloss": "문설주 탱",
+        "status": "full"
+      },
+      {
+        "reading": "탱",
+        "hanja": "橖",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "탱",
+        "hanja": "橕",
+        "gloss": "버틸 탱",
+        "status": "full"
+      },
+      {
+        "reading": "탱",
+        "hanja": "㯑",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "터",
+        "hanja": "摅",
+        "gloss": "펼 터",
+        "status": "full"
+      },
+      {
+        "reading": "토",
+        "hanja": "菟",
+        "gloss": "새삼 토",
+        "status": "full"
+      },
+      {
+        "reading": "토",
+        "hanja": "圡",
+        "gloss": "흙 토",
+        "status": "full"
+      },
+      {
+        "reading": "토",
+        "hanja": "讨",
+        "gloss": "칠 토",
+        "status": "full"
+      },
+      {
+        "reading": "토",
+        "hanja": "钍",
+        "gloss": "토륨 토",
+        "status": "full"
+      },
+      {
+        "reading": "토",
+        "hanja": "堍",
+        "gloss": "다리 언덕 토",
+        "status": "full"
+      },
+      {
+        "reading": "토",
+        "hanja": "汢",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "토",
+        "hanja": "芏",
+        "gloss": "왕골 토",
+        "status": "full"
+      },
+      {
+        "reading": "토",
+        "hanja": "莵",
+        "gloss": "새삼 토",
+        "status": "full"
+      },
+      {
+        "reading": "토",
+        "hanja": "鵵",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "토",
+        "hanja": "㫦",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "톤",
+        "hanja": "噸",
+        "gloss": "톤 톤",
+        "status": "full"
+      },
+      {
+        "reading": "톤",
+        "hanja": "瓲",
+        "gloss": "톤 톤",
+        "status": "full"
+      },
+      {
+        "reading": "톤",
+        "hanja": "畽",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "톤",
+        "hanja": "䵯",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "통",
+        "hanja": "痌",
+        "gloss": "앓을 통",
+        "status": "full"
+      },
+      {
+        "reading": "통",
+        "hanja": "蓪",
+        "gloss": "통초 통",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "椎",
+        "gloss": "몽둥이 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "焞",
+        "gloss": "불빛 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "搥",
+        "gloss": "두드릴 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "僓",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "蓷",
+        "gloss": "익모초 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "痽",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "俀",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "尵",
+        "gloss": "절름발이 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "垖",
+        "gloss": "언덕 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "嵟",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "弚",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "桘",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "煺",
+        "gloss": "털 뽑을 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "磓",
+        "gloss": "돌 던질 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "穨",
+        "gloss": "쇠할 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "藬",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "蘈",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "螁",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "蹆",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "蹪",
+        "gloss": "넘어질 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "陮",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "頧",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "骽",
+        "gloss": "넓적다리 퇴",
+        "status": "full"
+      },
+      {
+        "reading": "퇴",
+        "hanja": "鴭",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "투",
+        "hanja": "鍮",
+        "gloss": "놋쇠 투",
+        "status": "full"
+      },
+      {
+        "reading": "투",
+        "hanja": "秺",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "퉁",
+        "hanja": "佟",
+        "gloss": "성씨 퉁",
+        "status": "full"
+      },
+      {
+        "reading": "특",
+        "hanja": "螣",
+        "gloss": "등사 특",
+        "status": "full"
+      },
+      {
+        "reading": "특",
+        "hanja": "蟘",
+        "gloss": "해충 특",
+        "status": "full"
+      },
+      {
+        "reading": "특",
+        "hanja": "貣",
+        "gloss": "구할 특",
+        "status": "full"
+      },
+      {
+        "reading": "특",
+        "hanja": "铽",
+        "gloss": "테르븀 특",
+        "status": "full"
+      },
+      {
+        "reading": "특",
+        "hanja": "忑",
+        "gloss": "두려워할 특",
+        "status": "full"
+      },
+      {
+        "reading": "특",
+        "hanja": "脦",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "특",
+        "hanja": "蚮",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "특",
+        "hanja": "鋱",
+        "gloss": "테르븀 특",
+        "status": "full"
+      },
+      {
+        "reading": "특",
+        "hanja": "鴏",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "특",
+        "hanja": "㥂",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "특",
+        "hanja": "㧹",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "파",
+        "hanja": "霸",
+        "gloss": "으뜸 패",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "판",
+        "hanja": "汴",
+        "gloss": "물 이름 변",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "판",
+        "hanja": "舨",
+        "gloss": "판자배 판",
+        "status": "full"
+      },
+      {
+        "reading": "팔",
+        "hanja": "仈",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "팔",
+        "hanja": "哵",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "팔",
+        "hanja": "玐",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "팔",
+        "hanja": "㭭",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "팡",
+        "hanja": "乓",
+        "gloss": "탁구 팡",
+        "status": "full"
+      },
+      {
+        "reading": "패",
+        "hanja": "誖",
+        "gloss": "거스를 패",
+        "status": "full"
+      },
+      {
+        "reading": "패",
+        "hanja": "棑",
+        "gloss": "뗏목 패",
+        "status": "full"
+      },
+      {
+        "reading": "패",
+        "hanja": "捭",
+        "gloss": "헤칠 패",
+        "status": "full"
+      },
+      {
+        "reading": "패",
+        "hanja": "鋇",
+        "gloss": "바륨 패",
+        "status": "full"
+      },
+      {
+        "reading": "팽",
+        "hanja": "硼",
+        "gloss": "붕소 팽",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "편",
+        "hanja": "萹",
+        "gloss": "마디풀 편",
+        "status": "full"
+      },
+      {
+        "reading": "편",
+        "hanja": "煸",
+        "gloss": "볶을 편",
+        "status": "full"
+      },
+      {
+        "reading": "편",
+        "hanja": "楩",
+        "gloss": "나무 이름 편",
+        "status": "full"
+      },
+      {
+        "reading": "편",
+        "hanja": "楄",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "편",
+        "hanja": "鯾",
+        "gloss": "물고기 이름 편",
+        "status": "full"
+      },
+      {
+        "reading": "폄",
+        "hanja": "贬",
+        "gloss": "낮출 폄",
+        "status": "full"
+      },
+      {
+        "reading": "평",
+        "hanja": "玶",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "평",
+        "hanja": "呯",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "평",
+        "hanja": "姘",
+        "gloss": "간통할 평",
+        "status": "full"
+      },
+      {
+        "reading": "평",
+        "hanja": "岼",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "평",
+        "hanja": "胓",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "평",
+        "hanja": "閛",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "폐",
+        "hanja": "梐",
+        "gloss": "난간 폐",
+        "status": "full"
+      },
+      {
+        "reading": "폐",
+        "hanja": "箅",
+        "gloss": "시루밑 폐",
+        "status": "full"
+      },
+      {
+        "reading": "폐",
+        "hanja": "櫠",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "폐",
+        "hanja": "獙",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "폐",
+        "hanja": "砩",
+        "gloss": "형석 폐",
+        "status": "full"
+      },
+      {
+        "reading": "폐",
+        "hanja": "蕟",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "폐",
+        "hanja": "蜌",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "폐",
+        "hanja": "鄨",
+        "gloss": "고을 이름 폐",
+        "status": "full"
+      },
+      {
+        "reading": "폐",
+        "hanja": "鐾",
+        "gloss": "칼 갈 폐",
+        "status": "full"
+      },
+      {
+        "reading": "폐",
+        "hanja": "鼣",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "포",
+        "hanja": "酺",
+        "gloss": "함께 마실 포",
+        "status": "full"
+      },
+      {
+        "reading": "포",
+        "hanja": "枹",
+        "gloss": "북채 포",
+        "status": "full"
+      },
+      {
+        "reading": "폭",
+        "hanja": "曓",
+        "gloss": "사나울 폭",
+        "status": "full"
+      },
+      {
+        "reading": "폭",
+        "hanja": "䋹",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "폭",
+        "hanja": "䌿",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "표",
+        "hanja": "螵",
+        "gloss": "사마귀 알집 표",
+        "status": "full"
+      },
+      {
+        "reading": "푸",
+        "hanja": "䬌",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "품",
+        "hanja": "榀",
+        "gloss": "서까래 품",
+        "status": "full"
+      },
+      {
+        "reading": "풍",
+        "hanja": "酆",
+        "gloss": "나라 이름 풍",
+        "status": "full"
+      },
+      {
+        "reading": "풍",
+        "hanja": "鄷",
+        "gloss": "고을 이름 풍",
+        "status": "full"
+      },
+      {
+        "reading": "풍",
+        "hanja": "渢",
+        "gloss": "물 이름 풍",
+        "status": "full"
+      },
+      {
+        "reading": "풍",
+        "hanja": "灃",
+        "gloss": "강 이름 풍",
+        "status": "full"
+      },
+      {
+        "reading": "풍",
+        "hanja": "蘴",
+        "gloss": "순무 풍",
+        "status": "full"
+      },
+      {
+        "reading": "풍",
+        "hanja": "碸",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "풍",
+        "hanja": "霻",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "풍",
+        "hanja": "麷",
+        "gloss": "볶은 보리 풍",
+        "status": "full"
+      },
+      {
+        "reading": "피",
+        "hanja": "屁",
+        "gloss": "방귀 피",
+        "status": "full"
+      },
+      {
+        "reading": "피",
+        "hanja": "柀",
+        "gloss": "나무 이름 피",
+        "status": "full"
+      },
+      {
+        "reading": "피",
+        "hanja": "帔",
+        "gloss": "어깨걸이 피",
+        "status": "full"
+      },
+      {
+        "reading": "피",
+        "hanja": "骳",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "피",
+        "hanja": "狓",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "피",
+        "hanja": "鈹",
+        "gloss": "넓은 칼 피",
+        "status": "full"
+      },
+      {
+        "reading": "피",
+        "hanja": "秛",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "픽",
+        "hanja": "煏",
+        "gloss": "불로 쬘 픽",
+        "status": "full"
+      },
+      {
+        "reading": "필",
+        "hanja": "鉍",
+        "gloss": "비스무트 필",
+        "status": "full"
+      },
+      {
+        "reading": "핍",
+        "hanja": "愊",
+        "gloss": "꽉 찰 핍",
+        "status": "full"
+      },
+      {
+        "reading": "핍",
+        "hanja": "姂",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "핍",
+        "hanja": "鴔",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "縀",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "睱",
+        "gloss": "틈 하",
+        "status": "full"
+      },
+      {
+        "reading": "하",
+        "hanja": "谺",
+        "gloss": "골짜기 메아리 하",
+        "status": "full"
+      },
+      {
+        "reading": "하",
+        "hanja": "騢",
+        "gloss": "얼룩말 하",
+        "status": "full"
+      },
+      {
+        "reading": "하",
+        "hanja": "鏬",
+        "gloss": "틈 하",
+        "status": "full"
+      },
+      {
+        "reading": "하",
+        "hanja": "哧",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "抲",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "菏",
+        "gloss": "연꽃 하",
+        "status": "full"
+      },
+      {
+        "reading": "하",
+        "hanja": "嗬",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "圷",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "疜",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "碋",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "碬",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "芐",
+        "gloss": "지황 하",
+        "status": "full"
+      },
+      {
+        "reading": "하",
+        "hanja": "蕸",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "袔",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "諕",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "赮",
+        "gloss": "노을빛 하",
+        "status": "full"
+      },
+      {
+        "reading": "하",
+        "hanja": "鎼",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "閕",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "閜",
+        "gloss": "크게 열릴 하",
+        "status": "full"
+      },
+      {
+        "reading": "하",
+        "hanja": "鞐",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "하",
+        "hanja": "颬",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "학",
+        "hanja": "熇",
+        "gloss": "뜨거울 학",
+        "status": "full"
+      },
+      {
+        "reading": "학",
+        "hanja": "翯",
+        "gloss": "희고 빛날 학",
+        "status": "full"
+      },
+      {
+        "reading": "한",
+        "hanja": "犴",
+        "gloss": "들개 한",
+        "status": "full"
+      },
+      {
+        "reading": "한",
+        "hanja": "熯",
+        "gloss": "불 쬘 한",
+        "status": "full"
+      },
+      {
+        "reading": "한",
+        "hanja": "狠",
+        "gloss": "사나울 한",
+        "status": "full"
+      },
+      {
+        "reading": "한",
+        "hanja": "覵",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "한",
+        "hanja": "瞷",
+        "gloss": "엿볼 한",
+        "status": "full"
+      },
+      {
+        "reading": "한",
+        "hanja": "猂",
+        "gloss": "사나울 한",
+        "status": "full"
+      },
+      {
+        "reading": "한",
+        "hanja": "骭",
+        "gloss": "정강이뼈 한",
+        "status": "full"
+      },
+      {
+        "reading": "할",
+        "hanja": "鶡",
+        "gloss": "멧닭 할",
+        "status": "full"
+      },
+      {
+        "reading": "할",
+        "hanja": "舝",
+        "gloss": "수레 빗장 할",
+        "status": "full"
+      },
+      {
+        "reading": "함",
+        "hanja": "嗛",
+        "gloss": "머금을 함",
+        "status": "full"
+      },
+      {
+        "reading": "함",
+        "hanja": "憨",
+        "gloss": "어리석을 함",
+        "status": "full"
+      },
+      {
+        "reading": "합",
+        "hanja": "鴿",
+        "gloss": "비둘기 합",
+        "status": "full"
+      },
+      {
+        "reading": "합",
+        "hanja": "頜",
+        "gloss": "턱 합",
+        "status": "full"
+      },
+      {
+        "reading": "항",
+        "hanja": "酐",
+        "gloss": "술찌꺼기 항",
+        "status": "full"
+      },
+      {
+        "reading": "해",
+        "hanja": "瑎",
+        "gloss": "검은 옥 해",
+        "status": "full"
+      },
+      {
+        "reading": "해",
+        "hanja": "澥",
+        "gloss": "바다 해",
+        "status": "full"
+      },
+      {
+        "reading": "해",
+        "hanja": "荄",
+        "gloss": "풀뿌리 해",
+        "status": "full"
+      },
+      {
+        "reading": "핵",
+        "hanja": "栶",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "핵",
+        "hanja": "势",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "핵",
+        "hanja": "䃒",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "행",
+        "hanja": "婞",
+        "gloss": "강퍅할 행",
+        "status": "full"
+      },
+      {
+        "reading": "행",
+        "hanja": "涬",
+        "gloss": "기운 행",
+        "status": "full"
+      },
+      {
+        "reading": "행",
+        "hanja": "筕",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "행",
+        "hanja": "絎",
+        "gloss": "누빌 행",
+        "status": "full"
+      },
+      {
+        "reading": "행",
+        "hanja": "緈",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "행",
+        "hanja": "胻",
+        "gloss": "정강이 행",
+        "status": "full"
+      },
+      {
+        "reading": "행",
+        "hanja": "裄",
+        "gloss": "소매 행",
+        "status": "full"
+      },
+      {
+        "reading": "행",
+        "hanja": "鴴",
+        "gloss": "물떼새 행",
+        "status": "full"
+      },
+      {
+        "reading": "향",
+        "hanja": "晑",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "蠁",
+        "gloss": "굼벵이 향",
+        "status": "full"
+      },
+      {
+        "reading": "향",
+        "hanja": "膷",
+        "gloss": "고깃국 향",
+        "status": "full"
+      },
+      {
+        "reading": "향",
+        "hanja": "銄",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "麘",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "䦳",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "亯",
+        "gloss": "드릴, 누릴 향",
+        "status": "full"
+      },
+      {
+        "reading": "향",
+        "hanja": "姠",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "楿",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "稥",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "萫",
+        "gloss": "향기 향",
+        "status": "full"
+      },
+      {
+        "reading": "향",
+        "hanja": "蚃",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "鱜",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "黁",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "㕿",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "㗽",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "㴡",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "㿝",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "䅨",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "䊑",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "䖮",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "향",
+        "hanja": "䦭",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "허",
+        "hanja": "詡",
+        "gloss": "자랑할 허",
+        "status": "full"
+      },
+      {
+        "reading": "허",
+        "hanja": "栩",
+        "gloss": "상수리나무 허",
+        "status": "full"
+      },
+      {
+        "reading": "허",
+        "hanja": "虗",
+        "gloss": "빌 허",
+        "status": "full"
+      },
+      {
+        "reading": "허",
+        "hanja": "㠊",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "허",
+        "hanja": "魖",
+        "gloss": "허깨비 허",
+        "status": "full"
+      },
+      {
+        "reading": "허",
+        "hanja": "浒",
+        "gloss": "물가 허",
+        "status": "full"
+      },
+      {
+        "reading": "허",
+        "hanja": "许",
+        "gloss": "허락할 허",
+        "status": "full"
+      },
+      {
+        "reading": "허",
+        "hanja": "憈",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "허",
+        "hanja": "鄦",
+        "gloss": "나라이름 허",
+        "status": "full"
+      },
+      {
+        "reading": "허",
+        "hanja": "驉",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "허",
+        "hanja": "魼",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "허",
+        "hanja": "㞰",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "허",
+        "hanja": "䔓",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "헌",
+        "hanja": "掀",
+        "gloss": "들 헌",
+        "status": "full"
+      },
+      {
+        "reading": "헌",
+        "hanja": "巘",
+        "gloss": "산봉우리 헌",
+        "status": "full"
+      },
+      {
+        "reading": "헐",
+        "hanja": "滊",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "험",
+        "hanja": "憸",
+        "gloss": "간사할 험",
+        "status": "full"
+      },
+      {
+        "reading": "험",
+        "hanja": "杴",
+        "gloss": "가래 험",
+        "status": "full"
+      },
+      {
+        "reading": "험",
+        "hanja": "譣",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혁",
+        "hanja": "衋",
+        "gloss": "상심할 혁",
+        "status": "full"
+      },
+      {
+        "reading": "혁",
+        "hanja": "虩",
+        "gloss": "두려워할 혁",
+        "status": "full"
+      },
+      {
+        "reading": "혁",
+        "hanja": "焃",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혁",
+        "hanja": "殈",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혁",
+        "hanja": "赩",
+        "gloss": "붉을 혁",
+        "status": "full"
+      },
+      {
+        "reading": "현",
+        "hanja": "誢",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "현",
+        "hanja": "琄",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "현",
+        "hanja": "眴",
+        "gloss": "눈짓할 현",
+        "status": "full"
+      },
+      {
+        "reading": "현",
+        "hanja": "筧",
+        "gloss": "대홈통 현",
+        "status": "full"
+      },
+      {
+        "reading": "현",
+        "hanja": "祆",
+        "gloss": "하늘신 현",
+        "status": "full"
+      },
+      {
+        "reading": "현",
+        "hanja": "袨",
+        "gloss": "성장할 현",
+        "status": "full"
+      },
+      {
+        "reading": "현",
+        "hanja": "敻",
+        "gloss": "멀 현",
+        "status": "full"
+      },
+      {
+        "reading": "현",
+        "hanja": "礥",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "현",
+        "hanja": "垷",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "현",
+        "hanja": "莧",
+        "gloss": "비름 현",
+        "status": "full"
+      },
+      {
+        "reading": "현",
+        "hanja": "㬎",
+        "gloss": "밝을 현",
+        "status": "full"
+      },
+      {
+        "reading": "현",
+        "hanja": "埍",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "현",
+        "hanja": "胘",
+        "gloss": "위 현",
+        "status": "full"
+      },
+      {
+        "reading": "현",
+        "hanja": "蚿",
+        "gloss": "노래기 현",
+        "status": "full"
+      },
+      {
+        "reading": "현",
+        "hanja": "蠉",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "현",
+        "hanja": "鋧",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "현",
+        "hanja": "鑦",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "현",
+        "hanja": "䧎",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혐",
+        "hanja": "鼸",
+        "gloss": "쥐 혐",
+        "status": "full"
+      },
+      {
+        "reading": "혐",
+        "hanja": "馦",
+        "gloss": "향기 혐",
+        "status": "full"
+      },
+      {
+        "reading": "혐",
+        "hanja": "㾾",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혐",
+        "hanja": "㺌",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혐",
+        "hanja": "㽐",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혐",
+        "hanja": "䵌",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "悏",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "祫",
+        "gloss": "합제 협",
+        "status": "full"
+      },
+      {
+        "reading": "협",
+        "hanja": "筴",
+        "gloss": "대쪽 협",
+        "status": "full"
+      },
+      {
+        "reading": "협",
+        "hanja": "蛺",
+        "gloss": "나비 협",
+        "status": "full"
+      },
+      {
+        "reading": "협",
+        "hanja": "冾",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "脥",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "硤",
+        "gloss": "험한곳 협",
+        "status": "full"
+      },
+      {
+        "reading": "협",
+        "hanja": "陿",
+        "gloss": "좁을 협",
+        "status": "full"
+      },
+      {
+        "reading": "협",
+        "hanja": "拹",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "垥",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "愶",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "旪",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "梜",
+        "gloss": "젓가락 협",
+        "status": "full"
+      },
+      {
+        "reading": "협",
+        "hanja": "熁",
+        "gloss": "쬘 협",
+        "status": "full"
+      },
+      {
+        "reading": "협",
+        "hanja": "燲",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "綊",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "脋",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "협",
+        "hanja": "鉿",
+        "gloss": "방울 소리 협",
+        "status": "full"
+      },
+      {
+        "reading": "협",
+        "hanja": "鞈",
+        "gloss": "갑옷 협",
+        "status": "full"
+      },
+      {
+        "reading": "형",
+        "hanja": "鉶",
+        "gloss": "국 그릇 형",
+        "status": "full"
+      },
+      {
+        "reading": "형",
+        "hanja": "硎",
+        "gloss": "숫돌 형",
+        "status": "full"
+      },
+      {
+        "reading": "형",
+        "hanja": "浻",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "형",
+        "hanja": "蘅",
+        "gloss": "향초 형",
+        "status": "full"
+      },
+      {
+        "reading": "형",
+        "hanja": "脝",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혜",
+        "hanja": "潓",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혜",
+        "hanja": "橞",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혜",
+        "hanja": "蟪",
+        "gloss": "쓰르라미 혜",
+        "status": "full"
+      },
+      {
+        "reading": "혜",
+        "hanja": "豀",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "호",
+        "hanja": "嫭",
+        "gloss": "아름다울 호",
+        "status": "full"
+      },
+      {
+        "reading": "혹",
+        "hanja": "豰",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혹",
+        "hanja": "掝",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혹",
+        "hanja": "鍙",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혹",
+        "hanja": "頶",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혹",
+        "hanja": "嗀",
+        "gloss": "토할 혹",
+        "status": "full"
+      },
+      {
+        "reading": "혹",
+        "hanja": "㦯",
+        "gloss": "의심할 혹",
+        "status": "full"
+      },
+      {
+        "reading": "혹",
+        "hanja": "㷤",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혹",
+        "hanja": "㺉",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혹",
+        "hanja": "㽇",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혹",
+        "hanja": "䞱",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혼",
+        "hanja": "湣",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "혼",
+        "hanja": "惽",
+        "gloss": "어두울 혼",
+        "status": "full"
+      },
+      {
+        "reading": "혼",
+        "hanja": "睯",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "혼",
+        "hanja": "掍",
+        "gloss": "섞을 혼",
+        "status": "full"
+      },
+      {
+        "reading": "홀",
+        "hanja": "芴",
+        "gloss": "황홀할 홀",
+        "status": "full"
+      },
+      {
+        "reading": "홀",
+        "hanja": "鍃",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "葒",
+        "gloss": "여뀌 홍",
+        "status": "full"
+      },
+      {
+        "reading": "홍",
+        "hanja": "垬",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "渱",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "潂",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "灴",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "焢",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "硔",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "粠",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "苰",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "葓",
+        "gloss": "여뀌 홍",
+        "status": "full"
+      },
+      {
+        "reading": "홍",
+        "hanja": "蕻",
+        "gloss": "채소 줄기 홍",
+        "status": "full"
+      },
+      {
+        "reading": "홍",
+        "hanja": "谼",
+        "gloss": "골짜기 홍",
+        "status": "full"
+      },
+      {
+        "reading": "홍",
+        "hanja": "谾",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "銾",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "霐",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홍",
+        "hanja": "霟",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "화",
+        "hanja": "樗",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "화",
+        "hanja": "夥",
+        "gloss": "많을 화",
+        "status": "full"
+      },
+      {
+        "reading": "화",
+        "hanja": "鏵",
+        "gloss": "보습 화",
+        "status": "full"
+      },
+      {
+        "reading": "화",
+        "hanja": "盉",
+        "gloss": "술 그릇 화",
+        "status": "full"
+      },
+      {
+        "reading": "화",
+        "hanja": "鈥",
+        "gloss": "홀뮴 화",
+        "status": "full"
+      },
+      {
+        "reading": "확",
+        "hanja": "雘",
+        "gloss": "붉은 흙 확",
+        "status": "full"
+      },
+      {
+        "reading": "확",
+        "hanja": "矱",
+        "gloss": "법도 확",
+        "status": "full"
+      },
+      {
+        "reading": "확",
+        "hanja": "蠖",
+        "gloss": "자벌레 확",
+        "status": "full"
+      },
+      {
+        "reading": "확",
+        "hanja": "彍",
+        "gloss": "활 당길 확",
+        "status": "full"
+      },
+      {
+        "reading": "확",
+        "hanja": "戄",
+        "gloss": "두려워할 확",
+        "status": "full"
+      },
+      {
+        "reading": "확",
+        "hanja": "彉",
+        "gloss": "활 당길 확",
+        "status": "full"
+      },
+      {
+        "reading": "확",
+        "hanja": "攉",
+        "gloss": "휘두를 확",
+        "status": "full"
+      },
+      {
+        "reading": "확",
+        "hanja": "玃",
+        "gloss": "큰 원숭이 확",
+        "status": "full"
+      },
+      {
+        "reading": "확",
+        "hanja": "臛",
+        "gloss": "고깃국 확",
+        "status": "full"
+      },
+      {
+        "reading": "확",
+        "hanja": "艧",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "확",
+        "hanja": "靃",
+        "gloss": "비 올 확",
+        "status": "full"
+      },
+      {
+        "reading": "환",
+        "hanja": "繯",
+        "gloss": "올가미 환",
+        "status": "full"
+      },
+      {
+        "reading": "환",
+        "hanja": "垸",
+        "gloss": "둑 환",
+        "status": "full"
+      },
+      {
+        "reading": "환",
+        "hanja": "癏",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "환",
+        "hanja": "瑍",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "환",
+        "hanja": "䆠",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "환",
+        "hanja": "鱞",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "환",
+        "hanja": "漶",
+        "gloss": "흐릴 환",
+        "status": "full"
+      },
+      {
+        "reading": "환",
+        "hanja": "汍",
+        "gloss": "눈물 흐를 환",
+        "status": "full"
+      },
+      {
+        "reading": "환",
+        "hanja": "闤",
+        "gloss": "저자 환",
+        "status": "full"
+      },
+      {
+        "reading": "환",
+        "hanja": "澴",
+        "gloss": "물 돌 환",
+        "status": "full"
+      },
+      {
+        "reading": "환",
+        "hanja": "弮",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "환",
+        "hanja": "芄",
+        "gloss": "박주가리 환",
+        "status": "full"
+      },
+      {
+        "reading": "환",
+        "hanja": "綄",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "환",
+        "hanja": "鹮",
+        "gloss": "따오기 환",
+        "status": "full"
+      },
+      {
+        "reading": "환",
+        "hanja": "䴉",
+        "gloss": "따오기 환",
+        "status": "full"
+      },
+      {
+        "reading": "환",
+        "hanja": "洹",
+        "gloss": "강 이름 환",
+        "status": "full"
+      },
+      {
+        "reading": "활",
+        "hanja": "奯",
+        "gloss": "클 활",
+        "status": "full"
+      },
+      {
+        "reading": "활",
+        "hanja": "姡",
+        "gloss": "교활할 활",
+        "status": "full"
+      },
+      {
+        "reading": "활",
+        "hanja": "眓",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "활",
+        "hanja": "磆",
+        "gloss": "미끄러울 활",
+        "status": "full"
+      },
+      {
+        "reading": "활",
+        "hanja": "秮",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "활",
+        "hanja": "秳",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "활",
+        "hanja": "萿",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "활",
+        "hanja": "螖",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "활",
+        "hanja": "趏",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홰",
+        "hanja": "翽",
+        "gloss": "날갯짓 소리 홰",
+        "status": "full"
+      },
+      {
+        "reading": "홰",
+        "hanja": "哕",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홰",
+        "hanja": "澅",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "홰",
+        "hanja": "翙",
+        "gloss": "날갯짓 홰",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "濊",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "회",
+        "hanja": "燹",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "회",
+        "hanja": "繢",
+        "gloss": "수놓을 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "闠",
+        "gloss": "시장 문 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "沬",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "회",
+        "hanja": "湏",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "禬",
+        "gloss": "제사 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "薈",
+        "gloss": "풀 우거질 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "豗",
+        "gloss": "부딪칠 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "瀤",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "璯",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "咴",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "嬒",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "屷",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "拻",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "擓",
+        "gloss": "긁을 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "敼",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "杤",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "櫰",
+        "gloss": "느티나무 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "洃",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "烸",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "燴",
+        "gloss": "회를 만들 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "痐",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "瞺",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "硘",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "耲",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "藱",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "蘹",
+        "gloss": "회향풀 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "蚘",
+        "gloss": "회충 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "蜖",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "褱",
+        "gloss": "품을 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "詯",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "諙",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "鐬",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "회",
+        "hanja": "靧",
+        "gloss": "세수할 회",
+        "status": "full"
+      },
+      {
+        "reading": "회",
+        "hanja": "鮰",
+        "gloss": "물고기 이름 회",
+        "status": "full"
+      },
+      {
+        "reading": "획",
+        "hanja": "擭",
+        "gloss": "덫 획",
+        "status": "full"
+      },
+      {
+        "reading": "획",
+        "hanja": "砉",
+        "gloss": "뼈 바를 획",
+        "status": "full"
+      },
+      {
+        "reading": "효",
+        "hanja": "鴞",
+        "gloss": "올빼미 효",
+        "status": "full"
+      },
+      {
+        "reading": "후",
+        "hanja": "詬",
+        "gloss": "꾸짖을 후",
+        "status": "full"
+      },
+      {
+        "reading": "후",
+        "hanja": "睺",
+        "gloss": "눈 후",
+        "status": "full"
+      },
+      {
+        "reading": "후",
+        "hanja": "齁",
+        "gloss": "코 골 후",
+        "status": "full"
+      },
+      {
+        "reading": "훈",
+        "hanja": "醺",
+        "gloss": "취할 훈",
+        "status": "full"
+      },
+      {
+        "reading": "훌",
+        "hanja": "歘",
+        "gloss": "홀연 훌",
+        "status": "full"
+      },
+      {
+        "reading": "훌",
+        "hanja": "烼",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훌",
+        "hanja": "魆",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훌",
+        "hanja": "㗵",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훙",
+        "hanja": "顭",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훤",
+        "hanja": "楦",
+        "gloss": "신골 훤",
+        "status": "full"
+      },
+      {
+        "reading": "훨",
+        "hanja": "䎀",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훼",
+        "hanja": "毇",
+        "gloss": "쌀 찧을 훼",
+        "status": "full"
+      },
+      {
+        "reading": "훼",
+        "hanja": "檓",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훼",
+        "hanja": "譭",
+        "gloss": "헐뜯을 훼",
+        "status": "full"
+      },
+      {
+        "reading": "훼",
+        "hanja": "顪",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훼",
+        "hanja": "餯",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훼",
+        "hanja": "㑰",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훼",
+        "hanja": "㩓",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훼",
+        "hanja": "㷐",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훼",
+        "hanja": "䂕",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훼",
+        "hanja": "䃣",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훼",
+        "hanja": "䛼",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "훼",
+        "hanja": "𠦄",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휘",
+        "hanja": "褘",
+        "gloss": "왕비 예복 휘",
+        "status": "full"
+      },
+      {
+        "reading": "휭",
+        "hanja": "遤",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "墮",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "휴",
+        "hanja": "睢",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "휴",
+        "hanja": "庥",
+        "gloss": "쉴 휴",
+        "status": "full"
+      },
+      {
+        "reading": "휴",
+        "hanja": "鑴",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "攜",
+        "gloss": "이끌 휴",
+        "status": "full"
+      },
+      {
+        "reading": "휴",
+        "hanja": "巂",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "瓗",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "眭",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "휴",
+        "hanja": "茠",
+        "gloss": "쉴 휴",
+        "status": "full"
+      },
+      {
+        "reading": "휴",
+        "hanja": "觿",
+        "gloss": "뿔송곳 휴",
+        "status": "full"
+      },
+      {
+        "reading": "휴",
+        "hanja": "雟",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "飍",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "鸺",
+        "gloss": "솔부엉이 휴",
+        "status": "full"
+      },
+      {
+        "reading": "휴",
+        "hanja": "婎",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "孈",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "烌",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "睳",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "蘳",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "蠵",
+        "gloss": "바다거북 휴",
+        "status": "full"
+      },
+      {
+        "reading": "휴",
+        "hanja": "酅",
+        "gloss": "땅이름 휴",
+        "status": "full"
+      },
+      {
+        "reading": "휴",
+        "hanja": "驨",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휴",
+        "hanja": "鮴",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휵",
+        "hanja": "慉",
+        "gloss": "기를 휵",
+        "status": "full"
+      },
+      {
+        "reading": "휵",
+        "hanja": "槒",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휵",
+        "hanja": "䛙",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "휼",
+        "hanja": "潏",
+        "gloss": "물솟을 휼",
+        "status": "full"
+      },
+      {
+        "reading": "휼",
+        "hanja": "遹",
+        "gloss": "따를 휼",
+        "status": "full"
+      },
+      {
+        "reading": "흉",
+        "hanja": "汹",
+        "gloss": "물소리 흉",
+        "status": "full"
+      },
+      {
+        "reading": "흉",
+        "hanja": "訩",
+        "gloss": "떠들써할 흉",
+        "status": "full"
+      },
+      {
+        "reading": "흉",
+        "hanja": "讻",
+        "gloss": "시끄러울 흉",
+        "status": "full"
+      },
+      {
+        "reading": "흉",
+        "hanja": "詾",
+        "gloss": "떠들 흉",
+        "status": "full"
+      },
+      {
+        "reading": "흉",
+        "hanja": "㓙",
+        "gloss": "흉할 흉",
+        "status": "full"
+      },
+      {
+        "reading": "흉",
+        "hanja": "㕳",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흉",
+        "hanja": "㕼",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흉",
+        "hanja": "䠗",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흑",
+        "hanja": "潶",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흑",
+        "hanja": "釛",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흑",
+        "hanja": "㱄",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흔",
+        "hanja": "鞎",
+        "gloss": "가죽신 흔",
+        "status": "full"
+      },
+      {
+        "reading": "흔",
+        "hanja": "鍁",
+        "gloss": "삽 흔",
+        "status": "full"
+      },
+      {
+        "reading": "흠",
+        "hanja": "揿",
+        "gloss": "누를 흠",
+        "status": "full"
+      },
+      {
+        "reading": "흠",
+        "hanja": "钦",
+        "gloss": "공경할 흠",
+        "status": "full"
+      },
+      {
+        "reading": "흠",
+        "hanja": "噷",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흠",
+        "hanja": "嬜",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흠",
+        "hanja": "撳",
+        "gloss": "누를 흠",
+        "status": "full"
+      },
+      {
+        "reading": "흠",
+        "hanja": "鑫",
+        "gloss": "금은보화 흠",
+        "status": "full"
+      },
+      {
+        "reading": "흠",
+        "hanja": "㐸",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흠",
+        "hanja": "䜗",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흥",
+        "hanja": "兴",
+        "gloss": "일어날 흥",
+        "status": "full"
+      },
+      {
+        "reading": "흥",
+        "hanja": "嬹",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흥",
+        "hanja": "臖",
+        "gloss": "부을 흥",
+        "status": "full"
+      },
+      {
+        "reading": "흥",
+        "hanja": "馫",
+        "gloss": "향기 흥",
+        "status": "full"
+      },
+      {
+        "reading": "흥",
+        "hanja": "㒷",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "흥",
+        "hanja": "䕟",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "黖",
+        "gloss": "검붉을 희",
+        "status": "full"
+      },
+      {
+        "reading": "희",
+        "hanja": "浠",
+        "gloss": "강이름 희",
+        "status": "full"
+      },
+      {
+        "reading": "희",
+        "hanja": "橲",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "睎",
+        "gloss": "바랄, 볼 희",
+        "status": "full"
+      },
+      {
+        "reading": "희",
+        "hanja": "蟢",
+        "gloss": "거미 희",
+        "status": "full"
+      },
+      {
+        "reading": "희",
+        "hanja": "桸",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "琋",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "繥",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "霼",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "㱆",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "烯",
+        "gloss": "탈 희",
+        "status": "full"
+      },
+      {
+        "reading": "희",
+        "hanja": "莃",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "譆",
+        "gloss": "탄식할 희",
+        "status": "full"
+      },
+      {
+        "reading": "희",
+        "hanja": "豷",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "隵",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "鯑",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "鱚",
+        "gloss": "물고기 희",
+        "status": "full"
+      },
+      {
+        "reading": "희",
+        "hanja": "鵗",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "희",
+        "hanja": "齂",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "히",
+        "hanja": "屎",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "히",
+        "hanja": "忾",
+        "gloss": "",
+        "status": "wrong_reading"
+      },
+      {
+        "reading": "히",
+        "hanja": "㕧",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "히",
+        "hanja": "䐖",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "히",
+        "hanja": "䦙",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "힐",
+        "hanja": "肹",
+        "gloss": "울릴 힐",
+        "status": "full"
+      },
+      {
+        "reading": "힐",
+        "hanja": "擷",
+        "gloss": "딸 힐",
+        "status": "full"
+      },
+      {
+        "reading": "힐",
+        "hanja": "肸",
+        "gloss": "울릴 힐",
+        "status": "full"
+      },
+      {
+        "reading": "힐",
+        "hanja": "撷",
+        "gloss": "딸 힐",
+        "status": "full"
+      },
+      {
+        "reading": "힐",
+        "hanja": "缬",
+        "gloss": "무늬비단 힐",
+        "status": "full"
+      },
+      {
+        "reading": "힐",
+        "hanja": "诘",
+        "gloss": "꾸집을 힐",
+        "status": "full"
+      },
+      {
+        "reading": "힐",
+        "hanja": "颉",
+        "gloss": "새날 힐",
+        "status": "full"
+      },
+      {
+        "reading": "힐",
+        "hanja": "翓",
+        "gloss": "",
+        "status": "미상"
+      },
+      {
+        "reading": "힐",
+        "hanja": "㩪",
+        "gloss": "",
+        "status": "미상"
+      }
+    ],
+    "verify": [
+      {
+        "summary": "검수 결과 명백한 오류와 모순 9건을 보고합니다. 가장 확실한 건은 (1) 體 항목 懘의 gloss '근심할 체' 오역(실제 訓은 '소리 고르지 못할/풀어질 체'), (2) 詰의 이체자 诘의 gloss '꾸집을 힐' 오타('꾸짖을'), (3) 霸(파)는 wrong_reading인데 gloss '으뜸 패'가 채워져 있어 모순(판정 자체는 타당). reading의 음과 gloss의 음이 직접 충돌하거나 full인데 비표준 훈인 건을 보수적으로 선별했습니다. 나머지 wrong_reading 판정(汴·물 이름 변, 樗 등)과 미상 처리는 대체로 타당해 보입니다.",
+        "issues": [
+          {
+            "reading": "체",
+            "hanja": "懘",
+            "problem": "gloss '근심할 체'는 오역. 懘의 표준 훈은 '소리 고르지 못할/풀어질 체'이며 '근심할'은 다른 글자의 훈임. full인데 뜻이 틀림.",
+            "suggest": "소리 고르지 못할 체 / 풀어질 체"
+          },
+          {
+            "reading": "힐",
+            "hanja": "诘",
+            "problem": "gloss '꾸집을 힐'은 '꾸짖을 힐'의 오타. 诘(=詰)의 훈은 '꾸짖을/물을 힐'로 뜻은 맞으나 표기가 틀림.",
+            "suggest": "꾸짖을 힐"
+          },
+          {
+            "reading": "파",
+            "hanja": "霸",
+            "problem": "status가 wrong_reading인데 gloss '으뜸 패'가 채워져 있어 모순. reading '파'와 gloss 음 '패'가 불일치함. wrong_reading 판정 자체는 타당하나, 그렇다면 gloss는 비어두어야 일관됨(다른 wrong_reading 항목은 gloss가 비어 있음).",
+            "suggest": "gloss 비우기 (다른 wrong_reading 항목과 형식 통일)"
+          },
+          {
+            "reading": "판",
+            "hanja": "汴",
+            "problem": "status가 wrong_reading이고 gloss '물 이름 변'이 채워져 있어 위 霸와 동일한 모순. reading '판', gloss 음 '변' 불일치. 일관성을 위해 gloss를 비우거나 reading을 '변'으로 정정.",
+            "suggest": "gloss 비우기 또는 reading '변'으로 정정"
+          },
+          {
+            "reading": "태",
+            "hanja": "呆",
+            "problem": "呆의 표준 음은 '매'(어리석을 매, 癡呆=치매)가 우세하고 '태'는 비표준 이형. full인데 reading '태' 배정이 의심됨. '입 다문 모양 구'로 읽힐 때도 있음.",
+            "suggest": "reading '매' 검토"
+          },
+          {
+            "reading": "롱",
+            "hanja": "龐",
+            "problem": "龐의 표준 훈음은 '클/높은집 방', 성씨로는 '방'. '롱'은 비표준 이형이라 full로 두면 reading '롱' 배정이 의심스러움. gloss '클 롱'은 형식상 일치하나 표제 음 자체가 문제.",
+            "suggest": "reading '방' 검토"
+          },
+          {
+            "reading": "척",
+            "hanja": "隲",
+            "problem": "gloss '숫말 척'은 의심스러움. 隲의 대표 훈은 '오를 척'(=陟, 수말이 아닌 오를쪽)이며 '숫말(수말)'은 근거가 약함. full이므로 표준 훈 확인 필요.",
+            "suggest": "오를 척"
+          },
+          {
+            "reading": "향",
+            "hanja": "亯",
+            "problem": "gloss '드릴, 누릴 향'이 쉼표로 두 훈을 나열해 다른 항목의 '훈+음' 단일 형식과 불일치. 내용(享/亨의 고자)은 정상이나 표기 형식이 틀림.",
+            "suggest": "드릴 향 (단일 훈으로 통일)"
+          },
+          {
+            "reading": "히",
+            "hanja": "屎",
+            "problem": "status wrong_reading 판정은 타당함(屎은 '뚝 시/실구한 소리 희'이며 '히'는 비표준). 단 같은 reading '히'의 忾도 wrong_reading인데(忾='분할 개/희'), 두 글자 모두 표준 음으로 재분류 여지 있으나 교정 범위 초과. 판정 자체는 유지 가능.",
+            "suggest": "현상태 유지 (참고용 메모)"
+          }
+        ]
+      }
+    ]
+  }
+}
