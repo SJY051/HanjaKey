@@ -15,7 +15,7 @@ Resume the ranking-swarm grind from here (survives compaction).
 - Raw swarm outputs persisted: `swarm-raw/pilot.json` + `rank-batch1.json` … `rank-batch8.json` (batch5 = partial 18, verify=0).
 - Compiled table: `Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt` (261 readings, 24,441 rows).
 - Quality: top tiers are correct common chars; 간체/이체/유령 → tier 3; integrity 32 dropped cumulative (~0.13%).
-- **Sample-check TODO (after ranking):** each batch file keeps its `verify[]` issues — extract & review them all in the sample-check pass. Known flags: **삽** (颯 above 插/揷), **탑** (搭 tier2→1, 搭乘), **충** (虫 should be tier3, 蟲 variant) — re-tier these and any verify-flagged readings then.
+- **Sample-check TODO (after ranking):** mid-point audit done at 261/352 → see [`sample-check-notes.md`](sample-check-notes.md). Re-audit any time with `python3 scripts/audit_tiers.py` (`--issues` for the full verifier dump). The compile already absorbs the structural verifier noise (duplicate padding, wrong-reading, corruption); the residual *judgment* fixes (under-tiered 음 `飮`→0, 탑 `搭`→1, 령 `靈`; no-tier-0 삽/팽/알; dropped 도 `屠`) are catalogued in that note.
 
 ### Batch 5 session-limit interruption — RESOLVED
 - Batch 5 hit the session usage limit; 18 readings completed (saved to `rank-batch5.json`), 22 failed.
