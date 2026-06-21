@@ -29,6 +29,19 @@ public struct WordTable {
         readingToEntries[reading] ?? []
     }
 
+    /// The LONGEST suffix of `run` (length ≥ 2) that has word entries, or nil. Lets the segmenter find the
+    /// dictionary 한자어 at the caret even when capture over-grabbed — e.g. `한국` inside `나는한국`
+    /// (spec 007). Single-syllable suffixes are not words (those live in `HanjaTable`), so length ≥ 2.
+    public func longestWordSuffix(of run: String) -> String? {
+        let chars = Array(run)
+        guard chars.count >= 2 else { return nil }
+        for start in 0...(chars.count - 2) {   // start=0 → whole run (longest); … → the length-2 suffix
+            let suffix = String(chars[start...])
+            if !entries(for: suffix).isEmpty { return suffix }
+        }
+        return nil
+    }
+
     /// Parse `음:한자:뜻` lines (blank/`#` skipped), grouped by reading in source order.
     /// Ranking is applied later by `Converter.candidates(forWord:using:)`.
     public static func parse(_ text: String) -> WordTable {
