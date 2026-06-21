@@ -8,17 +8,17 @@ tags: [audit, sample-check, swarm, ranking]
 
 # M2 ranking — mid-point audit & sample-check notes
 
-Captured at the **261 / 352** mark (batches pilot + 1–8) during a usage-budget pause.
+First captured at the 261 / 352 mark; **refreshed at ranking completion (352 / 352, 2026-06-21).**
 Re-run the audit any time with **`python3 scripts/audit_tiers.py`** (`--issues` for the full
 verifier dump, `--reading 음` for one reading's tier list).
 
-## Snapshot (261 readings, 24,441 rows)
-- Tier distribution: **0 = 5.6% · 1 = 6.5% · 2 = 19.5% · 3 = 68.4%**; held (`뜻 미상`) = 16,179.
+## Snapshot (352 readings, 26,988 rows — ranking COMPLETE)
+- Tier distribution: **0 = 5.8% · 1 = 6.5% · 2 = 19.6% · 3 = 68.2%**; held (`뜻 미상`) = 17,873.
 - This matches the intended shape: ~12% everyday/occasional, ~20% rare·specialist, ~68% variant/ghost.
 
 ## Systemic finding — the compile already absorbs most verifier noise
-Verifiers reported **161 issues**, but kind breakdown shows most are *structural*, not judgment:
-`other=55, missing=52, wrong_rank=22, wrong_tier=32`. The first three are dominated by one swarm
+Verifiers reported **187 issues** (final), but kind breakdown shows most are *structural*, not judgment:
+`other=59, missing=54, wrong_rank=25, wrong_tier=49`. The first three are dominated by one swarm
 behavior: when a reading is **capped at the per-agent count**, the agent pads to the count with
 **duplicate entries** (self-annotated "중복 방지용/재확인/이미 위에 포함") and occasionally inserts a
 **wrong-reading or hallucinated** char.
@@ -38,7 +38,9 @@ looks up the swarm verdict** — so:
 - **음 `飮`/`飲` → tier 0** (飮食·飮料·飮酒·過飮; currently tier 1). *Most important.*
 - **탑 `搭` → tier 1** (搭乘·搭載; currently tier 2).
 - **령 `靈` → tier 0/1** (영혼·유령·심령·영적; currently tier 1).
-- **No-tier-0 readings** (`audit_tiers.py` head red-flag): **삽** (插/揷=삽입 should be tier 0; swarm put 颯 on top), **팽** (膨=팽창 → tier 1?), **알** (謁=알현, tier 1 is borderline-OK).
+- **No-tier-0 readings** (10 total, `audit_tiers.py` head red-flag): 삽 팽 알 랄 랍 멱 얼 올 훤 흘. Most are
+  genuinely rare readings with no everyday hanja (a tier-1 head is correct). **Real fixes:** **삽** (插/揷=삽입 → tier 0;
+  swarm put 颯 on top), **팽** (膨=팽창 → tier 1, maybe 0). The other 8 are acceptable as-is.
 
 ### B. Canonical chars the swarm dropped → now tier 3 (re-rank or manual add)
 Verifier "missing/substitution" cases where a real candidate was displaced by a wrong char:
