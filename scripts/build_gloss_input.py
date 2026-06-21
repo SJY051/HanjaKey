@@ -24,6 +24,7 @@ HANJA = "Sources/HanjaKitCore/Resources/hanja.txt"
 OVERLAYS = [
     "Sources/HanjaKitCore/Resources/data/hanja-gloss-wiktionary/hanja_gloss.txt",
     "Sources/HanjaKitCore/Resources/data/hanja-gloss-hanjadb/hanja_gloss.txt",
+    "Sources/HanjaKitCore/Resources/data/hanja-gloss-swarm/hanja_gloss.txt",  # spec 005 ② (our MIT)
 ]
 TIERS = "Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt"
 RAW = "docs/specs/005-candidate-quality/swarm-raw"

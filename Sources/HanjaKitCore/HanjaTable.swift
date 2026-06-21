@@ -87,6 +87,7 @@ public struct HanjaTable {
         for subdirectory in [
             "Resources/data/hanja-gloss-wiktionary",
             "Resources/data/hanja-gloss-hanjadb",
+            "Resources/data/hanja-gloss-swarm", // spec 005 ②: OUR MIT LLM-generated 훈음, fills remaining empties
         ] {
             if let text = try? loadBundled("hanja_gloss", subdirectory: subdirectory) {
                 table = table.merging(parse(text))

@@ -35,6 +35,7 @@ HANJA = "Sources/HanjaKitCore/Resources/hanja.txt"
 OVERLAYS = [
     "Sources/HanjaKitCore/Resources/data/hanja-gloss-wiktionary/hanja_gloss.txt",
     "Sources/HanjaKitCore/Resources/data/hanja-gloss-hanjadb/hanja_gloss.txt",
+    "Sources/HanjaKitCore/Resources/data/hanja-gloss-swarm/hanja_gloss.txt",  # spec 005 ② (our MIT)
 ]
 RAW_DIR = "docs/specs/005-candidate-quality/swarm-raw"
 OUT = "Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt"
@@ -101,6 +102,8 @@ def main() -> int:
     invalid: list[tuple[str, str]] = []
 
     for fp in sorted(glob.glob(f"{RAW_DIR}/*.json")):
+        if "/gloss-" in fp:  # gloss-pass outputs (②) are not ranking inputs
+            continue
         d = json.load(open(fp, encoding="utf-8"))
         for blk in d.get("result", d).get("combined", []):
             r = blk["reading"]
