@@ -1,0 +1,20 @@
+# Manual tier overrides — spec 005 M2 sample-check (the ① pass).
+# Format:  읽기:한자:티어   # reason
+# Applied by scripts/build_tiers.py AFTER the swarm tier + the variant hard-rule, so an override is the
+# FINAL say. A char raised out of the fallback (was unranked) is moved to the head of its new tier.
+# Keep this surgical — only correct clear swarm judgment errors found in the audit / run-check.
+#
+# tier 0 일상 / 1 가끔 / 2 희귀·전문 / 3 변이·유령·미사용
+
+# -- raise: common chars the swarm under-tiered --
+음:飮:0    # 飮食·飮料·飮酒·過飮 — everyday (swarm put tier 1)
+령:靈:0    # 영혼·유령·심령·신령·영적 — everyday (swarm put tier 1)
+삽:插:0    # modern standard for 삽입; libhangul gloss "揷의 略字" is backwards → was variant-demoted to tier 3
+팽:膨:0    # 팽창·팽대 — everyday (cleared 팽's no-tier-0)
+탑:搭:1    # 搭乘·搭載 — fairly common (swarm put tier 2)
+도:屠:1    # 도살·도륙·부도 — real; the swarm dropped it (was a tier-3 fallback)
+
+# -- demote: variants the swarm left too high (gloss lacked a hanja variant marker) --
+충:虫:3    # 蟲의 약자·동자 — Korea uses 蟲
+식:喰:3    # 食의 속자(일본자 形)
+동:働:3    # 和製漢字 (労働) — not a Korean Hanja

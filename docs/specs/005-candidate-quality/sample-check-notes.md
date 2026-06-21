@@ -16,6 +16,16 @@ verifier dump, `--reading 음` for one reading's tier list).
 - Tier distribution: **0 = 5.8% · 1 = 6.5% · 2 = 19.6% · 3 = 68.2%**; held (`뜻 미상`) = 17,873.
 - This matches the intended shape: ~12% everyday/occasional, ~20% rare·specialist, ~68% variant/ghost.
 
+## ① sample-check — APPLIED 2026-06-21
+Manual tier overrides in `tier-overrides.txt` (consumed by `build_tiers.py` after the variant rule, override =
+final say). **9 fixes:** raise 음 `飮`→0, 령 `靈`→0, 삽 `插`→0, 팽 `膨`→0, 탑 `搭`→1, 도 `屠`→1 (was a dropped
+fallback → moved to its new tier's head); demote 충 `虫`→3, 식 `喰`→3, 동 `働`→3. No-tier-0 readings **10→8**
+(remaining 8 = 알 랄 랍 멱 얼 올 훤 흘 — genuinely rare, no everyday hanja, correct as-is). 40 tests green.
+**Still open (later passes):** (a) 삽 `插` still carries the gloss text "揷의 略字" — its *tier* is fixed, the
+*text* is the ② gloss pass's job. (b) Other un-demoted variants beyond 충/식/동 (verify `wrong_tier`=49) —
+catch as stragglers; if systematic, extend the compile's variant regex to the Korean markers (약자/속자),
+carefully (avoid 동자 ↔ 童子). (c) tail policy left as-is (`뜻 미상` already sorts last via the `hold` key).
+
 ## Systemic finding — the compile already absorbs most verifier noise
 Verifiers reported **187 issues** (final), but kind breakdown shows most are *structural*, not judgment:
 `other=59, missing=54, wrong_rank=25, wrong_tier=49`. The first three are dominated by one swarm

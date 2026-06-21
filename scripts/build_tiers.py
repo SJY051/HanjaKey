@@ -38,6 +38,7 @@ OVERLAYS = [
 ]
 RAW_DIR = "docs/specs/005-candidate-quality/swarm-raw"
 OUT = "Sources/HanjaKitCore/Resources/data/curation-swarm/tiers.txt"
+OVERRIDES_FILE = "docs/specs/005-candidate-quality/tier-overrides.txt"
 VARIANT = re.compile(
     r"(同字|略字|俗字|古字|本字|簡體|简体|간체|이체자|신자체|이형동자)"
 )
@@ -71,8 +72,29 @@ def load_canonical() -> tuple[dict[str, list[str]], dict[tuple[str, str], str]]:
     return readings, cur
 
 
+def load_overrides() -> dict[tuple[str, str], int]:
+    """(reading, hanja) -> forced tier, from the manual sample-check override file. Optional."""
+    ov: dict[tuple[str, str], int] = {}
+    p = Path(OVERRIDES_FILE)
+    if not p.exists():
+        return ov
+    for raw in p.read_text(encoding="utf-8").splitlines():
+        line = raw.split("#", 1)[0].strip()
+        if not line:
+            continue
+        c = line.split(":", 2)
+        if len(c) == 3 and c[0] and c[1]:
+            try:
+                ov[(c[0], c[1])] = int(c[2])
+            except ValueError:
+                pass
+    return ov
+
+
 def main() -> int:
     readings, cur = load_canonical()
+    overrides = load_overrides()
+    applied: set[tuple[str, str]] = set()
     rankmap: dict[tuple[str, str], tuple[int, int, str]] = {}
     sgloss: dict[tuple[str, str], tuple[str, str]] = {}
     processed: set[str] = set()
@@ -114,6 +136,13 @@ def main() -> int:
                 gloss, hold = "뜻 미상", True
             if VARIANT.search(reason) or VARIANT.search(curg):
                 tier = 3
+            if (r, h) in overrides:
+                tier = overrides[(r, h)]
+                applied.add((r, h))
+                if (
+                    rk >= UNRANKED
+                ):  # was a fallback → lead its new tier instead of sinking to the back
+                    rk = 0
             rows.append(
                 {"h": h, "tier": tier, "rank": rk, "gloss": gloss, "hold": hold}
             )
@@ -132,6 +161,7 @@ def main() -> int:
 
     print(f"[ok] {len(processed)} readings, {total} rows -> {OUT}")
     print(f"[integrity] invalid swarm hanja dropped: {len(invalid)} {invalid[:6]}")
+    print(f"[overrides] applied {len(applied)}/{len(overrides)}: {sorted(applied)}")
     for r in sorted(by_reading):
         canon, missing = stats[r]
         rows = by_reading[r]
