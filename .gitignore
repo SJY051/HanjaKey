@@ -8,5 +8,9 @@ Package.resolved
 # macOS
 .DS_Store
 
-# Debug logs (CaptureLog writes to /tmp by default; keep any stray local log out of the repo)
+# Stray local logs (e.g. /tmp debug logs) — keep out of the repo
 *.log
+
+# Internal planning docs — kept local, not published to the public repo
+docs/specs/
+docs/BACKLOG.md
