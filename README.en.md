@@ -30,14 +30,17 @@ KS X 1001 symbols into one picker that inserts in place.
 
 ## Features
 
-- **Syllable → Hanja** — 한 → 韓 · 漢 · 寒 … (shown with the Korean reading and meaning)
-- **Jamo → special symbol** — the same KS X 1001 layout as the Windows IME. ㅁ → ※ ◎ □ …, ㄷ → ± × ÷ …
-- **Word → Hanja word** — 대한민국 → 大韓民國, 한자 → 漢字 (ranked by meaning and frequency)
+- **Syllable → Hanja** : 한 → 韓 · 漢 · 寒 …
+- **Jamo → special symbol** : ㅁ → ※ ◎ □ …, ㄷ → ± × ÷ …
+- **Word → Hanja word** : 대한민국 → 大韓民國, 한자 → 漢字
+
+Each Hanja and Hanja-word carries a short reading and meaning. The special symbols use the same
+KS X 1001 layout as the Windows IME, and Hanja and Hanja-words are ordered by frequency (most common first).
 
 ## Compatibility
 
-- **Supported** — native apps (TextEdit, …), Electron apps (Claude, Discord, …), browsers — **most macOS apps**
-- **Not supported** — terminals; they don't expose editable accessibility (AX) text
+- **Supported** : native apps (TextEdit, …), Electron apps (Claude, Discord, …), browsers — **most macOS apps**
+- **Not supported** : terminals; they don't expose editable accessibility (AX) text.
 
 ## Usage
 
@@ -56,20 +59,19 @@ Settings live behind the menu-bar **字** icon or the popup's **⋯ → Settings
 [Releases](https://github.com/SJY051/HanjaKey/releases/latest), open it, and **drag HanjaKey to your
 Applications folder.** (Runs on macOS 14+.)
 
-**First launch** — this build is *not yet Apple-notarized*, so macOS blocks it once. Just once:
-- After the blocked attempt, open **System Settings → Privacy & Security** and click
-  *“Open Anyway”* for HanjaKey, or
+**First launch** — this build is *not yet Apple-notarized*, so the first launch after install may be blocked. Just once:
+- After the blocked attempt, open **System Settings → Privacy & Security** and click *“Open Anyway”* for HanjaKey, or
 - run `xattr -dr com.apple.quarantine /Applications/HanjaKey.app` in Terminal.
 
-Then grant **Accessibility** (System Settings → Privacy & Security → Accessibility) — required for
-in-place insertion.
+Then grant **Accessibility** (System Settings → Privacy & Security → Accessibility) — the app's core
+features need it. After doing this once, no re-authorization or extra steps are required.
 
 **Build from source** — `scripts/bundle.sh` → `.build/HanjaKey.app`; see
 [CONTRIBUTING.md](CONTRIBUTING.md) for setup, and [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) for hotkeys.
 
 ## Data / credits
 
-The code is MIT, but **bundled data keeps each source's own license** (not relicensed to MIT).
+This repository's source is MIT-licensed, but **bundled data keeps each source's own license** (not relicensed to MIT).
 Full list and details in [`THIRD_PARTY_DATA.md`](THIRD_PARTY_DATA.md).
 
 - **Hanja & Hanja-word inventory** — [libhangul](https://github.com/libhangul/libhangul) `hanja.txt` · BSD 3-Clause · © 2005,2006 Choe Hwanjin
