@@ -17,7 +17,7 @@
 <table align="center">
   <tr>
     <td align="center"><img src="docs/images/hanjakey-single.gif" width="300" alt="단일 한자 변환"><br><sub>단일 한자 · 가 → 歌</sub></td>
-    <td align="center"><img src="docs/images/hanjakey-symbol.gif" width="300" alt="특수문자 변환"><br><sub>특수문자 · ㄱ → ♥</sub></td>
+    <td align="center"><img src="docs/images/hanjakey-symbol.gif" width="300" alt="특수문자 변환"><br><sub>특수문자 · ㅁ → ♥</sub></td>
   </tr>
 </table>
 

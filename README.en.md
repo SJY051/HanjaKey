@@ -17,7 +17,7 @@ method, one global hotkey turns the Hangul before your caret into Hanja or speci
 <table align="center">
   <tr>
     <td align="center"><img src="docs/images/hanjakey-single.gif" width="300" alt="Single-Hanja conversion"><br><sub>Single Hanja · 가 → 歌</sub></td>
-    <td align="center"><img src="docs/images/hanjakey-symbol.gif" width="300" alt="Special-symbol conversion"><br><sub>Special symbols · ㄱ → ♥</sub></td>
+    <td align="center"><img src="docs/images/hanjakey-symbol.gif" width="300" alt="Special-symbol conversion"><br><sub>Special symbols · ㅁ → ♥</sub></td>
   </tr>
 </table>
 
