@@ -77,3 +77,18 @@ only thin copyright and stay MIT. Pipeline + provenance: `docs/specs/005-candida
   invalid, fall back missing → tier 3).
 - `hanja_gloss.txt` (`읽기:한자:훈음`) built by `scripts/build_gloss_compile.py` from the swarm raw outputs
   (`status: full` only; `미상` / `wrong_reading` excluded).
+
+## Icon glyph fonts (build-time only) — SIL Open Font License 1.1
+
+The app icon (spec 008) is rendered at build time by `bundling/icon-src/gen_icon.swift`; the shipped
+artifacts are the rasterized PNG layers (`bundling/AppIcon.icon/Assets/*.png`) compiled into
+`Assets.car` / `AppIcon.icns`. **No font binary is bundled** — the fonts are used only to draw the glyphs.
+
+| Font | Used for | License | Source |
+|---|---|---|---|
+| Pretendard (Black) | Hangul `한` glyph | OFL 1.1 | github.com/orioncactus/pretendard |
+| Noto Serif KR (Black) | Hanja `字` glyph | OFL 1.1 | Google Noto Fonts |
+
+Rendered glyph output is unrestricted under the OFL (its reserved-name / bundling clauses govern the font
+*software*, not documents or graphics produced with it), so the rasterized icon ships under the project
+MIT `LICENSE`; the fonts are credited here as a courtesy and for reproducibility.

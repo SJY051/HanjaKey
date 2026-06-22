@@ -111,6 +111,10 @@ HanjaKey is a public repo; before calling it released:
 - **User-facing attribution (출처 표기):** ✅ DONE (2026-06-22) — README (ko/en) data·license sections
   refreshed, `THIRD_PARTY_DATA.md` first-party section + per-dir `LICENSE-DATA.md`, and an in-app 정보
   (About) credits section in Settings. CC BY-SA / KOGL attribution now visible to users.
-- **App icon**, **screenshots** — still TODO (need assets / real-run captures).
+- **App icon** — ✅ DONE 2026-06-22 (spec 008 M1): Liquid Glass `.icon` (celadon 한/字, frosted-panel
+  depth) compiled by `actool` into `Assets.car` + legacy `.icns`, wired into `bundle.sh`; ASQi-verified
+  in Finder. Source: `bundling/AppIcon.icon/` + `bundling/icon-src/gen_icon.swift`.
+- **Menu-bar template mark** (spec 008 M2) + **README screenshots / hero / social preview** (spec 008 M3)
+  — still TODO.
 - **Deployment-target mismatch:** ✅ RESOLVED 2026-06-22 — `bundling/Info.plist` `LSMinimumSystemVersion`
   set to **14.0** to match the build target (Package.swift `.macOS(.v14)`) and the README.

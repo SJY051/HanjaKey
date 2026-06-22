@@ -27,6 +27,24 @@ else
   echo "[!] resource bundle not found at $RES — bundled data would fail to load"; exit 1
 fi
 
+# App icon (spec 008): compile the Liquid Glass .icon into Assets.car (macOS 26+) plus a
+# legacy AppIcon.icns fallback (14/15). actool emits both; no Xcode project needed.
+ICON_SRC="$ROOT/bundling/AppIcon.icon"
+if [ -d "$ICON_SRC" ]; then
+  echo "[*] compiling app icon ($ICON_SRC)"
+  ICON_OUT="$(mktemp -d)"
+  xcrun actool "$ICON_SRC" --compile "$ICON_OUT" \
+    --app-icon AppIcon --include-all-app-icons \
+    --target-device mac --minimum-deployment-target 26.0 --platform macosx \
+    --output-partial-info-plist "$ICON_OUT/icon-info.plist" \
+    --output-format human-readable-text --notices --warnings --errors
+  cp "$ICON_OUT/Assets.car" "$APP/Contents/Resources/"
+  cp "$ICON_OUT/AppIcon.icns" "$APP/Contents/Resources/"
+  rm -rf "$ICON_OUT"
+else
+  echo "[!] no app icon at $ICON_SRC — bundling without an icon"
+fi
+
 # Ad-hoc signing (the "-" identity). Free; no certificate or Developer Program needed.
 codesign --force --deep --sign - "$APP"
 
