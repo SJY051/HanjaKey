@@ -20,7 +20,7 @@ SIGN_IDENTITY="${HANJAKEY_SIGN_IDENTITY:-}"
 NOTARY_PROFILE="${HANJAKEY_NOTARY_PROFILE:-}"
 APP="$ROOT/.build/HanjaKey.app"
 DIST="$ROOT/.build/dist"
-DMG="$DIST/HanjaKey-$VERSION.dmg"
+DMG="$DIST/HanjaKey-v$VERSION.dmg"   # tag/filename use a v-prefix; CFBundleShortVersionString stays numeric
 
 echo "[*] release build — version $VERSION"
 "$ROOT/scripts/bundle.sh" release        # builds + bundles (icon, resources); ad-hoc signs (re-signed below)
@@ -45,7 +45,7 @@ echo "[*] create-dmg → $DMG"
 mkdir -p "$DIST"; rm -f "$DMG"
 STAGE="$(mktemp -d)"; cp -R "$APP" "$STAGE/"
 create-dmg \
-  --volname "HanjaKey $VERSION" \
+  --volname "HanjaKey v$VERSION" \
   --window-size 540 380 \
   --icon-size 110 \
   --icon "HanjaKey.app" 150 195 \

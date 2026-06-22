@@ -41,7 +41,7 @@ KS X 1001 symbols into one picker that inserts in place.
 
 ## Usage
 
-1. Type Hangul, keep the caret right after it, and press `⌥⌘H`
+1. Type Hangul, keep the caret right after it, and press `⌥ + ⌘ + H`
    - For words it auto-grabs the 어절 (Hangul run) before the caret, or uses your selection if you made one.
 2. Pick a candidate
    - `1–9` select · `↑↓` `←→` move·page · `Tab` expand · `↵` insert · `esc` cancel
@@ -52,7 +52,7 @@ Settings live behind the menu-bar **字** icon or the popup's **⋯ → Settings
 
 ## Install
 
-**Download (recommended)** — grab `HanjaKey-x.y.z.dmg` from
+**Download (recommended)** — grab `HanjaKey-vx.y.z.dmg` from
 [Releases](https://github.com/SJY051/HanjaKey/releases/latest), open it, and **drag HanjaKey to your
 Applications folder.** (Runs on macOS 14+.)
 
