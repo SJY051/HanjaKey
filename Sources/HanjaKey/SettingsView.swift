@@ -59,7 +59,15 @@ private struct GeneralSettingsView: View {
                     .font(.caption).foregroundStyle(.secondary)
             }
             Section("정보") {
-                LabeledContent("HanjaKey", value: Self.appVersion)
+                HStack(spacing: 12) {
+                    Image(nsImage: NSWorkspace.shared.icon(forFile: Bundle.main.bundlePath))
+                        .resizable()
+                        .frame(width: 56, height: 56)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("HanjaKey").font(.headline)
+                        Text("버전 \(Self.appVersion)").font(.caption).foregroundStyle(.secondary)
+                    }
+                }
                 Link("GitHub 저장소", destination: URL(string: "https://github.com/SJY051/HanjaKey")!)
                 Text("데이터 출처 — libhangul(BSD), 국립국어원 표준국어대사전·한국어 위키낱말사전(CC BY-SA), 국립국어원 2002 빈도조사(KOGL 제1유형), NeoMindStd/HanjaDB(MIT). 단일 한자 정렬·훈음은 자체 생성(MIT).")
                     .font(.caption).foregroundStyle(.secondary)
