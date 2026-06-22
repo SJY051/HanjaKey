@@ -4,8 +4,8 @@
 
 # HanjaKey
 
-A macOS menu-bar utility that brings back the Windows **Hanja key**. Without replacing your input
-method, a global hotkey converts the Hangul before your caret into Hanja or special symbols, in place.
+A macOS menu-bar app that brings the Windows **Hanja key** to the Mac. Without changing your input
+method, one global hotkey turns the Hangul before your caret into Hanja or special symbols, in place.
 
 > 한국어: [README.md](README.md)
 
@@ -21,39 +21,38 @@ method, a global hotkey converts the Hangul before your caret into Hanja or spec
   </tr>
 </table>
 
-## Why
+## Overview
 
-macOS's Korean input method does convert Hangul to Hanja (Option+Return), but it has **no way to
+macOS's Korean input method can convert Hangul to Hanja (`Option+Return`), but it has **no way to
 enter special symbols from a jamo**, and it only works while Korean input is active. HanjaKey is
-callable anywhere via a global hotkey, regardless of the input source, and unifies Hanja and KS X
-1001 symbols in one picker that inserts in place.
+callable anywhere via a global hotkey, regardless of the input source, and gathers Hanja and
+KS X 1001 symbols into one picker that inserts in place.
 
-## What it does
+## Features
 
-- **Hangul syllable → Hanja** — 한 → 韓 漢 寒 … (shown with the Korean reading/meaning)
-- **Jamo → special symbol** — the KS X 1001 layout. ㅁ → ※ ◎ □ …, ㄷ → ± × ÷ …
-- **Hanja word → Hanja** — 대한민국 → 大韓民國, 한자 → 漢字
-- Inserts the chosen text **in place at the caret** (your clipboard is saved and restored)
+- **Syllable → Hanja** — 한 → 韓 · 漢 · 寒 … (shown with the Korean reading and meaning)
+- **Jamo → special symbol** — the same KS X 1001 layout as the Windows IME. ㅁ → ※ ◎ □ …, ㄷ → ± × ÷ …
+- **Word → Hanja word** — 대한민국 → 大韓民國, 한자 → 漢字 (ranked by meaning and frequency)
 
-## Where it works
+## Compatibility
 
-- **Works:** native apps (TextEdit, …), Electron apps (Claude, Discord, …), browsers
-- **Not supported:** terminals — they don't expose editable accessibility (AX) text
+- **Supported** — native apps (TextEdit, …), Electron apps (Claude, Discord, …), browsers — **most macOS apps**
+- **Not supported** — terminals; they don't expose editable accessibility (AX) text
 
 ## Usage
 
-1. Type Hangul, keep the caret right after it, and press **⌥⌘H**
-   - For words it auto-grabs the 어절 (Hangul run) before the caret, or uses your selection if any
+1. Type Hangul, keep the caret right after it, and press `⌥⌘H`
+   - For words it auto-grabs the 어절 (Hangul run) before the caret, or uses your selection if you made one.
 2. Pick a candidate
-   - **1–9** to pick · **↑↓←→** move/page · **Tab** expand · **↵** insert · **esc** cancel
-3. For words not in the dictionary, use **"음절별로 만들기"** (build per syllable) to assemble one
+   - `1–9` select · `↑↓` `←→` move·page · `Tab` expand · `↵` insert · `esc` cancel
+3. For words not in the dictionary, use **‘음절별로 만들기’** (build per syllable) to assemble one character at a time
 
-Settings live in the menu-bar **漢** icon or the popup's **⋯ → Settings**: expanded view
+Settings live behind the menu-bar **字** icon or the popup's **⋯ → Settings** — expanded view
 (wide/compact grid), fullwidth/halfwidth symbols, custom user sets, and menu-bar icon visibility.
 
 ## Install / Build
 
-- Requires **macOS 14+** and the **Xcode toolchain** (for XCTest / building)
+- Requires **macOS 14+** and the **Xcode toolchain** (for building and tests)
 - Build: `scripts/bundle.sh` → `.build/HanjaKey.app`
 - On first run, grant **Accessibility** permission so in-place insertion works
   (System Settings → Privacy & Security → Accessibility)
@@ -73,6 +72,10 @@ Full list and details in [`THIRD_PARTY_DATA.md`](THIRD_PARTY_DATA.md).
 
 > The dictionary and Wiktionary data are distributed under **CC BY-SA (ShareAlike)**, and the NIKL
 > frequency survey under **KOGL Type 1 (attribution)**. Keep the attribution and ShareAlike terms when redistributing.
+
+## Contributing
+
+Bug reports and PRs are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) for setup, project layout, and conventions.
 
 ## License
 
