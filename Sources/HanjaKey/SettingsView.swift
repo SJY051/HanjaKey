@@ -69,6 +69,7 @@ private struct GeneralSettingsView: View {
                     }
                 }
                 Link("GitHub 저장소", destination: URL(string: "https://github.com/SJY051/HanjaKey")!)
+                Link("업데이트 확인", destination: URL(string: "https://github.com/SJY051/HanjaKey/releases/latest")!)
                 Text("데이터 출처 — libhangul(BSD), 국립국어원 표준국어대사전·한국어 위키낱말사전(CC BY-SA), 국립국어원 2002 빈도조사(KOGL 제1유형), NeoMindStd/HanjaDB(MIT). 단일 한자 정렬·훈음은 자체 생성(MIT).")
                     .font(.caption).foregroundStyle(.secondary)
             }

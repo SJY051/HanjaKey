@@ -65,6 +65,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let settings = NSMenuItem(title: "설정…", action: #selector(openSettings), keyEquivalent: ",")
         settings.target = self
         menu.addItem(settings)
+        let updates = NSMenuItem(title: "업데이트 확인…", action: #selector(checkForUpdates), keyEquivalent: "")
+        updates.target = self
+        menu.addItem(updates)
         menu.addItem(.separator())
         menu.addItem(
             withTitle: "Quit HanjaKey",
@@ -72,6 +75,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             keyEquivalent: "q"
         )
         return menu
+    }
+
+    /// Open the GitHub Releases page for a manual update check (spec 009 M4).
+    @objc private func checkForUpdates() {
+        if let url = URL(string: "https://github.com/SJY051/HanjaKey/releases/latest") {
+            NSWorkspace.shared.open(url)
+        }
     }
 
     /// Open (or focus) the preferences window hosting `SettingsView`.
