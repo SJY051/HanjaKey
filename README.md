@@ -49,13 +49,19 @@ KS X 1001 특수문자를 한 창에서 고르고 그대로 끼워 넣습니다.
 설정은 메뉴바 **字** 아이콘이나 팝업의 **⋯ → 설정**에서 — 확장 보기(와이드·컴팩트 그리드), 특수문자
 전각·반각, 사용자 정의 세트, 메뉴바 아이콘 표시를 바꿀 수 있습니다.
 
-## 설치 / 빌드
+## 설치
 
-- 필요한 것: **macOS 14 이상**, **Xcode 툴체인**(빌드·테스트용)
-- 빌드: `scripts/bundle.sh` → `.build/HanjaKey.app`
-- 첫 실행 때 **접근성 권한**을 켜 줘야 자리 치환이 동작합니다
-  (시스템 설정 → 개인정보 보호 및 보안 → 손쉬운 사용)
-- 단축키는 [sindresorhus/KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts)를 씁니다
+**다운로드 (권장)** — [Releases](https://github.com/SJY051/HanjaKey/releases/latest)에서
+`HanjaKey-x.y.z.dmg`를 받아 열고, **HanjaKey를 응용 프로그램 폴더로 드래그**하세요. (실행: macOS 14 이상)
+
+**처음 열 때** — 현재 빌드는 *Apple 공증 전*이라 한 번은 차단됩니다. 딱 한 번만:
+- 실행을 시도한 뒤 **시스템 설정 → 개인정보 보호 및 보안**에서 *“HanjaKey을(를) 그래도 열기”* 버튼을 누르거나,
+- 터미널에서 `xattr -dr com.apple.quarantine /Applications/HanjaKey.app`
+
+그다음 **접근성 권한**을 켜 주세요(시스템 설정 → 개인정보 보호 및 보안 → 손쉬운 사용) — 자리 치환에 필요합니다.
+
+**소스에서 빌드** — `scripts/bundle.sh` → `.build/HanjaKey.app`. 개발 환경·구조는
+[CONTRIBUTING.md](CONTRIBUTING.md), 단축키는 [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts)를 참고하세요.
 
 ## 데이터 / 출처
 

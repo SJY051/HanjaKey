@@ -50,13 +50,22 @@ KS X 1001 symbols into one picker that inserts in place.
 Settings live behind the menu-bar **字** icon or the popup's **⋯ → Settings** — expanded view
 (wide/compact grid), fullwidth/halfwidth symbols, custom user sets, and menu-bar icon visibility.
 
-## Install / Build
+## Install
 
-- Requires **macOS 14+** and the **Xcode toolchain** (for building and tests)
-- Build: `scripts/bundle.sh` → `.build/HanjaKey.app`
-- On first run, grant **Accessibility** permission so in-place insertion works
-  (System Settings → Privacy & Security → Accessibility)
-- Hotkeys via [sindresorhus/KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
+**Download (recommended)** — grab `HanjaKey-x.y.z.dmg` from
+[Releases](https://github.com/SJY051/HanjaKey/releases/latest), open it, and **drag HanjaKey to your
+Applications folder.** (Runs on macOS 14+.)
+
+**First launch** — this build is *not yet Apple-notarized*, so macOS blocks it once. Just once:
+- After the blocked attempt, open **System Settings → Privacy & Security** and click
+  *“Open Anyway”* for HanjaKey, or
+- run `xattr -dr com.apple.quarantine /Applications/HanjaKey.app` in Terminal.
+
+Then grant **Accessibility** (System Settings → Privacy & Security → Accessibility) — required for
+in-place insertion.
+
+**Build from source** — `scripts/bundle.sh` → `.build/HanjaKey.app`; see
+[CONTRIBUTING.md](CONTRIBUTING.md) for setup, and [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) for hotkeys.
 
 ## Data / credits
 
