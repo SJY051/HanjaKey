@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/images/hanjakey-hero.png" width="720" alt="HanjaKey — 가벼운 macOS용 한글 → 한자·특수문자 변환기">
+</p>
+
 # HanjaKey
 
 macOS에서 Windows의 **한자 키**를 재현하는 메뉴바 유틸리티입니다. 시스템 입력기를 바꾸지 않고,

@@ -155,8 +155,10 @@ This was de-risked then built this session: an **end-to-end spike passed** (macO
   template (`bundling/menubar-mark.pdf` from `gen_menubar.swift`, Noto Sans CJK KR), loaded with
   `NSImage.isTemplate` so it tints with the menu bar. **字 (not 한)** — a lone 한 clashes with the
   macOS Korean input-source indicator. ASQi-verified.
-- **M3 — README screenshots + hero + GitHub social preview.** Real-run captures (popup in action) +
-  a header image reusing the icon's palette/glyphs.
+- **M3 — README demo + hero + social. ✅ DONE 2026-06-22.** Three looping demo GIFs (한자→漢字,
+  가→歌, ㄱ→symbol; recorded with BetterCapture, optimized via ffmpeg + gifski) in README.md/en, plus a
+  1280×640 hero/social card (`bundling/icon-src/gen_hero.swift`) used as the README banner and the
+  GitHub social preview.
 - *(Later, separate: Developer-ID code signing, notarization, DMG distribution.)*
 
 ## Resolved decisions

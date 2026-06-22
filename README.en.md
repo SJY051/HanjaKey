@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/images/hanjakey-hero.png" width="720" alt="HanjaKey — a lightweight Hangul → Hanja & symbol converter for macOS">
+</p>
+
 # HanjaKey
 
 A macOS menu-bar utility that brings back the Windows **Hanja key**. Without replacing your input

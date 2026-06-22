@@ -116,6 +116,7 @@ HanjaKey is a public repo; before calling it released:
   in Finder. Source: `bundling/AppIcon.icon/` + `bundling/icon-src/gen_icon.swift`.
 - **Menu-bar template mark** (spec 008 M2) — ✅ DONE 2026-06-22 (`353ff4b`): monochrome 字 vector-PDF
   template (`NSImage.isTemplate`); 字 not 한 to avoid clashing with the macOS Korean input indicator.
-- **README screenshots / hero / social preview** (spec 008 M3) — still TODO.
+- **README demo GIFs + hero / social preview** (spec 008 M3) — ✅ DONE 2026-06-22: three looping
+  conversion GIFs + a 1280×640 hero banner that doubles as the GitHub social-preview card.
 - **Deployment-target mismatch:** ✅ RESOLVED 2026-06-22 — `bundling/Info.plist` `LSMinimumSystemVersion`
   set to **14.0** to match the build target (Package.swift `.macOS(.v14)`) and the README.
