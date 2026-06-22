@@ -45,6 +45,11 @@ else
   echo "[!] no app icon at $ICON_SRC — bundling without an icon"
 fi
 
+# Menu-bar template mark (spec 008 M2): a vector PDF, tinted via NSImage.isTemplate at runtime.
+if [ -f "$ROOT/bundling/menubar-mark.pdf" ]; then
+  cp "$ROOT/bundling/menubar-mark.pdf" "$APP/Contents/Resources/"
+fi
+
 # Ad-hoc signing (the "-" identity). Free; no certificate or Developer Program needed.
 codesign --force --deep --sign - "$APP"
 

@@ -42,7 +42,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if AppSettings.showMenuBarIcon {
             guard statusItem == nil else { return }
             let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-            item.button?.title = "漢" // text glyph suits a Hanja tool better than any SF Symbol
+            // Monochrome template mark (spec 008 M2): a vector PDF that tints with the menu bar.
+            // Glyph is 字 (not 한) to avoid clashing with the macOS Korean input-source indicator.
+            if let url = Bundle.main.url(forResource: "menubar-mark", withExtension: "pdf"),
+               let image = NSImage(contentsOf: url) {
+                image.isTemplate = true
+                image.size = NSSize(width: 18, height: 18)
+                item.button?.image = image
+            } else {
+                item.button?.title = "字" // fallback if the template resource is missing
+            }
             item.menu = buildMenu()
             statusItem = item
         } else if let item = statusItem {
