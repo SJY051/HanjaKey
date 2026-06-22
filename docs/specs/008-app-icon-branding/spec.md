@@ -151,9 +151,10 @@ This was de-risked then built this session: an **end-to-end spike passed** (macO
   `actool` compile; `bundle.sh` + `Info.plist` wiring; macOS-14 `.icns` fallback. ASQi-verified in
   Finder. Files: `bundling/AppIcon.icon/`, `bundling/icon-src/gen_icon.swift`, `bundling/Info.plist`,
   `scripts/bundle.sh`.
-- **M2 — menu-bar template mark (separate).** A monochrome single-glyph mark (~16–18px). The app
-  icon does **not** reduce to 16px, so this is a distinct, simpler mark (template image, tints with
-  the menu bar). Likely just 한 (or a 한자-key glyph).
+- **M2 — menu-bar template mark. ✅ DONE 2026-06-22** (`353ff4b`). A monochrome **字** vector-PDF
+  template (`bundling/menubar-mark.pdf` from `gen_menubar.swift`, Noto Sans CJK KR), loaded with
+  `NSImage.isTemplate` so it tints with the menu bar. **字 (not 한)** — a lone 한 clashes with the
+  macOS Korean input-source indicator. ASQi-verified.
 - **M3 — README screenshots + hero + GitHub social preview.** Real-run captures (popup in action) +
   a header image reusing the icon's palette/glyphs.
 - *(Later, separate: Developer-ID code signing, notarization, DMG distribution.)*

@@ -114,7 +114,8 @@ HanjaKey is a public repo; before calling it released:
 - **App icon** — ✅ DONE 2026-06-22 (spec 008 M1): Liquid Glass `.icon` (celadon 한/字, frosted-panel
   depth) compiled by `actool` into `Assets.car` + legacy `.icns`, wired into `bundle.sh`; ASQi-verified
   in Finder. Source: `bundling/AppIcon.icon/` + `bundling/icon-src/gen_icon.swift`.
-- **Menu-bar template mark** (spec 008 M2) + **README screenshots / hero / social preview** (spec 008 M3)
-  — still TODO.
+- **Menu-bar template mark** (spec 008 M2) — ✅ DONE 2026-06-22 (`353ff4b`): monochrome 字 vector-PDF
+  template (`NSImage.isTemplate`); 字 not 한 to avoid clashing with the macOS Korean input indicator.
+- **README screenshots / hero / social preview** (spec 008 M3) — still TODO.
 - **Deployment-target mismatch:** ✅ RESOLVED 2026-06-22 — `bundling/Info.plist` `LSMinimumSystemVersion`
   set to **14.0** to match the build target (Package.swift `.macOS(.v14)`) and the README.
