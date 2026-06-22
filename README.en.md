@@ -5,7 +5,17 @@ method, a global hotkey converts the Hangul before your caret into Hanja or spec
 
 > 한국어: [README.md](README.md)
 
-<!-- Screenshot: add an image under docs/images/ when ready -->
+<p align="center">
+  <img src="docs/images/hanjakey-word.gif" width="480" alt="Converting 한자 into 漢字"><br>
+  <sub>Word recognition · 한자 → 漢字 (ranked, with meanings)</sub>
+</p>
+
+<table align="center">
+  <tr>
+    <td align="center"><img src="docs/images/hanjakey-single.gif" width="300" alt="Single-Hanja conversion"><br><sub>Single Hanja · 가 → 歌</sub></td>
+    <td align="center"><img src="docs/images/hanjakey-symbol.gif" width="300" alt="Special-symbol conversion"><br><sub>Special symbols · ㄱ → ♥</sub></td>
+  </tr>
+</table>
 
 ## Why
 
