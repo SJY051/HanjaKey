@@ -59,13 +59,6 @@ final class PopupPanel: NSPanel {
         // the selection layer instead (see spec 006, revised).
         makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
-        CaptureLog.log("present: key=\(isKeyWindow) appActive=\(NSApp.isActive) visible=\(isVisible) onScreen=\(occlusionState.contains(.visible))")
-        // occlusionState settles async; re-check whether the panel actually rendered on screen (the
-        // present-time visible=true can lie — see the A1 cold-start finding, spec 006).
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            guard let self else { return }
-            CaptureLog.log("present+250ms: onScreen=\(self.occlusionState.contains(.visible)) key=\(self.isKeyWindow) appActive=\(NSApp.isActive) front=\(NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?")")
-        }
         installOutsideClickDismiss()
     }
 
@@ -93,9 +86,6 @@ final class PopupPanel: NSPanel {
             Output.copyToClipboard(chosen)  // no context → clipboard (M1 fallback)
             target?.activate(options: [.activateAllWindows]) // still return focus to the source app
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            CaptureLog.log("commit+200ms: front=\(NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?")")
-        }
     }
 
     /// Re-fit and re-place the panel when the SwiftUI content changes size (e.g. decomposition view).
@@ -121,10 +111,6 @@ final class PopupPanel: NSPanel {
         back?.activate(options: [.activateAllWindows])
         // No selection to restore: capture collapses its probe selection at capture time (spec 006), so
         // cancel is a true no-op for the source text — just hide and return focus.
-        CaptureLog.log("dismiss: reactivate \(back?.bundleIdentifier ?? "?")")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            CaptureLog.log("dismiss+200ms: front=\(NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?")")
-        }
     }
 
     private func positionNearCaret(_ rect: CGRect?) {

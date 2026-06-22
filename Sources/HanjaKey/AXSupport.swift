@@ -52,15 +52,13 @@ struct AXContext {
     }
 
     static func capture() -> AXContext? {
-        CaptureLog.session()
         guard AXPermission.ensureTrusted(prompt: false) else {
-            CaptureLog.log("guard: not AX-trusted → nil"); return nil
+            return nil
         }
         guard let frontApp = NSWorkspace.shared.frontmostApplication,
               frontApp.processIdentifier != NSRunningApplication.current.processIdentifier else {
-            CaptureLog.log("guard: no frontmost app (or self is front) → nil"); return nil
+            return nil
         }
-        CaptureLog.log("app: \(frontApp.bundleIdentifier ?? "?") (\(frontApp.localizedName ?? "?")) pid=\(frontApp.processIdentifier)")
 
         let appEl = AXUIElementCreateApplication(frontApp.processIdentifier)
         // Force Chromium/Electron (and some browsers) to expose their AX tree.
@@ -80,12 +78,6 @@ struct AXContext {
         }
         let el: AXUIElement? = (err == .success && focusedObj != nil
             && CFGetTypeID(focusedObj!) == AXUIElementGetTypeID()) ? (focusedObj as! AXUIElement) : nil
-        if el == nil {
-            CaptureLog.log("focused unavailable (err=\(err.rawValue)) after \(tries) tries → AX-less ⌘C capture")
-        } else if tries > 1 {
-            CaptureLog.log("focused: ok after \(tries) tries")
-        }
-        if let el, let role = axString(el, kAXRoleAttribute) { CaptureLog.log("focused role: \(role)") }
 
         var selected = ""
         if let el {
@@ -110,18 +102,15 @@ struct AXContext {
         var autoCaptured = false
         var rectRange = caretRange
         let caret = Int(caretRange.location)
-        CaptureLog.log("initial: selected=\(CaptureLog.vis(selected)) caretRange=(loc=\(caretRange.location), len=\(caretRange.length))")
 
         if !selected.isEmpty, containsHangul(selected) {
             source = selected
             selectBack = 0                  // already selected → ⌘V replaces it
             rectRange = caretRange
-            CaptureLog.log("path: already-selected → source=\(CaptureLog.vis(source))")
         } else {
             // Read the Hangul 어절 before the caret with REAL key events rather than AX: Electron/
             // Chromium serve a STALE AX value/caret right after typing (the AX tree updates async).
             // Select up to maxCapture chars left, copy, then keep only the trailing Hangul run.
-            CaptureLog.log("path: auto-capture (no usable selection)")
             let pasteboard = NSPasteboard.general
             let saved = pasteboard.string(forType: .string)
             let beforeCount = pasteboard.changeCount
@@ -129,25 +118,18 @@ struct AXContext {
             Output.synthesizeCmdC()
             // Wait briefly for the target app (a separate process) to service ⌘C; stop once it does.
             var copied = ""
-            var polls = 0
-            var pollOK = false
             for _ in 0..<24 { // up to ~120ms
                 usleep(5_000)
-                polls += 1
                 if pasteboard.changeCount != beforeCount {
                     copied = pasteboard.string(forType: .string) ?? ""
-                    pollOK = true
                     break
                 }
             }
             // Restore the clipboard, marked transient so the probe copy is skipped by clipboard managers.
             Output.writeTransient(saved, to: pasteboard)
-            CaptureLog.log("⌘C poll: \(pollOK ? "ok" : "TIMEOUT") after \(polls)×5ms, copied=\(CaptureLog.vis(copied))")
 
             let run = trailingHangulRun(copied)
-            CaptureLog.log("trailingHangulRun=\(CaptureLog.vis(run))")
             if run.isEmpty {
-                CaptureLog.log("run empty → right-arrow collapse, will fall through to nil")
                 Output.synthesizeRightArrow()  // nothing to convert → collapse, restoring the caret
             } else {
                 source = run
@@ -178,12 +160,11 @@ struct AXContext {
                 } else {
                     selectBack = 0
                 }
-                CaptureLog.log("shrink result: canReplace=\(canReplace) selectBack=\(selectBack)")
             }
         }
 
         guard !source.isEmpty else {
-            CaptureLog.log("guard: source empty → nil (nothing recognized)"); return nil
+            return nil
         }
 
         // On-screen rect of the source, for positioning the popup near the caret (best-effort).
@@ -198,7 +179,6 @@ struct AXContext {
                 }
             }
         }
-        CaptureLog.log("RESULT: source=\(CaptureLog.vis(source)) selectBack=\(selectBack) canReplace=\(canReplace) screenRect=\(screenRect)")
         return AXContext(app: frontApp, source: source, selectBack: selectBack, screenRect: screenRect, canReplace: canReplace, autoCaptured: autoCaptured)
     }
 
@@ -217,10 +197,9 @@ struct AXContext {
         // around empty paragraphs, so allow headroom. We stop the instant the clipboard reads `run`.
         // After every peek we put the user's clipboard straight back (transient), so the fragments we
         // copy never linger on the pasteboard or reach clipboard-manager history.
-        for step in 0..<(maxCapture * 2) {
+        for _ in 0..<(maxCapture * 2) {
             let sel = copySelection(pb)
             Output.writeTransient(saved, to: pb)
-            CaptureLog.log("shrink step \(step): sel=\(CaptureLog.vis(sel))")
             if sel == run { return true }
             guard sel.hasSuffix(run), sel.count > n else { break } // run no longer at the right edge → unsafe
             Output.synthesizeShiftRight()
@@ -235,7 +214,6 @@ struct AXContext {
             if sel.isEmpty { break }
             Output.synthesizeShiftRight()
         }
-        CaptureLog.log("shrink: could not confirm selection == run → clipboard fallback")
         return false
     }
 
@@ -254,7 +232,6 @@ struct AXContext {
     /// `selectBack` chars to the left (if not already selected), then ⌘V; restore the clipboard.
     func insert(_ replacement: String, selectBack overrideBack: Int? = nil) {
         let back = overrideBack ?? selectBack   // the active token's length (spec 007), else the whole run
-        CaptureLog.log("insert: replacement=\(CaptureLog.vis(replacement)) selectBack=\(back) canReplace=\(canReplace) app=\(app.bundleIdentifier ?? "?")")
         guard canReplace else {
             // No selection we could confirm → don't paste over the wrong text. Hand the result to the
             // clipboard and return focus; the user pastes it where they want.

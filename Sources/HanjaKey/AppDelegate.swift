@@ -96,7 +96,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// Capture the editing context in the frontmost app, then show the candidate popup.
     private func togglePanel() {
         if let panel, panel.isVisible {
-            CaptureLog.log("toggle: panel already visible → dismiss")
             panel.dismiss()
             return
         }
@@ -108,7 +107,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             lastTarget = front
         }
         let context = AXContext.capture() // nil → popup falls back to type-in + clipboard
-        CaptureLog.log("toggle: capture \(context == nil ? "nil" : "ok") target=\(lastTarget?.bundleIdentifier ?? "?") → present")
         let panel = self.panel ?? PopupPanel()
         self.panel = panel
         panel.present(context: context, target: lastTarget)
