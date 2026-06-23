@@ -20,6 +20,8 @@ private struct GeneralSettingsView: View {
     @AppStorage(AppSettings.expandedWideKey) private var expandedWide = true
     @AppStorage(AppSettings.halfwidthSymbolsKey) private var halfwidthSymbols = false
     @AppStorage(AppSettings.showMenuBarIconKey) private var showMenuBarIcon = true
+    @State private var launchAtLogin = LaunchAtLogin.isEnabled
+    @State private var launchNeedsApproval = LaunchAtLogin.requiresApproval
 
     private static var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "—"
@@ -33,6 +35,23 @@ private struct GeneralSettingsView: View {
                     .font(.caption).foregroundStyle(.secondary)
             }
             Section("일반") {
+                Toggle("로그인 시 자동 시작", isOn: $launchAtLogin)
+                    .onChange(of: launchAtLogin) { _, newValue in
+                        LaunchAtLogin.setEnabled(newValue)
+                        launchAtLogin = LaunchAtLogin.isEnabled
+                        launchNeedsApproval = LaunchAtLogin.requiresApproval
+                    }
+                if launchNeedsApproval {
+                    HStack(spacing: 6) {
+                        Text("시스템 설정의 ‘로그인 항목’에서 허용해야 적용됩니다.")
+                            .font(.caption).foregroundStyle(.orange)
+                        Button("열기") { LaunchAtLogin.openLoginItemsSettings() }
+                            .buttonStyle(.link).font(.caption)
+                    }
+                } else {
+                    Text("로그인하면 HanjaKey가 자동으로 실행됩니다.")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
                 Toggle("메뉴바 아이콘 표시", isOn: $showMenuBarIcon)
                     .onChange(of: showMenuBarIcon) { _, _ in
                         NotificationCenter.default.post(name: .hkMenuBarVisibilityChanged, object: nil)
@@ -75,5 +94,9 @@ private struct GeneralSettingsView: View {
             }
         }
         .formStyle(.grouped)
+        .onAppear {
+            launchAtLogin = LaunchAtLogin.isEnabled
+            launchNeedsApproval = LaunchAtLogin.requiresApproval
+        }
     }
 }
