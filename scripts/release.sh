@@ -51,7 +51,13 @@ create-dmg \
   --icon "HanjaKey.app" 150 195 \
   --app-drop-link 390 195 \
   --no-internet-enable \
-  "$DMG" "$STAGE" || echo "[!] create-dmg returned nonzero (layout styling may need a GUI session)"
+  "$DMG" "$STAGE" || echo "[!] create-dmg returned nonzero (cosmetic Finder styling can fail on a locked/headless session)"
+
+# create-dmg's exit code can be a benign styling failure, but the DMG itself MUST exist and verify —
+# otherwise a broken or missing artifact would slip through as a 'successful' release.
+test -s "$DMG" || { echo "[error] DMG was not created: $DMG"; exit 1; }
+hdiutil verify "$DMG" >/dev/null || { echo "[error] DMG failed hdiutil verify: $DMG"; exit 1; }
+echo "[ok] DMG verified"
 
 # Notarize + staple the DMG when a notary profile is configured (needs a real Developer-ID signature).
 if [ -n "$SIGN_IDENTITY" ] && [ -n "$NOTARY_PROFILE" ]; then
