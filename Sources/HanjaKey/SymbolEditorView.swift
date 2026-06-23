@@ -8,6 +8,8 @@ struct SymbolEditorView: View {
     @State private var selectedJamo: String?
     @State private var newSymbol = ""
     @State private var showingPicker = false
+    @State private var loadWarning: String?   // symbols.json on disk is malformed
+    @State private var saveError: String?     // the last save failed
 
     // Canonical order: vowels (unused by the real Hanja key) first, then consonants (override).
     private static let order = [
@@ -25,6 +27,8 @@ struct SymbolEditorView: View {
         VStack(alignment: .leading, spacing: 12) {
             chipBar
             Divider()
+            if let loadWarning { noticeBanner(loadWarning, color: .orange) }
+            if let saveError { noticeBanner(saveError, color: .red) }
             if let jamo = selectedJamo {
                 editor(for: jamo)
             } else {
@@ -35,7 +39,13 @@ struct SymbolEditorView: View {
         }
         .padding()
         .onAppear {
-            sets = UserSymbols.load() // pick up edits made via the JSON file
+            switch UserSymbols.loadOutcome() { // pick up edits made via the JSON file
+            case .ok(let map): sets = map; loadWarning = nil
+            case .missing: sets = [:]; loadWarning = nil
+            case .malformed:
+                sets = [:]
+                loadWarning = "symbols.json을 읽지 못했어요(형식 오류). 파일을 고치거나, 여기서 편집하면 새로 덮어씁니다."
+            }
             if selectedJamo == nil { selectedJamo = activeJamo.first }
         }
     }
@@ -128,8 +138,23 @@ struct SymbolEditorView: View {
 
     private func setCurrent(_ value: [String]) {
         guard let jamo = selectedJamo else { return }
+        let previous = sets
         sets[jamo] = value.isEmpty ? nil : value
-        UserSymbols.save(sets)
-        CandidateView.reloadUserSymbols()
+        do {
+            try UserSymbols.save(sets)
+            saveError = nil
+            CandidateView.reloadUserSymbols()
+        } catch {
+            sets = previous   // roll back so the UI matches what's actually on disk
+            saveError = "저장에 실패했어요: \(error.localizedDescription)"
+        }
+    }
+
+    private func noticeBanner(_ text: String, color: Color) -> some View {
+        Text(text)
+            .font(.caption)
+            .foregroundStyle(color)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 4)
     }
 }

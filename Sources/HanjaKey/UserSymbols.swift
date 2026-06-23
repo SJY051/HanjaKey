@@ -12,11 +12,29 @@ enum UserSymbols {
         return base.appendingPathComponent("symbols.json")
     }
 
-    /// Load the overlay; empty if missing or malformed (defensive — it's a hand-edited file).
+    /// Outcome of reading the overlay: a hand-edited JSON we must not silently clobber when it's broken.
+    enum LoadOutcome {
+        case ok([String: [String]])
+        case missing                  // no file yet → treat as an empty overlay
+        case malformed(Error)         // file exists but unreadable/invalid → surface; do NOT overwrite
+    }
+
+    /// Read the overlay, distinguishing "no file" from "broken file" (the latter must be surfaced so a
+    /// later save doesn't overwrite the user's recoverable content).
+    static func loadOutcome() -> LoadOutcome {
+        let url = fileURL
+        guard FileManager.default.fileExists(atPath: url.path) else { return .missing }
+        do {
+            return .ok(try SymbolTable.parseMap(try Data(contentsOf: url)))
+        } catch {
+            return .malformed(error)
+        }
+    }
+
+    /// Convenience for the converter overlay: missing or malformed → empty (conversion still works).
     static func load() -> [String: [String]] {
-        guard let data = try? Data(contentsOf: fileURL),
-              let map = try? SymbolTable.parseMap(data) else { return [:] }
-        return map
+        if case .ok(let map) = loadOutcome() { return map }
+        return [:]
     }
 
     /// On first run, write a starter template with a few vowel examples so the file is discoverable.
@@ -29,16 +47,16 @@ enum UserSymbols {
         try? Data(template.utf8).write(to: url)
     }
 
-    /// Save the overlay back to disk (pretty-printed, sorted), dropping empty entries.
-    static func save(_ map: [String: [String]]) {
-        try? FileManager.default.createDirectory(
+    /// Save the overlay back to disk (pretty-printed, sorted), dropping empty entries. Throws on failure
+    /// and writes atomically so a failed write can't truncate the existing file.
+    static func save(_ map: [String: [String]]) throws {
+        try FileManager.default.createDirectory(
             at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true
         )
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        if let data = try? encoder.encode(map.filter { !$0.value.isEmpty }) {
-            try? data.write(to: fileURL)
-        }
+        let data = try encoder.encode(map.filter { !$0.value.isEmpty })
+        try data.write(to: fileURL, options: .atomic)
     }
 
     /// Starter content: vowels (unused by the real Hanja key) prefilled as examples to edit.

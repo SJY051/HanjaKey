@@ -94,10 +94,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 defer: false
             )
             window.title = "HanjaKey 설정"
-            window.contentView = NSHostingView(rootView: SettingsView())
             window.isReleasedWhenClosed = false // reuse across opens
             window.center()
             settingsWindow = window
+        }
+        // Rebuild the SwiftUI content on each (re)open so onAppear re-runs — the user-symbol editor must
+        // re-read symbols.json to reflect external edits. Skip when already visible so we don't reset a
+        // window the user is actively using.
+        if let window = settingsWindow, !window.isVisible {
+            window.contentView = NSHostingView(rootView: SettingsView())
         }
         NSApp.activate(ignoringOtherApps: true)
         settingsWindow?.makeKeyAndOrderFront(nil)
