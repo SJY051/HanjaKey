@@ -3,7 +3,7 @@
 .swiftpm/
 DerivedData/
 *.xcodeproj
-Package.resolved
+# Package.resolved IS committed (executable app → pin dependency resolution for reproducible builds)
 
 # macOS
 .DS_Store
