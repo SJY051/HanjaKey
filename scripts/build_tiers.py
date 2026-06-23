@@ -101,9 +101,16 @@ def main() -> int:
     processed: set[str] = set()
     invalid: list[tuple[str, str]] = []
 
-    for fp in sorted(glob.glob(f"{RAW_DIR}/*.json")):
-        if "/gloss-" in fp:  # gloss-pass outputs (②) are not ranking inputs
-            continue
+    raw_files = [
+        fp for fp in sorted(glob.glob(f"{RAW_DIR}/*.json")) if "/gloss-" not in fp
+    ]
+    if not raw_files:  # clean checkout: swarm-raw is gitignored → refuse to overwrite committed tiers.txt
+        print(f"[error] no ranking inputs in {RAW_DIR}/ — refusing to overwrite {OUT}.")
+        print(
+            "        swarm-raw lives under docs/specs/ (gitignored); restore it before rebuilding."
+        )
+        return 1
+    for fp in raw_files:
         d = json.load(open(fp, encoding="utf-8"))
         for blk in d.get("result", d).get("combined", []):
             r = blk["reading"]

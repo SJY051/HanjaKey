@@ -44,7 +44,14 @@ def main() -> int:
     wrong: list[tuple[str, str]] = []
     counts: dict[str, int] = defaultdict(int)
 
-    for fp in sorted(glob.glob(f"{RAW}/gloss-*.json")):
+    raw_files = sorted(glob.glob(f"{RAW}/gloss-*.json"))
+    if not raw_files:  # clean checkout: swarm-raw is gitignored → refuse to overwrite committed overlay
+        print(f"[error] no gloss inputs in {RAW}/ — refusing to overwrite {OUT}.")
+        print(
+            "        swarm-raw lives under docs/specs/ (gitignored); restore it before rebuilding."
+        )
+        return 1
+    for fp in raw_files:
         d = json.load(open(fp, encoding="utf-8"))
         for e in d.get("result", d).get("combined", []):
             r, h = e.get("reading"), e.get("hanja")
