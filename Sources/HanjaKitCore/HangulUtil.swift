@@ -13,7 +13,6 @@ public enum HangulInput: Equatable {
 public enum HangulUtil {
     /// Classify a (typically single-character) input string.
     ///
-    /// TODO: implement.
     /// - syllable: scalar in 0xAC00...0xD7A3
     /// - jamo:     scalar in 0x3131...0x3163 (Hangul Compatibility Jamo)
     /// - other:    everything else, including empty and multi-character input
