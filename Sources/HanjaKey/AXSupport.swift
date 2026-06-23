@@ -112,7 +112,7 @@ struct AXContext {
             // Chromium serve a STALE AX value/caret right after typing (the AX tree updates async).
             // Select up to maxCapture chars left, copy, then keep only the trailing Hangul run.
             let pasteboard = NSPasteboard.general
-            let saved = pasteboard.string(forType: .string)
+            let snapshot = PasteboardSnapshot.capture(pasteboard)   // full clipboard (all types), not just string
             let beforeCount = pasteboard.changeCount
             for _ in 0..<maxCapture { Output.synthesizeShiftLeft() }
             Output.synthesizeCmdC()
@@ -125,8 +125,8 @@ struct AXContext {
                     break
                 }
             }
-            // Restore the clipboard, marked transient so the probe copy is skipped by clipboard managers.
-            Output.writeTransient(saved, to: pasteboard)
+            // Restore the user's full clipboard (transient, so clipboard managers skip the probe copy).
+            snapshot.restore(to: pasteboard)
 
             let run = trailingHangulRun(copied)
             if run.isEmpty {
@@ -191,7 +191,7 @@ struct AXContext {
     private static func shrinkSelectionToRun(run: String) -> Bool {
         let n = run.count
         let pb = NSPasteboard.general
-        let saved = pb.string(forType: .string)
+        let snapshot = PasteboardSnapshot.capture(pb)
 
         // Generous cap: the over-selection is a few steps wide, but Shift+←/→ aren't perfectly symmetric
         // around empty paragraphs, so allow headroom. We stop the instant the clipboard reads `run`.
@@ -199,7 +199,7 @@ struct AXContext {
         // copy never linger on the pasteboard or reach clipboard-manager history.
         for _ in 0..<(maxCapture * 2) {
             let sel = copySelection(pb)
-            Output.writeTransient(saved, to: pb)
+            snapshot.restore(to: pb)
             if sel == run { return true }
             guard sel.hasSuffix(run), sel.count > n else { break } // run no longer at the right edge → unsafe
             Output.synthesizeShiftRight()
@@ -210,7 +210,7 @@ struct AXContext {
         // Leaves no stray selection; report failure so insert() uses the clipboard.
         for _ in 0..<(maxCapture * 2) {
             let sel = copySelection(pb)
-            Output.writeTransient(saved, to: pb)
+            snapshot.restore(to: pb)
             if sel.isEmpty { break }
             Output.synthesizeShiftRight()
         }
@@ -242,15 +242,20 @@ struct AXContext {
         app.activate(options: [.activateAllWindows]) // bring the target fully forward (reliable focus return)
 
         let pasteboard = NSPasteboard.general
-        let saved = pasteboard.string(forType: .string)
+        let snapshot = PasteboardSnapshot.capture(pasteboard)       // full clipboard; restored only if we still own it
         Output.writeTransient(replacement, to: pasteboard) // stage the paste, marked transient (managers skip)
+        let stagedChangeCount = pasteboard.changeCount              // HanjaKey's write — guards the deferred restore
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) { // let focus return to the target
             for _ in 0..<back { Output.synthesizeShiftLeft() }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                 Output.synthesizeCmdV()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // ⌘V done → restore the user's clipboard
-                    Output.writeTransient(saved, to: pasteboard)
+                    // Restore only if nobody wrote since our stage; else the user copied something new — keep it.
+                    if ClipboardRestore.shouldRestore(expectedChangeCount: stagedChangeCount,
+                                                      currentChangeCount: pasteboard.changeCount) {
+                        snapshot.restore(to: pasteboard)
+                    }
                 }
             }
         }
