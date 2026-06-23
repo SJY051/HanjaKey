@@ -15,6 +15,8 @@ struct CandidateView: View {
     let onCancel: () -> Void
     let onResize: (CGSize) -> Void
     private let replaceLength: Int   // chars insertion replaces = active-token length (0 = live selection)
+    private let mixedSelection: Bool // user selected non-Hangul content (e.g. "한자!") → show a clear note
+    private let dataUnavailable: Bool // a required bundled resource failed to load (packaging defect)
 
     private let candidates: [Candidate]
     @State private var selection = 0
@@ -81,16 +83,32 @@ struct CandidateView: View {
                 self.isWord = true
                 self.candidates = []   // no dictionary word → wordMissState → 음절별로 만들기
             }
+            self.mixedSelection = false
         } else {
-            let word = rawReading.count >= 2
             self.reading = rawReading
-            self.isWord = word
             self.replaceLength = 0      // a live user selection → ⌘V replaces it (insert selectBack 0)
-            if word {
-                self.candidates = Self.wordTable.flatMap { Self.converter?.candidates(forWord: rawReading, using: $0, freq: Self.freqTable) } ?? []
+            // A user's explicit selection must be pure Hangul; mixed content (e.g. "한자!") can't be routed
+            // and would dead-end in the per-syllable builder, so flag it for a clear message instead.
+            let allHangul = !rawReading.isEmpty && rawReading.allSatisfy { HangulUtil.classify(String($0)) != .other }
+            let word = rawReading.count >= 2
+            self.isWord = word
+            if !allHangul {
+                self.mixedSelection = true
+                self.candidates = []
             } else {
-                self.candidates = Self.converter?.candidates(for: rawReading, halfwidthSymbols: AppSettings.halfwidthSymbols) ?? []
+                self.mixedSelection = false
+                if word {
+                    self.candidates = Self.wordTable.flatMap { Self.converter?.candidates(forWord: rawReading, using: $0, freq: Self.freqTable) } ?? []
+                } else {
+                    self.candidates = Self.converter?.candidates(for: rawReading, halfwidthSymbols: AppSettings.halfwidthSymbols) ?? []
+                }
             }
+        }
+
+        // A required bundled resource failed to load (packaging defect) → distinguish from a real miss.
+        self.dataUnavailable = (Self.converter == nil) || (self.isWord && Self.wordTable == nil)
+        if self.dataUnavailable {
+            NSLog("[HanjaKey] required conversion data unavailable (converter: \(Self.converter != nil), wordTable: \(Self.wordTable != nil)) — reinstall may be needed")
         }
     }
 
@@ -110,7 +128,11 @@ struct CandidateView: View {
             header
             Divider()
             if candidates.isEmpty {
-                if decomposing {
+                if dataUnavailable {
+                    resourceErrorState
+                } else if mixedSelection {
+                    mixedSelectionState
+                } else if decomposing {
                     decompositionView
                 } else if isWord {
                     wordMissState
@@ -264,6 +286,27 @@ struct CandidateView: View {
         Text(reading.isEmpty ? "변환할 한글이 없습니다" : "‘\(reading)’ 후보가 없습니다")
             .font(.callout)
             .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 18)
+    }
+
+    /// A user selected text that isn't pure Hangul (e.g. "한자!") — can't route it, so say so clearly.
+    private var mixedSelectionState: some View {
+        Text("선택 영역에 한글만 있어야 해요")
+            .font(.callout)
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 18)
+    }
+
+    /// A required bundled resource failed to load — the conversion data is missing, not just unmatched.
+    private var resourceErrorState: some View {
+        Text("변환 데이터를 불러오지 못했어요.\n앱을 다시 설치해 주세요.")
+            .font(.callout)
+            .foregroundStyle(.secondary)
+            .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.horizontal, 12)
             .padding(.vertical, 18)
