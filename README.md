@@ -54,7 +54,15 @@ KS X 1001 특수문자를 한 창에서 고르고 그대로 끼워 넣습니다.
 
 ## 설치
 
-**다운로드 (권장)** — [Releases](https://github.com/SJY051/HanjaKey/releases/latest)에서
+**Homebrew (권장)** — 자체 tap으로 설치·업데이트가 가장 간단합니다:
+
+```sh
+brew install --cask SJY051/tap/hanjakey
+```
+
+이후 업데이트는 `brew upgrade --cask hanjakey`. (`HOMEBREW_REQUIRE_TAP_TRUST`를 켜둔 환경이라면 먼저 `brew trust SJY051/tap`을 실행하세요.)
+
+**직접 다운로드** — [Releases](https://github.com/SJY051/HanjaKey/releases/latest)에서
 `HanjaKey-vx.y.z.dmg`를 받아 열고, **HanjaKey를 응용 프로그램 폴더로 드래그**하세요. (실행: macOS 14 이상)
 
 **처음 열 때** — 현재 빌드는 *Apple 공증 전*이라 설치 후 첫 실행에서 권한 문제가 생길 수 있습니다.

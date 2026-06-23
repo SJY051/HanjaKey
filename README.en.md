@@ -55,7 +55,15 @@ Settings live behind the menu-bar **字** icon or the popup's **⋯ → Settings
 
 ## Install
 
-**Download (recommended)** — grab `HanjaKey-vx.y.z.dmg` from
+**Homebrew (recommended)** — the easiest way to install and stay up to date:
+
+```sh
+brew install --cask SJY051/tap/hanjakey
+```
+
+Update later with `brew upgrade --cask hanjakey`. (If you've enabled `HOMEBREW_REQUIRE_TAP_TRUST`, run `brew trust SJY051/tap` first.)
+
+**Download** — grab `HanjaKey-vx.y.z.dmg` from
 [Releases](https://github.com/SJY051/HanjaKey/releases/latest), open it, and **drag HanjaKey to your
 Applications folder.** (Runs on macOS 14+.)
 
