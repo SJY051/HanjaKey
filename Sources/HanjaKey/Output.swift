@@ -69,11 +69,20 @@ enum Output {
         up.post(tap: .cghidEventTap)
     }
 
-    /// Synthesize a → key event (collapse a selection to its right end). Requires Accessibility.
+    /// Synthesize a plain → key event (collapse a selection to its right end). Requires Accessibility.
+    ///
+    /// The flags are explicitly cleared. HanjaKey is triggered by ⌥⌘H, so the user is usually still
+    /// physically holding ⌘/⌥ when capture() runs. With a `.combinedSessionState` source the event
+    /// inherits those LIVE hardware modifiers unless we override them — turning this → into ⌘→ ("move
+    /// to the end of the line"), which mid-sentence jumped the caret to the visual line end and made
+    /// insert() overwrite (and lose) the trailing text. The other helpers are immune only because they
+    /// set `.flags` explicitly; this one must do the same with an empty set.
     static func synthesizeRightArrow() {
         guard let src = CGEventSource(stateID: .combinedSessionState),
               let down = CGEvent(keyboardEventSource: src, virtualKey: 0x7C /* right arrow */, keyDown: true),
               let up = CGEvent(keyboardEventSource: src, virtualKey: 0x7C, keyDown: false) else { return }
+        down.flags = []
+        up.flags = []
         down.post(tap: .cghidEventTap)
         up.post(tap: .cghidEventTap)
     }
