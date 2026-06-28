@@ -65,11 +65,14 @@ brew install --cask SJY051/tap/hanjakey
 **직접 다운로드** — [Releases](https://github.com/SJY051/HanjaKey/releases/latest)에서
 `HanjaKey-vx.y.z.dmg`를 받아 열고, **HanjaKey를 응용 프로그램 폴더로 드래그**하세요. (실행: macOS 14 이상)
 
-**처음 열 때** — 이 빌드는 **Apple 공증을 받았습니다** — Gatekeeper 경고 없이 바로 실행됩니다.
+**처음 열 때** — 현재 빌드는 *Apple 공증 전*이라 설치 후 첫 실행에서 권한 문제가 생길 수 있습니다.
 
-처음 실행 시 **접근성 권한**만 켜 주세요(시스템 설정 → 개인정보 보호 및 보안 → "손쉬운 사용"). 앱의 실제 기능에 필요하며, 한 번만 허용하면 됩니다.
+한 번만 아래를 진행해 주세요:
+- 실행을 시도한 뒤 **시스템 설정 → 개인정보 보호 및 보안**에서 *“HanjaKey을(를) 그래도 열기”* 버튼을 누르거나,
+- 터미널에서 `xattr -dr com.apple.quarantine /Applications/HanjaKey.app`
 
-> ℹ️ v0.1.2(self-signed)에서 업데이트하는 경우, 서명 신원이 바뀌어 접근성 권한을 한 번 다시 허용해야 할 수 있어요.
+그다음 **접근성 권한**을 켜 주세요.(시스템 설정 → 개인정보 보호 및 보안 → "손쉬운 사용")
+해당 권한을 허용해주셔야 앱의 실제 기능이 동작합니다. 위의 과정을 1번 진행한 후에는 추가 재인증이나 별도 작업은 필요없습니다.
 
 **소스에서 빌드** — `scripts/bundle.sh` → `.build/HanjaKey.app`. 개발 환경·구조는
 [CONTRIBUTING.md](CONTRIBUTING.md), 단축키는 [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts)를 참고하세요.

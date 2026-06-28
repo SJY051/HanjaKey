@@ -67,9 +67,12 @@ Update later with `brew upgrade --cask hanjakey`. (If you've enabled `HOMEBREW_R
 [Releases](https://github.com/SJY051/HanjaKey/releases/latest), open it, and **drag HanjaKey to your
 Applications folder.** (Runs on macOS 14+.)
 
-**First launch** — this build is **Apple-notarized**, so it launches with no Gatekeeper warning. On first run, just grant **Accessibility** (System Settings → Privacy & Security → Accessibility) — the app's core features need it. One time only.
+**First launch** — this build is *not yet Apple-notarized*, so the first launch after install may be blocked. Just once:
+- After the blocked attempt, open **System Settings → Privacy & Security** and click *“Open Anyway”* for HanjaKey, or
+- run `xattr -dr com.apple.quarantine /Applications/HanjaKey.app` in Terminal.
 
-> ℹ️ Upgrading from v0.1.2 (self-signed)? The signing identity changed, so you may need to re-grant Accessibility once.
+Then grant **Accessibility** (System Settings → Privacy & Security → Accessibility) — the app's core
+features need it. After doing this once, no re-authorization or extra steps are required.
 
 **Build from source** — `scripts/bundle.sh` → `.build/HanjaKey.app`; see
 [CONTRIBUTING.md](CONTRIBUTING.md) for setup, and [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) for hotkeys.
