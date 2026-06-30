@@ -69,7 +69,7 @@ Applications folder.** (Runs on macOS 14+.)
 
 **First launch** — this build is **Apple-notarized**, so it launches with no Gatekeeper warning. On first run, just grant **Accessibility** (System Settings → Privacy & Security → Accessibility) — the app's core features need it. One time only.
 
-> ℹ️ Upgrading from v0.1.2 (self-signed)? The signing identity changed, so you may need to re-grant Accessibility once.
+> ℹ️ Upgrading from a self-signed build (v0.1.2/v0.1.3)? The signing identity changed, so you may need to re-grant Accessibility once.
 
 **Build from source** — `scripts/bundle.sh` → `.build/HanjaKey.app`; see
 [CONTRIBUTING.md](CONTRIBUTING.md) for setup, and [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) for hotkeys.

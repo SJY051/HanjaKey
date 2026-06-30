@@ -69,7 +69,7 @@ brew install --cask SJY051/tap/hanjakey
 
 처음 실행 시 **접근성 권한**만 켜 주세요(시스템 설정 → 개인정보 보호 및 보안 → "손쉬운 사용"). 앱의 실제 기능에 필요하며, 한 번만 허용하면 됩니다.
 
-> ℹ️ v0.1.2(self-signed)에서 업데이트하는 경우, 서명 신원이 바뀌어 접근성 권한을 한 번 다시 허용해야 할 수 있어요.
+> ℹ️ v0.1.2·v0.1.3(self-signed)에서 업데이트하는 경우, 서명 신원이 바뀌어 접근성 권한을 한 번 다시 허용해야 할 수 있어요.
 
 **소스에서 빌드** — `scripts/bundle.sh` → `.build/HanjaKey.app`. 개발 환경·구조는
 [CONTRIBUTING.md](CONTRIBUTING.md), 단축키는 [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts)를 참고하세요.
