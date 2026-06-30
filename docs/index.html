@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HanjaKey · Hangul → Hanja &amp; symbol converter for macOS</title>
+<meta name="description" content="윈도우의 한자 키를 macOS에서. 단축키 하나로 커서 앞의 한글을 한자·특수문자로 그 자리에서 바꿔 주는 가벼운 메뉴바 앱. A lightweight macOS menu-bar app that turns Hangul into Hanja and special symbols, in place.">
+<meta name="theme-color" content="#5E7D60">
+<script>document.documentElement.className += ' js';</script>
+
+<!-- Open Graph / Twitter (absolute Pages URL so unfurls resolve the image) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="HanjaKey, the Hanja key on macOS">
+<meta property="og:description" content="One hotkey turns the Hangul before your caret into Hanja or special symbols, in place. macOS 14+, Apple-notarized.">
+<meta property="og:url" content="https://SJY051.github.io/HanjaKey/">
+<meta property="og:image" content="https://SJY051.github.io/HanjaKey/images/hanjakey-hero.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HanjaKey, the Hanja key on macOS">
+<meta name="twitter:description" content="One hotkey turns the Hangul before your caret into Hanja or special symbols, in place.">
+<meta name="twitter:image" content="https://SJY051.github.io/HanjaKey/images/hanjakey-hero.png">
+
+<link rel="icon" href="images/hanjakey-icon.png">
+<link rel="apple-touch-icon" href="images/hanjakey-icon.png">
+
+<style>
+/* ---- Tokens (celadon / 청자 + warm cream, from the real app icon) ---- */
+:root{
+  --bg:#EFE8DA; --bg-alt:#E7DDCA; --surface:#F8F3E8; --surface-2:#FCF9F1;
+  --ink:#233A29; --ink-soft:#51624E;
+  --celadon:#5E7D60; --celadon-deep:#3F5A40; --celadon-soft:#A9C3A6; --on-celadon:#F3EEE0;
+  --line:rgba(35,58,41,.14);
+  --glass-bg:rgba(248,243,232,.72); --glass-brd:rgba(255,255,255,.55);
+  --shadow:0 18px 50px rgba(43,60,40,.14);
+  --radius:18px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#141C16; --bg-alt:#19221A; --surface:#1F2A20; --surface-2:#243024;
+    --ink:#E9EDE2; --ink-soft:#A6B4A3;
+    --celadon:#8FB389; --celadon-deep:#AFC9AB; --celadon-soft:#33462E; --on-celadon:#15201A;
+    --line:rgba(233,237,226,.12);
+    --glass-bg:rgba(31,42,32,.62); --glass-brd:rgba(255,255,255,.08);
+    --shadow:0 18px 50px rgba(0,0,0,.42);
+  }
+}
+
+/* ---- Reset-ish ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",system-ui,"Segoe UI",sans-serif;
+  line-height:1.6; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+a{color:inherit}
+img{display:block;max-width:100%}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ---- Language toggle visibility (translatable nodes carry class .t) ---- */
+html:not(.show-en) .t[lang="en"]{display:none}
+html.show-en .t[lang="ko"]{display:none}
+
+/* ---- Buttons ---- */
+.btn{display:inline-flex;align-items:center;gap:.5em;font-size:15px;font-weight:600;
+  padding:.72em 1.15em;border-radius:12px;border:1px solid transparent;cursor:pointer;
+  text-decoration:none;transition:transform .15s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--celadon-deep);color:var(--on-celadon)}
+.btn-primary:hover{box-shadow:0 8px 22px rgba(63,90,64,.28)}
+.btn-ghost{background:transparent;color:var(--celadon-deep);border-color:var(--line)}
+@media (prefers-color-scheme:dark){.btn-ghost{color:var(--celadon)}}
+.btn-ghost:hover{border-color:var(--celadon);background:color-mix(in srgb,var(--celadon) 12%,transparent)}
+
+/* ---- Nav (frosted; honest web-glass approximation of the app's material) ---- */
+.nav{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);
+  background:var(--glass-bg);backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%)}
+@media (prefers-reduced-transparency:reduce){.nav{background:var(--surface);backdrop-filter:none}}
+.nav .row{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;letter-spacing:-.02em;font-size:18px}
+.brand img{width:30px;height:30px;border-radius:8px}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-link{font-size:14px;font-weight:600;color:var(--ink-soft);text-decoration:none;padding:8px 10px;border-radius:9px}
+.nav-link:hover{color:var(--ink)}
+#langToggle{font-size:13px;font-weight:700;min-width:62px;justify-content:center}
+
+/* ---- Hero ---- */
+.hero{padding:clamp(48px,8vw,92px) 0 clamp(40px,6vw,72px)}
+.hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center}
+.wordmark{font-size:clamp(40px,7vw,68px);font-weight:850;letter-spacing:-.035em;line-height:1.02;color:var(--celadon-deep)}
+@media (prefers-color-scheme:dark){.wordmark{color:var(--celadon-deep)}}
+.headline{font-size:clamp(26px,3.6vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.18;margin-top:.5em}
+.lede{font-size:clamp(16px,1.5vw,18px);color:var(--ink-soft);max-width:42ch;margin-top:18px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:26px}
+.req{font-size:13px;color:var(--ink-soft);margin-top:14px;font-weight:500}
+
+/* install command pill */
+.cmd{display:inline-flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:12px;padding:.6em .7em .6em 1em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;color:var(--ink)}
+.cmd code{white-space:nowrap;overflow:auto}
+.sh-p{color:var(--ink-soft);user-select:none;-webkit-user-select:none}
+.sh-c{color:var(--celadon-deep);font-weight:700}
+.sh-f{color:var(--ink-soft)}
+.sh-a{color:#a87c4a}
+@media (prefers-color-scheme:dark){.sh-c{color:var(--celadon)}.sh-a{color:#c89c61}}
+.copy{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex:none;border-radius:9px;
+  border:1px solid var(--line);background:var(--surface);cursor:pointer;color:var(--ink-soft);transition:all .15s ease}
+.copy:hover{color:var(--ink);border-color:var(--celadon)}
+.copy.copied{color:var(--celadon-deep);border-color:var(--celadon)}
+@media (prefers-color-scheme:dark){.copy.copied{color:var(--celadon)}}
+
+/* hero visual: the app icon over a soft celadon glow + a frosted diagonal panel (icon motif) */
+.hero-art{position:relative;display:flex;align-items:center;justify-content:center;isolation:isolate}
+.hero-art::before{content:"";position:absolute;inset:auto;width:118%;height:118%;z-index:-2;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--celadon) 38%,transparent),transparent 72%);filter:blur(6px)}
+.hero-art::after{content:"";position:absolute;width:80%;height:80%;z-index:-1;border-radius:34px;transform:rotate(-12deg);
+  background:linear-gradient(135deg,var(--glass-brd),transparent 60%);border:1px solid var(--glass-brd);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+@media (prefers-reduced-transparency:reduce){.hero-art::after{backdrop-filter:none;background:color-mix(in srgb,var(--celadon-soft) 30%,transparent)}}
+.hero-art img{width:min(340px,72%);height:auto;border-radius:24%;box-shadow:var(--shadow)}
+
+/* ---- Section scaffolding ---- */
+section{padding:clamp(48px,7vw,84px) 0}
+.section-alt{background:var(--bg-alt)}
+.h2{font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.sub{color:var(--ink-soft);max-width:52ch;margin-top:12px;font-size:16px}
+
+/* feature: headline conversion (full-width split) */
+.feat-lead{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:center}
+.gifframe{aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);
+  background:var(--surface);box-shadow:var(--shadow)}
+.gifframe img{width:100%;height:100%;object-fit:cover}
+.kbd{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;
+  background:color-mix(in srgb,var(--celadon) 16%,transparent);border:1px solid var(--line);border-radius:7px;padding:.06em .45em}
+.feat-lead .h2{margin-bottom:4px}
+
+/* feature pair (2-col) */
+.feat-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,32px);margin-top:clamp(28px,4vw,44px)}
+.fcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  transition:transform .2s ease,box-shadow .2s ease}
+.fcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.fcard .gif{aspect-ratio:1/1;overflow:hidden;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.fcard .gif img{width:100%;height:100%;object-fit:cover}
+.fcard .body{padding:20px 22px 24px}
+.fcard h3{font-size:19px;font-weight:750;letter-spacing:-.01em}
+.fcard p{color:var(--ink-soft);font-size:15px;margin-top:8px}
+
+/* install paths */
+.install-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(20px,3vw,32px);margin-top:30px;align-items:stretch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.panel h3{font-size:18px;font-weight:750}
+.panel p{color:var(--ink-soft);font-size:15px;margin-top:8px}
+.panel .cmd{margin-top:16px;width:100%;justify-content:space-between}
+.note{margin-top:26px;font-size:14.5px;color:var(--ink-soft);max-width:64ch}
+.note strong{color:var(--ink);font-weight:700}
+
+/* compatibility table */
+.compat{margin-top:24px;max-width:560px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.crow{display:flex;align-items:center;gap:16px;padding:15px 20px;border-bottom:1px solid var(--line)}
+.crow:last-child{border-bottom:0}
+.crow.off{opacity:.6}
+.cic{flex:none;width:40px;height:40px;display:grid;place-items:center;border-radius:11px;
+  background:color-mix(in srgb,var(--celadon) 15%,transparent);color:var(--celadon-deep)}
+@media (prefers-color-scheme:dark){.cic{color:var(--celadon)}}
+.crow.off .cic{background:color-mix(in srgb,var(--ink) 9%,transparent);color:var(--ink-soft)}
+.cname{flex:1;display:flex;flex-direction:column;gap:2px;font-weight:680;font-size:15.5px;letter-spacing:-.01em}
+.cname em{font-style:normal;font-weight:500;font-size:12.5px;color:var(--ink-soft)}
+.cstat{flex:none;font-weight:800;font-size:17px}
+.cstat.ok{color:var(--celadon-deep)}
+@media (prefers-color-scheme:dark){.cstat.ok{color:var(--celadon)}}
+.cstat.no{color:#a9603f}
+.compat-split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,60px);align-items:center}
+.compat-split .compat{margin-top:0;max-width:none}
+
+/* gentle float on the hero icon (motivated: draws the eye to the product mark) */
+@media (prefers-reduced-motion:no-preference){
+  .hero-art img{animation:hk-float 7s ease-in-out infinite}
+  @keyframes hk-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+}
+
+/* credits */
+.credits{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,30px);margin-top:26px}
+.credits ul{list-style:none}
+.credits li{padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px;display:flex;justify-content:space-between;gap:16px}
+.credits li:last-child{border-bottom:0}
+.credits .lic{color:var(--ink-soft);white-space:nowrap;font-size:13px}
+.credits a{color:var(--celadon-deep);text-decoration:none;font-weight:600}
+@media (prefers-color-scheme:dark){.credits a{color:var(--celadon)}}
+.credits a:hover{text-decoration:underline}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--ink-soft);font-size:14px}
+.foot{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
+.foot a{color:var(--ink-soft);text-decoration:none}
+.foot a:hover{color:var(--ink)}
+.foot-right{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.sponsor{display:inline-flex;align-items:center;gap:7px;font-weight:650;color:var(--celadon-deep);
+  border:1px solid var(--line);border-radius:999px;padding:.42em .9em;text-decoration:none;
+  transition:border-color .15s ease,background .15s ease}
+.sponsor svg{color:#bb6a4b}
+.sponsor:hover{border-color:var(--celadon);background:color-mix(in srgb,var(--celadon) 10%,transparent)}
+@media (prefers-color-scheme:dark){.sponsor{color:var(--celadon)}}
+
+/* ---- reveal motion (gentle; gated on .js so no-JS clients & crawlers see content) ---- */
+html.js [data-reveal]{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+html.js [data-reveal].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html.js [data-reveal]{opacity:1;transform:none;transition:none}}
+
+/* ---- responsive ---- */
+@media (max-width:820px){
+  .hero .grid,.feat-lead,.feat-pair,.install-grid,.credits,.compat-split{grid-template-columns:1fr}
+  .hero-art{order:-1}
+  .hero-art img{width:min(260px,62%)}
+  .nav-link.hide-sm{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap row">
+    <a class="brand" href="#top"><img src="images/hanjakey-icon.png" alt="HanjaKey icon"> HanjaKey</a>
+    <nav class="nav-right">
+      <a class="nav-link hide-sm" href="#features"><span class="t" lang="ko">기능</span><span class="t" lang="en">Features</span></a>
+      <a class="nav-link hide-sm" href="#install"><span class="t" lang="ko">설치</span><span class="t" lang="en">Install</span></a>
+      <a class="nav-link" href="https://github.com/SJY051/HanjaKey" target="_blank" rel="noopener">GitHub</a>
+      <button id="langToggle" class="btn btn-ghost" type="button" aria-label="Switch language">EN</button>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<main id="top">
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="wordmark">HanjaKey</div>
+      <h1 class="headline">
+        <span class="t" lang="ko">한글을 그 자리에서 한자로.</span>
+        <span class="t" lang="en">Hangul to Hanja, right where you type.</span>
+      </h1>
+      <p class="lede">
+        <span class="t" lang="ko">입력기를 바꾸지 않아도, 단축키 하나로 커서 앞의 한글을 한자·특수문자로 그 자리에서 바꿔 주는 가벼운 메뉴바 앱이에요.</span>
+        <span class="t" lang="en">A lightweight menu-bar app. One hotkey turns the Hangul before your caret into Hanja or special symbols, in place, without switching input sources.</span>
+      </p>
+      <div class="cta">
+        <span class="cmd">
+          <code class="sh"><span class="sh-p">$</span> <span class="sh-c">brew</span> install <span class="sh-f">--cask</span> <span class="sh-a">SJY051/tap/hanjakey</span></code>
+          <button class="copy" id="copyBrew" type="button" aria-label="Copy install command" title="Copy">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </span>
+        <a class="btn btn-primary" href="https://github.com/SJY051/HanjaKey/releases/latest" target="_blank" rel="noopener">
+          <span class="t" lang="ko">DMG 다운로드</span><span class="t" lang="en">Download DMG</span>
+        </a>
+      </div>
+      <p class="req">macOS 14+</p>
+    </div>
+    <div class="hero-art">
+      <img src="images/hanjakey-icon.png" width="512" height="512" alt="HanjaKey app icon, a celadon-green tile with 한 and 字">
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="feat-lead" data-reveal>
+      <div>
+        <h2 class="h2"><span class="t" lang="ko">단어를 통째로 한자어로</span><span class="t" lang="en">Whole words, converted to Hanja</span></h2>
+        <p class="sub">
+          <span class="t" lang="ko">커서 앞 어절을 알아서 잡아 <span class="kbd">대한민국 → 大韓民國</span>, <span class="kbd">한자 → 漢字</span>. 뜻과 함께 빈도순으로 정렬돼요.</span>
+          <span class="t" lang="en">It grabs the word before your caret, <span class="kbd">대한민국 → 大韓民國</span>, <span class="kbd">한자 → 漢字</span>, ranked by frequency with meanings.</span>
+        </p>
+      </div>
+      <div class="gifframe"><img src="images/hanjakey-word.gif" width="760" height="760" alt="Converting the word 한자 into 漢字" loading="lazy"></div>
+    </div>
+
+    <div class="feat-pair">
+      <article class="fcard" data-reveal>
+        <div class="gif"><img src="images/hanjakey-single.gif" width="760" height="760" alt="Converting the syllable 가 into 歌" loading="lazy"></div>
+        <div class="body">
+          <h3><span class="t" lang="ko">음절 → 한자</span><span class="t" lang="en">Syllable → Hanja</span></h3>
+          <p>
+            <span class="t" lang="ko">한 글자씩 한자로. <span class="kbd">한 → 韓 · 漢 · 寒</span></span>
+            <span class="t" lang="en">Each syllable to its Hanja. <span class="kbd">한 → 韓 · 漢 · 寒</span></span>
+          </p>
+        </div>
+      </article>
+      <article class="fcard" data-reveal>
+        <div class="gif"><img src="images/hanjakey-symbol.gif" width="760" height="760" alt="Converting the jamo ㅁ into a special symbol" loading="lazy"></div>
+        <div class="body">
+          <h3><span class="t" lang="ko">자모 → 특수문자</span><span class="t" lang="en">Jamo → special symbol</span></h3>
+          <p>
+            <span class="t" lang="ko">자모로 특수문자까지. <span class="kbd">ㅁ → ※ ◎ □</span>. macOS 입력기엔 없는 기능이에요.</span>
+            <span class="t" lang="en">Even jamo to symbols. <span class="kbd">ㅁ → ※ ◎ □</span>. Something macOS&rsquo;s own IME can&rsquo;t do.</span>
+          </p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install" class="section-alt">
+  <div class="wrap">
+    <h2 class="h2" data-reveal><span class="t" lang="ko">설치</span><span class="t" lang="en">Install</span></h2>
+    <p class="sub" data-reveal><span class="t" lang="ko">두 가지 방법 모두 한 줄이면 끝나요.</span><span class="t" lang="en">Either path takes about one line.</span></p>
+    <div class="install-grid" data-reveal>
+      <div class="panel">
+        <h3>Homebrew</h3>
+        <p><span class="t" lang="ko">설치와 업데이트가 가장 간단합니다.</span><span class="t" lang="en">The simplest way to install and stay up to date.</span></p>
+        <span class="cmd">
+          <code class="sh"><span class="sh-p">$</span> <span class="sh-c">brew</span> install <span class="sh-f">--cask</span> <span class="sh-a">SJY051/tap/hanjakey</span></code>
+          <button class="copy" id="copyBrew2" type="button" aria-label="Copy install command" title="Copy">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </span>
+      </div>
+      <div class="panel">
+        <h3><span class="t" lang="ko">직접 다운로드</span><span class="t" lang="en">Direct download</span></h3>
+        <p><span class="t" lang="ko">DMG를 열고 응용 프로그램 폴더로 드래그하세요.</span><span class="t" lang="en">Open the DMG and drag HanjaKey to Applications.</span></p>
+        <a class="btn btn-primary" style="margin-top:16px" href="https://github.com/SJY051/HanjaKey/releases/latest" target="_blank" rel="noopener">
+          <span class="t" lang="ko">최신 DMG 받기</span><span class="t" lang="en">Get the latest DMG</span>
+        </a>
+      </div>
+    </div>
+    <p class="note" data-reveal>
+      <span class="t" lang="ko">처음 한 번만 <strong>접근성 권한</strong>을 켜 주세요 (시스템 설정 → 개인정보 보호 및 보안 → 손쉬운 사용). 다른 앱의 텍스트를 읽고 바꾸는 데 필요해요.</span>
+      <span class="t" lang="en">Just grant <strong>Accessibility</strong> once (System Settings → Privacy &amp; Security → Accessibility); HanjaKey needs it to read and replace text in other apps.</span>
+    </p>
+  </div>
+</section>
+
+<!-- COMPATIBILITY -->
+<section id="compat">
+  <div class="wrap compat-split">
+    <div class="compat-text" data-reveal>
+      <h2 class="h2"><span class="t" lang="ko">어디서나 동작</span><span class="t" lang="en">Works almost everywhere</span></h2>
+      <p class="sub">
+        <span class="t" lang="ko">네이티브 앱, Electron 앱(Slack·Discord 등), 브라우저까지 대부분의 macOS 앱에서 작동합니다. 터미널은 편집 가능한 접근성 텍스트를 내주지 않아 지원하지 않아요.</span>
+        <span class="t" lang="en">Native apps, Electron apps (Slack, Discord), and browsers, most macOS apps. Terminals are the exception; they don&rsquo;t expose editable accessibility text.</span>
+      </p>
+    </div>
+    <div class="compat" data-reveal>
+      <div class="crow">
+        <span class="cic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><line x1="3" y1="9" x2="21" y2="9"/></svg></span>
+        <span class="cname"><span><span class="t" lang="ko">네이티브 앱</span><span class="t" lang="en">Native apps</span></span><em>TextEdit, Notes, Pages</em></span>
+        <span class="cstat ok" aria-label="supported">✓</span>
+      </div>
+      <div class="crow">
+        <span class="cic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="12" height="12" rx="2.5"/><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/></svg></span>
+        <span class="cname"><span>Electron</span><em>Slack, Discord, VS Code</em></span>
+        <span class="cstat ok" aria-label="supported">✓</span>
+      </div>
+      <div class="crow">
+        <span class="cic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.5 2.6 15.5 0 18"/><path d="M12 3c-2.6 2.5-2.6 15.5 0 18"/></svg></span>
+        <span class="cname"><span><span class="t" lang="ko">브라우저</span><span class="t" lang="en">Browsers</span></span><em>Safari, Chrome</em></span>
+        <span class="cstat ok" aria-label="supported">✓</span>
+      </div>
+      <div class="crow off">
+        <span class="cic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7.5 9.5l2.5 2.5-2.5 2.5"/><line x1="12.5" y1="15" x2="16.5" y2="15"/></svg></span>
+        <span class="cname"><span><span class="t" lang="ko">터미널</span><span class="t" lang="en">Terminals</span></span><em><span class="t" lang="ko">접근성 텍스트 없음</span><span class="t" lang="en">no accessible text</span></em></span>
+        <span class="cstat no" aria-label="not supported">✕</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDITS -->
+<section class="section-alt">
+  <div class="wrap">
+    <h2 class="h2" data-reveal><span class="t" lang="ko">데이터 · 라이선스</span><span class="t" lang="en">Data &amp; credits</span></h2>
+    <p class="sub" data-reveal>
+      <span class="t" lang="ko">코드는 MIT. 번들 데이터는 각 출처의 라이선스를 그대로 따릅니다.</span>
+      <span class="t" lang="en">The code is MIT. Bundled data keeps each source&rsquo;s own license.</span>
+    </p>
+    <div class="credits" data-reveal>
+      <ul>
+        <li><span>libhangul (hanja.txt)</span><span class="lic">BSD 3-Clause</span></li>
+        <li><span><span class="t" lang="ko">국립국어원 빈도 조사 (2002)</span><span class="t" lang="en">NIKL usage-frequency survey</span></span><span class="lic">KOGL Type 1</span></li>
+        <li><span><span class="t" lang="ko">표준국어대사전 · 위키낱말사전</span><span class="t" lang="en">Standard Korean Dict · Wiktionary</span></span><span class="lic">CC BY-SA</span></li>
+        <li><span>NeoMindStd HanjaDB</span><span class="lic">MIT</span></li>
+      </ul>
+      <ul>
+        <li><span><span class="t" lang="ko">KS X 1001 특수문자 배열</span><span class="t" lang="en">KS X 1001 symbol layout</span></span><span class="lic"><span class="t" lang="ko">자체 작성</span><span class="t" lang="en">first-party</span></span></li>
+        <li><span><span class="t" lang="ko">단축키</span><span class="t" lang="en">Hotkeys</span> (KeyboardShortcuts)</span><span class="lic">MIT</span></li>
+        <li><span><span class="t" lang="ko">전체 출처</span><span class="t" lang="en">Full attribution</span></span><span class="lic"><a href="https://github.com/SJY051/HanjaKey/blob/main/THIRD_PARTY_DATA.md" target="_blank" rel="noopener">THIRD_PARTY_DATA.md</a></span></li>
+        <li><span><span class="t" lang="ko">소스 코드</span><span class="t" lang="en">Source code</span></span><span class="lic"><a href="https://github.com/SJY051/HanjaKey" target="_blank" rel="noopener">GitHub</a></span></li>
+      </ul>
+    </div>
+    <p class="note" data-reveal>
+      <span class="t" lang="ko">표준국어대사전·위키낱말사전은 CC BY-SA(동일조건변경허락), 국립국어원 빈도조사는 KOGL 제1유형(출처표시) 조건으로 배포됩니다.</span>
+      <span class="t" lang="en">The dictionary and Wiktionary data are CC BY-SA (ShareAlike); the NIKL frequency survey is KOGL Type 1 (attribution). Keep those terms when redistributing.</span>
+    </p>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot">
+    <span>HanjaKey · <a href="https://github.com/SJY051/HanjaKey/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a></span>
+    <span class="foot-right">
+      <!-- TODO: confirm sponsor destination (GitHub Sponsors / Ko-fi / Buy Me a Coffee). Placeholder = GitHub Sponsors. -->
+      <a class="sponsor" href="https://github.com/sponsors/SJY051" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.3l-1.5-1.4C5.4 15.4 2 12.3 2 8.6 2 5.7 4.2 3.6 7 3.6c1.7 0 3.3.8 4.3 2.1l.7.9.7-.9C13.7 4.4 15.3 3.6 17 3.6c2.8 0 5 2.1 5 5 0 3.7-3.4 6.8-8.5 11.3L12 21.3z"/></svg>
+        <span class="t" lang="ko">후원</span><span class="t" lang="en">Sponsor</span>
+      </a>
+      <span><span class="t" lang="ko">만든 사람</span><span class="t" lang="en">Built by</span> <a href="https://github.com/SJY051" target="_blank" rel="noopener">ASQi (@SJY051)</a></span>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  // language toggle (default ko; persists)
+  var btn=document.getElementById('langToggle');
+  function setLang(l){
+    if(l==='en'){root.classList.add('show-en');root.lang='en';btn.textContent='한국어';}
+    else{root.classList.remove('show-en');root.lang='ko';btn.textContent='EN';}
+    try{localStorage.setItem('hk-lang',l);}catch(e){}
+  }
+  btn.addEventListener('click',function(){setLang(root.classList.contains('show-en')?'ko':'en');});
+  try{var s=localStorage.getItem('hk-lang');if(s){setLang(s);}}catch(e){}
+
+  // copy-to-clipboard for the brew command
+  var CMD='brew install --cask SJY051/tap/hanjakey';
+  function wireCopy(id){
+    var b=document.getElementById(id);if(!b)return;
+    b.addEventListener('click',function(){
+      navigator.clipboard.writeText(CMD).then(function(){
+        b.classList.add('copied');
+        setTimeout(function(){b.classList.remove('copied');},1400);
+      });
+    });
+  }
+  wireCopy('copyBrew');wireCopy('copyBrew2');
+
+  // gentle reveal-on-scroll (skipped under reduced motion)
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var nodes=document.querySelectorAll('[data-reveal]');
+  if(!reduce&&'IntersectionObserver'in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.14});
+    nodes.forEach(function(n){io.observe(n);});
+  }else{
+    nodes.forEach(function(n){n.classList.add('in');});
+  }
+})();
+</script>
+</body>
+</html>
